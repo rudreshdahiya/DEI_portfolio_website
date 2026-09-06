@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import { ChevronDown } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
@@ -10,8 +12,11 @@ const pillars = [
     id: "corporate",
     number: "01",
     title: "Corporate Sensitization",
-    outcome:
-      "Your teams understand disability, your language and policies become inclusive.",
+    outcome: (
+      <>
+        Your <span data-key-info>teams understand disability</span>, your language and policies become inclusive.
+      </>
+    ),
     includes: [
       "DEI training workshops for teams and senior leadership",
       "Language and communication guidance for internal and external use",
@@ -24,8 +29,11 @@ const pillars = [
     id: "ngo",
     number: "02",
     title: "NGO Capacity Building",
-    outcome:
-      "Your frontline teams and beneficiaries access the right schemes and accessible services.",
+    outcome: (
+      <>
+        Your <span data-key-info>frontline teams and beneficiaries access the right welfare schemes</span> and accessible services.
+      </>
+    ),
     includes: [
       "Connecting communities to relevant government welfare schemes",
       "Building accessibility into programmes, facilities, and communication",
@@ -38,8 +46,11 @@ const pillars = [
     id: "talks",
     number: "03",
     title: "Academic & Public Talks",
-    outcome:
-      "Your students and audience leave with a lived understanding of disability.",
+    outcome: (
+      <>
+        Your <span data-key-info>students and audience leave with a lived understanding</span> of disability.
+      </>
+    ),
     includes: [
       "Guest lectures and academic seminars",
       "Panel discussions at disability, DEI, and public health conferences",
@@ -52,8 +63,11 @@ const pillars = [
     id: "advisory",
     number: "04",
     title: "Government & Multilateral Advisory",
-    outcome:
-      "Inclusive, accessible programs and infrastructure that reach the people who need them.",
+    outcome: (
+      <>
+        <span data-key-info>Inclusive, accessible programs and infrastructure</span> that reach the people who need them.
+      </>
+    ),
     includes: [
       "Child protection policy advisory and programme input",
       "Inclusive education framework development",
@@ -64,10 +78,55 @@ const pillars = [
   },
 ];
 
+const faqItems = [
+  {
+    q: "What is disability sensitization and why does it matter?",
+    a: (
+      <>
+        Disability sensitization is the process of <span data-key-info>helping individuals and organisations understand disability</span> — particularly invisible disabilities — from a rights-based and human perspective, not a charity or pity frame. It matters because most inclusion initiatives fail not due to policy gaps but due to attitudinal barriers: people don't know how to talk about disability, what reasonable accommodations look like, or that many disabilities are invisible. Pratik's sensitization work combines lived experience of fibromyalgia with nine years of professional practice, making it <span data-key-info>grounded in reality rather than theory</span>.
+      </>
+    ),
+  },
+  {
+    q: "Who typically works with Pratik?",
+    a: (
+      <>
+        <span data-key-info>Corporates and foundations</span> seeking DEI training, <span data-key-info>NGOs</span> building disability-inclusive programmes, <span data-key-info>universities and conferences</span> looking for speakers on invisible disability, and <span data-key-info>government bodies and multilateral organisations</span> needing advisory input on inclusive policy. Past engagements include UNICEF India, HCL Foundation, Tech Mahindra Foundation, and the National Disaster Management Authority.
+      </>
+    ),
+  },
+  {
+    q: "Does Pratik work with organisations outside India?",
+    a: (
+      <>
+        Yes. While most frontline work is based in India, he has spoken at international events including the <span data-key-info>ARNEC Regional Conference in Manila</span> and diplomatic events at the Spanish and Finnish embassies in New Delhi. He is open to international partnerships and speaking invitations.
+      </>
+    ),
+  },
+  {
+    q: "What's the difference between sensitization and capacity building?",
+    a: (
+      <>
+        Corporate sensitization <span data-key-info>shifts attitudes</span> — helping people understand what disability is and how it shows up in the workplace. Capacity building goes further: it <span data-key-info>builds the skills, systems, and institutional knowledge for frontline staff to deliver disability-inclusive services consistently</span> — connecting communities to welfare schemes, designing accessible programmes, and training trainers so the work continues.
+      </>
+    ),
+  },
+  {
+    q: "How long does a typical engagement last?",
+    a: (
+      <>
+        It varies. A conference talk may be 45–90 minutes. A corporate workshop may be a half-day or full-day. <span data-key-info>NGO capacity building and government advisory projects typically span weeks or months.</span> Every engagement starts with a conversation about what your context actually needs.
+      </>
+    ),
+  },
+];
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Services() {
   useRevealAll();
+  const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
+
   return (
     <div>
       <PageMeta
@@ -200,7 +259,7 @@ export default function Services() {
             </h1>
           </div>
           <p className="text-lg text-muted-foreground max-w-[42ch] leading-relaxed md:text-right md:pb-1">
-            Moving organisations from awareness to inclusion — through training,
+            <span data-key-info>Moving organisations from awareness to inclusion</span> — through training,
             advisory, and the kind of knowledge that only comes from lived
             experience.
           </p>
@@ -294,7 +353,7 @@ export default function Services() {
         ))}
       </div>
 
-      {/* ── FAQ ───────────────────────────────────────────────────────── */}
+      {/* ── FAQ (Hover-expandable) ───────────────────────────────────────── */}
       <section
         aria-labelledby="faq-heading"
         className="px-6 py-20 border-t border-border"
@@ -313,42 +372,41 @@ export default function Services() {
             </p>
           </div>
 
-          <dl className="reveal-stagger divide-y divide-border">
-            {[
-              {
-                q: "What is disability sensitization and why does it matter?",
-                a: "Disability sensitization is the process of helping individuals and organisations understand disability — particularly invisible disabilities — from a rights-based and human perspective, not a charity or pity frame. It matters because most inclusion initiatives fail not due to policy gaps but due to attitudinal barriers: people don't know how to talk about disability, what reasonable accommodations look like, or that many disabilities are invisible. Pratik's sensitization work combines lived experience of fibromyalgia with nine years of professional practice, making it grounded in reality rather than theory.",
-              },
-              {
-                q: "Who typically works with Pratik?",
-                a: "Corporates and foundations seeking DEI training, NGOs building disability-inclusive programmes, universities and conferences looking for speakers on invisible disability and chronic illness, and government bodies and multilateral organisations needing advisory input on inclusive policy. Past engagements include UNICEF India, HCL Foundation, Tech Mahindra Foundation, and the National Disaster Management Authority.",
-              },
-              {
-                q: "Does Pratik work with organisations outside India?",
-                a: "Yes. While most frontline work is based in India, he has spoken at international events including the ARNEC Regional Conference in Manila and diplomatic events at the Spanish and Finnish embassies in New Delhi. He is open to international partnerships and speaking invitations.",
-              },
-              {
-                q: "What's the difference between sensitization and capacity building?",
-                a: "Corporate sensitization shifts attitudes — helping people understand what disability is and how it shows up in the workplace, including invisible conditions. Capacity building goes further: it builds the skills, systems, and institutional knowledge for frontline staff to deliver disability-inclusive services consistently — connecting communities to welfare schemes, designing accessible programmes, and training trainers so the work continues after the engagement ends.",
-              },
-              {
-                q: "How long does a typical engagement last?",
-                a: "It varies. A conference talk may be 45–90 minutes. A corporate sensitization workshop may be a half-day or full-day, or a series over several weeks. NGO capacity building and government advisory projects typically span weeks or months. Every engagement starts with a conversation about what your context actually needs.",
-              },
-            ].map(({ q, a }) => (
-              <div key={q} className="py-8">
-                <dt
-                  className="text-lg font-semibold text-foreground mb-3 leading-snug"
-                  style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+          <div className="divide-y divide-border border-y border-border">
+            {faqItems.map((item, index) => {
+              const isOpen = activeFaqIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="py-6 transition-colors group cursor-pointer"
+                  onMouseEnter={() => setActiveFaqIndex(index)}
+                  onMouseLeave={() => setActiveFaqIndex(null)}
+                  onClick={() => setActiveFaqIndex(isOpen ? null : index)}
                 >
-                  {q}
-                </dt>
-                <dd className="text-base text-muted-foreground leading-relaxed max-w-[70ch]">
-                  {a}
-                </dd>
-              </div>
-            ))}
-          </dl>
+                  <div className="flex items-center justify-between gap-4">
+                    <h3
+                      className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors leading-snug"
+                      style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+                    >
+                      {item.q}
+                    </h3>
+                    <ChevronDown
+                      className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                        isOpen ? "rotate-180 text-primary" : "group-hover:translate-y-0.5"
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 text-base text-muted-foreground leading-relaxed max-w-[70ch] ${
+                      isOpen ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0 mt-0"
+                    }`}
+                  >
+                    <div>{item.a}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
