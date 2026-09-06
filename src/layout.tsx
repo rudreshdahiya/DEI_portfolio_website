@@ -180,115 +180,31 @@ export function Layout() {
       </div>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-border bg-background">
-        <div className="max-w-5xl mx-auto px-6 py-14 grid md:grid-cols-3 gap-10">
-
-          {/* Brand + role */}
-          <div>
-            <p
-              className="text-lg font-semibold text-foreground mb-1"
-              style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-            >
+      <footer className="border-t border-border bg-background py-8">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center gap-2 text-center md:text-left">
+            <span className="font-semibold text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
               Pratik Aggarwal
-            </p>
-            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-              Disability inclusion expert and storyteller. Founder of{" "}
-              <Link
-                to="/blooming-in-pain"
-                className="underline underline-offset-4 hover:text-foreground transition-colors"
-              >
-                Blooming in Pain
-              </Link>
-              .
-            </p>
-            <a
-              href="https://asthaindia.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-            >
-              Director, ASTHA
-              <span className="sr-only">(opens in new tab)</span>
-            </a>
+            </span>
+            <span aria-hidden="true" className="hidden sm:inline">·</span>
+            <span className="text-xs sm:text-sm">Disability Inclusion & Storytelling</span>
           </div>
 
-          {/* Navigation */}
-          <nav aria-label="Footer navigation">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
-              Explore
-            </p>
-            <ul className="space-y-2.5 list-none m-0 p-0" role="list">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  to="/work"
-                  className="text-sm text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
-                >
-                  All work
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* Contact + socials + legal */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-4">
-              Connect
-            </p>
-            <ul className="space-y-2.5 list-none m-0 p-0 mb-8" role="list">
-              <li>
-                <a
-                  href="mailto:hello@bloominginpain.com"
-                  className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-                >
-                  hello@bloominginpain.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com/bloominginpain"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-                  onClick={() => track("outbound_click", { destination: "instagram", location: "footer" })}
-                >
-                  Instagram
-                  <span className="sr-only">(opens in new tab)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://linkedin.com/in/pratikaggarwal"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-                  onClick={() => track("outbound_click", { destination: "linkedin", location: "footer" })}
-                >
-                  LinkedIn
-                  <span className="sr-only">(opens in new tab)</span>
-                </a>
-              </li>
-            </ul>
-
+          <div className="flex items-center gap-5 flex-wrap justify-center">
+            <a
+              href="mailto:hello@bloominginpain.com"
+              className="text-xs sm:text-sm hover:text-foreground underline underline-offset-4 transition-colors"
+            >
+              hello@bloominginpain.com
+            </a>
+            <SocialLinks iconSize="w-4 h-4" />
             <Link
               to="/accessibility"
-              className="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground transition-colors"
+              className="text-xs hover:text-foreground underline underline-offset-4 transition-colors"
             >
-              Accessibility statement
+              Accessibility
             </Link>
-
-            <p className="text-xs text-muted-foreground mt-3">
-              © {new Date().getFullYear()} Pratik Aggarwal.
-            </p>
+            <span className="text-xs text-muted-foreground/80">© {new Date().getFullYear()}</span>
           </div>
         </div>
       </footer>
