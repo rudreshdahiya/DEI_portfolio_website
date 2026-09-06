@@ -98,8 +98,38 @@
    - ease-out-quart  → enter/exit (user-triggered, fast start)
    - ease-in-out-quart → on-screen morph (expand/collapse, layout change)
    - ease (built-in)  → subtle hover states (color, opacity, border)
-   - linear           → time/progress visualisations
-   ─────────────────────────────────────────────────────────────────────────── */
+   ───────────────────────────────────────────────────────────────────────── */
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-slow {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 55s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-slow:hover,
+.animate-marquee-slow:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-slow {
+    animation-play-state: paused;
+  }
+}
+
+[data-a11y-energy="low"] .animate-marquee-slow {
+  animation-play-state: paused;
+}
 
 :root {
   --ease-out-quart:    cubic-bezier(.165, .84, .44,  1);

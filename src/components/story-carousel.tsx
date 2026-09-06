@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { track } from "@vercel/analytics";
 
 export interface Story {
@@ -19,148 +17,32 @@ interface StoryCarouselProps {
 }
 
 export function StoryCarousel({ stories }: StoryCarouselProps) {
-  const count = stories.length;
-  // Duplicate stories array 3 times for seamless infinite looping
-  const extendedStories = [...stories, ...stories, ...stories];
-
-  // Start at the beginning of the middle set (index = count)
-  const [currentIndex, setCurrentIndex] = useState(count);
-  const [isTransitioning, setIsTransitioning] = useState(true);
-  const [isPaused, setIsPaused] = useState(false);
-  const [cardsToShow, setCardsToShow] = useState(3);
-  const touchStartX = useRef<number | null>(null);
-
-  // Responsive card column layout
-  useEffect(() => {
-    function updateCardsToShow() {
-      if (window.innerWidth < 640) {
-        setCardsToShow(1);
-      } else if (window.innerWidth < 1024) {
-        setCardsToShow(2);
-      } else {
-        setCardsToShow(3);
-      }
-    }
-    updateCardsToShow();
-    window.addEventListener("resize", updateCardsToShow);
-    return () => window.removeEventListener("resize", updateCardsToShow);
-  }, []);
-
-  const nextSlide = useCallback(() => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev + 1);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev - 1);
-  }, []);
-
-  // Handle seamless wrap-around when transition finishes
-  const handleTransitionEnd = () => {
-    if (currentIndex >= count * 2) {
-      // Reached the end set, seamlessly jump to equivalent index in middle set
-      setIsTransitioning(false);
-      setCurrentIndex(currentIndex - count);
-    } else if (currentIndex < count) {
-      // Reached the start set, seamlessly jump to equivalent index in middle set
-      setIsTransitioning(false);
-      setCurrentIndex(currentIndex + count);
-    }
-  };
-
-  // Autoplay ticker
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isPaused, nextSlide]);
-
-  // Touch handlers for mobile swipe
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diffX = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diffX) > 40) {
-      if (diffX > 0) nextSlide();
-      else prevSlide();
-    }
-    touchStartX.current = null;
-  };
-
-  // Active story index in original 0-8 range for indicator
-  const activeDisplayIndex = ((currentIndex % count) + count) % count;
+  // Duplicate stories array for a 100% seamless infinite horizontal scroll marquee
+  const marqueeStories = [...stories, ...stories];
 
   return (
     <div
       className="relative w-full overflow-hidden py-4"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
       aria-roledescription="carousel"
-      aria-label="Blooming in Pain stories"
+      aria-label="Blooming in Pain stories infinite scroll"
     >
-      {/* Navigation & Status Header */}
-      <div className="flex items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-2.5">
-          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Story {activeDisplayIndex + 1} of {count}
-          </span>
-          <span className="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-muted text-muted-foreground">
-            <span
-              className={`w-1.5 h-1.5 rounded-full ${
-                isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
-              }`}
-            />
-            {isPaused ? "Paused" : "Looping"}
-          </span>
-        </div>
+      {/* Side Fade Masks for smooth visually polished edges */}
+      <div
+        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-background to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-background to-transparent"
+        aria-hidden="true"
+      />
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={prevSlide}
-            aria-label="Previous story"
-            className="w-9 h-9 rounded-full border-border hover:bg-muted transition-transform active:scale-95"
-          >
-            ←
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={nextSlide}
-            aria-label="Next story"
-            className="w-9 h-9 rounded-full border-border hover:bg-muted transition-transform active:scale-95"
-          >
-            →
-          </Button>
-        </div>
-      </div>
-
-      {/* Infinite Track Container */}
+      {/* Continuous Slow Infinite Scroll Track */}
       <div className="overflow-hidden rounded-xl">
-        <div
-          className="flex"
-          onTransitionEnd={handleTransitionEnd}
-          style={{
-            transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`,
-            transition: isTransitioning ? "transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1)" : "none",
-          }}
-        >
-          {extendedStories.map((story, idx) => (
+        <div className="animate-marquee-slow py-2">
+          {marqueeStories.map((story, idx) => (
             <div
               key={`${story.id}-${idx}`}
-              className="flex-none px-2.5"
-              style={{ width: `${100 / cardsToShow}%` }}
+              className="w-[300px] sm:w-[350px] md:w-[380px] flex-none px-3"
               role="group"
               aria-roledescription="slide"
               aria-label={`${story.title} by ${story.author}`}
@@ -227,28 +109,6 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Pagination Indicator Dots */}
-      <div className="flex justify-center items-center gap-2 mt-6">
-        {stories.map((story, idx) => (
-          <button
-            key={story.id}
-            onClick={() => {
-              setIsTransitioning(true);
-              setCurrentIndex(count + idx);
-            }}
-            aria-label={`Go to story ${idx + 1}: ${story.title}`}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              idx === activeDisplayIndex
-                ? "w-8"
-                : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-            }`}
-            style={{
-              backgroundColor: idx === activeDisplayIndex ? "var(--plum)" : undefined,
-            }}
-          />
-        ))}
       </div>
     </div>
   );
