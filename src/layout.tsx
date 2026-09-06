@@ -53,10 +53,10 @@ export function Layout() {
             Pratik Aggarwal
           </Link>
 
-          {/* Desktop navigation & accessibility control & social icons */}
-          <div className="hidden md:flex items-center gap-6">
+          {/* Desktop navigation & accessibility control */}
+          <div className="hidden md:flex items-center gap-8">
             <ul
-              className="flex items-center gap-6 list-none m-0 p-0"
+              className="flex items-center gap-8 list-none m-0 p-0"
               role="list"
             >
               {navLinks.map((link) => (
@@ -70,12 +70,6 @@ export function Layout() {
                 </li>
               ))}
             </ul>
-
-            <div className="h-4 w-px bg-border" aria-hidden="true" />
-
-            <SocialLinks />
-
-            <div className="h-4 w-px bg-border" aria-hidden="true" />
 
             {/* Inclusivity / Reading Modes Widget */}
             <AccessibilityWidget />
