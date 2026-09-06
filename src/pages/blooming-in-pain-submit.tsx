@@ -94,21 +94,29 @@ export default function BloomingInPainSubmit() {
 
     try {
       const endpoint = import.meta.env.VITE_STORY_FORM_ENDPOINT;
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          condition: form.condition,
-          title: form.title,
-          story: form.story,
-          anything_else: form.anythingElse,
-        }),
-      });
+      if (endpoint) {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            condition: form.condition,
+            title: form.title,
+            story: form.story,
+            anything_else: form.anythingElse,
+          }),
+        });
 
-      if (!response.ok) {
-        throw new Error("Submission failed");
+        if (!response.ok) {
+          throw new Error("Submission failed");
+        }
+      } else {
+        // Fallback for preview/development when form endpoint is not configured
+        await new Promise((res) => setTimeout(res, 800));
+        const saved = JSON.parse(localStorage.getItem("bip_story_submissions") || "[]");
+        saved.push({ ...form, timestamp: new Date().toISOString() });
+        localStorage.setItem("bip_story_submissions", JSON.stringify(saved));
       }
 
       track("story_submitted");
@@ -207,12 +215,10 @@ export default function BloomingInPainSubmit() {
           </h1>
           <div className="space-y-3 text-lg text-muted-foreground leading-relaxed max-w-[52ch]">
             <p>
-              We're not looking for polished essays. We're looking for honest
-              accounts of what your life actually looks like — how you manage,
-              how you don't, what helps, and what doesn't.
+              We're not looking for polished essays. We're looking for <span data-key-info>honest accounts of what your life actually looks like</span> — how you manage, how you don't, what helps, and what doesn't.
             </p>
             <p>
-              You don't need a diagnosis to contribute. You need to have lived it.
+              <span data-key-info>You don't need a diagnosis to contribute.</span> You need to have lived it.
             </p>
           </div>
         </div>

@@ -1,116 +1,129 @@
 import { Link } from "react-router";
-import { Card, CardContent } from "@/components/ui/card";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
+import { StoryCarousel, Story } from "@/components/story-carousel";
 
 // ── Data ───────────────────────────────────────────────────────────
-const stories = [
+const stories: Story[] = [
   {
     id: 1,
-    tag: "Holistic Wellness",
-    title: "Sujatha Rao’s Journey with Fibromyalgia: Finding Hope",
+    tag: "Endometriosis",
+    title: "Living with Endometriosis: Srinikhita Pole’s Story of Chronic Pain, Surgery, and Resilience",
     excerpt:
-      "Sujatha Rao shares her inspiring journey living with fibromyalgia, processing loss, and reclaiming agency through holistic well-being.",
+      "Srinikhita Pole reflects on living with severe endometriosis, navigating major surgeries, and discovering resilience amidst chronic pelvic pain.",
     readTime: "6 min",
-    author: "Sujatha Rao",
-    href: "/medium/Sujatha%20Rao%20shares%20her%20inspiring%20journey%20with%20Fibromyalgia,%20finding%20hope%20amidst%20pain%20and%20loss,%20discovering%20the%20power%20of%20holistic%20wellness%20_%20Medium.pdf",
-    imgTint: "plum",
+    author: "Srinikhita Pole",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/living-with-endometriosis-srinikhita-poles-story-of-chronic-pain-surgery-and-resilience-e22486eeb5f7",
+    imgUrl:
+      "/medium/Living%20with%20Endometriosis-%20Srinikhita%20Pole%E2%80%99s%20Story%20of%20Chronic%20Pain,%20Surgery,%20and%20Resilience_image.webp",
   },
   {
     id: 2,
-    tag: "Empowerment",
-    title: "Zanna Barrett’s Journey: Chronic Pain to Empowerment",
+    tag: "Founder Note",
+    title: "Understanding the Unseen: A Neuropsychologist’s Personal Journey with Chronic Pain",
     excerpt:
-      "Zanna Barrett reflects on transforming chronic pain into community advocacy, self-definition, and collective strength.",
+      "A neuropsychologist shares his lived experience of chronic pain and invisible illness, and why he founded Blooming in Pain to build community.",
     readTime: "5 min",
-    author: "Zanna Barrett",
-    href: "/medium/Zanna%20Barrett%E2%80%99s%20Journey_%20Chronic%20Pain%20to%20Empowerment%20_%20Medium.pdf",
-    imgTint: "sand",
+    author: "Pratik Aggarwal",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/understanding-the-unseen-a-neuropsychologists-personal-journey-with-chronic-pain-262dbee5357f",
+    imgUrl:
+      "/medium/Understanding%20the%20Unseen-%20A%20Neuropsychologist%E2%80%99s%20Personal%20Journey%20with%20Chronic%20Pain_image.webp",
   },
   {
     id: 3,
-    tag: "ME / CFS",
-    title: "Beyond Diagnosis: ME/CFS & Invisible Challenges",
+    tag: "Chronic Illness",
+    title: "Living with Pain: Varshal’s Story of Strength and Stillness",
     excerpt:
-      "Navigating Myalgic Encephalomyelitis / Chronic Fatigue Syndrome — post-exertional malaise and the daily reality of un-legible symptoms.",
-    readTime: "7 min",
-    author: "Community Member",
-    href: "/medium/_Beyond%20Diagnosis_%20ME_CFS%20%26%20Invisible%20Challenges_%20_%20Medium.pdf",
-    imgTint: "plum",
+      "Varshal shares her journey after her body suddenly turned against her at a young age, finding inner quiet, strength, and acceptance.",
+    readTime: "5 min",
+    author: "Varshal",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/living-with-pain-varshals-story-of-strength-and-stillness-de0f29706db9",
+    imgUrl:
+      "/medium/She%20Was%20Active,%20Healthy,%20and%20Young-%20Then%20Her%20Body%20Turned%20Against%20Her_image.webp",
   },
   {
     id: 4,
-    tag: "Tracheostomy Care",
-    title: "Living With a Tracheostomy and Chronic Illness",
+    tag: "Pelvic Pain & Stigma",
+    title: "She Thought It Was Just Another Yeast Infection: Years of Misdiagnosis & Pelvic Pain",
     excerpt:
-      "A rare personal narrative on managing complex airway care alongside chronic systemic illness while navigating public spaces.",
-    readTime: "5 min",
-    author: "Community Member",
-    href: "/medium/Living%20With%20a%20Tracheostomy%20and%20Chronic%20Illness%20_%20Medium.pdf",
-    imgTint: "sand",
+      "Breaking silence around taboo pelvic pain and chronic infections that disrupt bodily autonomy, peace, and daily living.",
+    readTime: "6 min",
+    author: "Pratik Aggarwal",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/she-thought-it-was-just-another-yeast-infection-what-followed-was-years-of-misdiagnosis-pain-21ca8e569330",
+    imgUrl:
+      "/medium/She%20Thought%20It%20Was%20Just%20Another%20Yeast%20Infection,%20But%20It%20Stole%20Her%20Peace%20and%20Power_image.webp",
   },
   {
     id: 5,
-    tag: "Endometriosis",
-    title: "Endometriosis and Chronic Pain: Navigating Life & Diagnosis",
+    tag: "Patient Advocacy",
+    title: "Kevin James’ Unyielding Fight: Surviving Iatrogenic Injuries & Misdiagnoses",
     excerpt:
-      "Exploring severe chronic pelvic pain, surgical delays, and finding validation when symptoms are dismissed by medical systems.",
-    readTime: "6 min",
-    author: "Community Member",
-    href: "/medium/Endometriosis%20and%20Chronic%20Pain%20Story%20_%20Medium.pdf",
-    imgTint: "plum",
+      "Navigating complex medical trauma, iatrogenic harm, and the emotional journey from systemic medical disbelief to fierce self-advocacy.",
+    readTime: "7 min",
+    author: "Kevin James",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/kevin-james-unyielding-fight-surviving-iatrogenic-injuries-misdiagnoses-and-the-emotional-bb4d0579d29f",
+    imgUrl:
+      "/medium/Kevin%20James%E2%80%99%20Unyielding%20Fight-%20Surviving%20Iatrogenic%20Injuries,%20Misdiagnoses,%20and%20the%20Emotional%20Journey%20to%20Self-Advocacy_image.webp",
   },
   {
     id: 6,
-    tag: "Long COVID & Fibro",
-    title: "Overcoming Fibromyalgia & Long-COVID: A Journey of Persistence",
+    tag: "Caregiving & Allyship",
+    title: "Shabnam Rakhiba’s Guide to Love and Care: Standing by Someone with Chronic Pain",
     excerpt:
-      "Exploring the compounding realities of post-viral Long COVID and chronic fibromyalgia, and finding community solidarity in collective healing.",
-    readTime: "6 min",
-    author: "Community Member",
-    href: "/medium/Overcoming%20Fibromyalgia%20%26%20Long-COVID_%20Journey%20_%20Medium.pdf",
-    imgTint: "sand",
+      "An insightful guide for partners, family, and allies on providing meaningful care, emotional grounding, and active support for loved ones with chronic pain.",
+    readTime: "5 min",
+    author: "Shabnam Rakhiba",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/shabnam-rakhibas-guide-to-love-and-care-standing-by-someone-with-chronic-pain-b687cd63fc28",
+    imgUrl:
+      "/medium/Shabnam%20Rakhiba%E2%80%99s%20Guide%20to%20Love%20and%20Care-%20Standing%20by%20Someone%20with%20Chronic%20Pain_image.webp",
   },
   {
     id: 7,
-    tag: "Pelvic Pain & Stigma",
-    title: "She Thought It Was Just Another Infection: Reclaiming Peace & Power",
+    tag: "Global Advocacy",
+    title: "Rising from the Abyss: Virginia McIntyre’s Journey to International Advocacy",
     excerpt:
-      "Breaking silence around taboo pelvic pain and chronic infections that disrupt bodily autonomy, peace, and daily living.",
-    readTime: "5 min",
-    author: "Community Contributor",
-    href: "/medium/She%20Thought%20It%20Was%20Just%20Another%20Yeast%20Infection,%20But%20It%20Stole%20Her%20Peace%20and%20Power%20_%20by%20Pratik%20Aggarwal%20_%20Medium.html",
-    imgTint: "plum",
+      "From chronic pain patient to global patient advocate, Virginia McIntyre shares how processing deep illness transformed her into a champion for disability rights.",
+    readTime: "6 min",
+    author: "Virginia McIntyre",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/rising-from-the-abyss-virginia-mcintyres-journey-from-chronic-pain-patient-to-international-1fefa2664bf1",
+    imgUrl:
+      "/medium/Rising%20from%20the%20Abyss-%20Virginia%20McIntyre%E2%80%99s%20Journey%20from%20Chronic%20Pain%20Patient%20to%20International%20Advocate_image.webp",
   },
   {
     id: 8,
-    tag: "Neuroplastic Pain",
-    title: "Why Pain Persists Even When Tests Are Normal",
+    tag: "Resilience & Art",
+    title: "The Last Dance: Abitha P Sunil Rises Through Pain",
     excerpt:
-      "Understanding nervous system sensitization, medical normalcy, and validating chronic symptoms that don't show up on conventional scans.",
+      "Abitha P Sunil reflects on dance, movement, and bodily expression while navigating the unyielding onset of chronic pain.",
     readTime: "5 min",
-    author: "Community Contributor",
-    href: "/medium/Why%20Pain%20Persists%20Even%20When%20Tests%20Are%20Normal%20_%20Medium.pdf",
-    imgTint: "sand",
+    author: "Abitha P Sunil",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/the-last-dance-abitha-p-sunil-rises-through-pain-27ca52c584a2",
+    imgUrl:
+      "/medium/The%20Last%20Dance-%20Abitha%20P%20Sunil%20Rises%20Through%20Pain_image.webp",
   },
   {
     id: 9,
-    tag: "Founder Note",
-    title: "Understanding the Unseen: A Neuropsychologist’s Journey",
+    tag: "Lived Experience",
+    title: "I Am Changed: Navigating Life, Loss, and Identity with Chronic Illness",
     excerpt:
-      "A neuropsychologist shares his lived experience of chronic pain and invisible illness, and why he founded Blooming in Pain to build community.",
+      "A reflective personal essay on grief, body identity, and letting go of who you were to embrace who you are today.",
     readTime: "4 min",
-    author: "Pratik Aggarwal",
-    href: "/medium/Living%20with%20Chronic%20Pain_%20A%20Psychologist%E2%80%99s%20Story%20_%20Medium.html",
-    imgTint: "plum",
+    author: "Community Contributor",
+    mediumUrl:
+      "https://medium.com/@BloomingInPain/i-am-changed-ffe9ecd433be",
+    imgUrl:
+      "/medium/I%20am%20changed_image.webp",
   },
 ];
-
-const cardGradient = {
-  sand: "linear-gradient(145deg, #EDE9EF 0%, #D8D0DC 100%)",
-  plum: "linear-gradient(145deg, #EAE2F0 0%, #D4C6E4 100%)",
-};
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -228,21 +241,13 @@ export default function BloomingInPain() {
 
           <div className="space-y-5 text-lg text-foreground leading-relaxed">
             <p>
-              Blooming in Pain is a storytelling platform for people who live
-              with disabilities the world can't see — fibromyalgia, chronic
-              fatigue, lupus, anxiety disorders, endometriosis, and the hundreds
-              of other conditions that exist in the space between what bodies
-              hold and what medicine is prepared to name.
+              Blooming in Pain is a <span data-key-info>storytelling platform for people who live with disabilities the world can't see</span> — fibromyalgia, chronic fatigue, lupus, anxiety disorders, endometriosis, and the hundreds of other conditions that exist in the space between what bodies hold and what medicine is prepared to name.
             </p>
             <p>
-              This isn't a resource hub. It isn't a support group. It's a place
-              where people write about their lives honestly — the hard parts and
-              the full parts — and where they don't have to explain themselves
-              before they begin.
+              This isn't a resource hub. It isn't a support group. It's a place where <span data-key-info>people write about their lives honestly</span> — the hard parts and the full parts — and where they don't have to explain themselves before they begin.
             </p>
             <p>
-              We started this because we couldn't find it. You're welcome to
-              stay.
+              We started this because we couldn't find it. You're welcome to stay.
             </p>
           </div>
         </div>
@@ -251,13 +256,13 @@ export default function BloomingInPain() {
       {/* ── Pull-quote ────────────────────────────────────────────────── */}
       <div className="px-6 py-16 border-b border-border">
         <div className="max-w-[65ch] mx-auto">
-          <blockquote>
+          <blockquote className="relative">
             <p
               className="text-2xl md:text-3xl text-foreground italic leading-relaxed"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
-              "A space to be believed — not explained, not inspired, not
-              compared to someone who has it worse. Just heard."
+              "<span data-key-info>A space to be believed</span> — not explained, not inspired, not
+              compared to someone who has it worse. <span data-key-info>Just heard.</span>"
             </p>
             <footer className="mt-5 text-sm text-muted-foreground not-italic">
               — Pratik Aggarwal, founder
@@ -266,11 +271,11 @@ export default function BloomingInPain() {
         </div>
       </div>
 
-      {/* ── Story grid ────────────────────────────────────────────────── */}
+      {/* ── Story Carousel ────────────────────────────────────────────────── */}
       <section aria-labelledby="stories-heading" className="px-6 py-16 md:py-20">
         <div className="max-w-5xl mx-auto">
 
-          <div className="flex items-end justify-between gap-6 mb-10 flex-wrap">
+          <div className="flex items-end justify-between gap-6 mb-6 flex-wrap">
             <div>
               <p
                 className="text-xs font-semibold uppercase tracking-widest mb-3"
@@ -283,7 +288,7 @@ export default function BloomingInPain() {
                 className="text-3xl md:text-4xl text-foreground"
                 style={{ fontFamily: "'Fraunces', Georgia, serif" }}
               >
-                Recent from the platform
+                Featured from the platform
               </h2>
             </div>
             <a
@@ -298,66 +303,7 @@ export default function BloomingInPain() {
             </a>
           </div>
 
-          <ul
-            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 list-none m-0 p-0"
-            role="list"
-          >
-            {stories.map((story) => (
-              <li key={story.id} className="flex">
-                <Card className="flex flex-col w-full bg-card border-border shadow-none hover:shadow-sm transition-shadow">
-
-                  {/* Card image */}
-                  <div
-                    className="relative w-full rounded-t-lg overflow-hidden flex-none"
-                    style={{ aspectRatio: "16/9" }}
-                    role="img"
-                    aria-label={`Illustration for: ${story.title}`}
-                  >
-                    <div
-                      className="absolute inset-0"
-                      style={{ background: cardGradient[story.imgTint as keyof typeof cardGradient] }}
-                      aria-hidden="true"
-                    />
-                    {/* Tag overlaid on image */}
-                    <span
-                      className="absolute bottom-3 left-4 text-xs font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full"
-                      style={{ backgroundColor: "rgba(255,255,255,0.85)", color: "var(--plum)" }}
-                    >
-                      {story.tag}
-                    </span>
-                  </div>
-
-                  <CardContent className="flex flex-col flex-1 p-5">
-                    <h3
-                      className="text-lg text-foreground leading-snug mb-2.5"
-                      style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-                    >
-                      {story.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed flex-1 mb-5">
-                      {story.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-muted-foreground">
-                        {story.author} · {story.readTime}
-                      </span>
-                      <a
-                        href={story.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-                        style={{ color: "var(--plum)" }}
-                        aria-label={`Read "${story.title}" on Medium (opens in new tab)`}
-                      >
-                        Read →
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </div>
-                  </CardContent>
-                </Card>
-              </li>
-            ))}
-          </ul>
+          <StoryCarousel stories={stories} />
 
         </div>
       </section>
@@ -432,11 +378,11 @@ export default function BloomingInPain() {
           </h2>
           <p className="text-lg text-foreground leading-relaxed mb-4">
             We're not looking for polished essays or resolved conclusions. We're
-            looking for honest accounts of what your life actually looks like —
+            looking for <span data-key-info>honest accounts of what your life actually looks like</span> —
             how you manage, how you don't, what helps, and what doesn't.
           </p>
           <p className="text-base text-muted-foreground leading-relaxed mb-10">
-            You don't need a diagnosis to contribute. You need to have lived it.
+            <span data-key-info>You don't need a diagnosis to contribute.</span> You need to have lived it.
             We'll work with you from there.
           </p>
           <Link
