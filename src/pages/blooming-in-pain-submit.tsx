@@ -83,7 +83,7 @@ export default function BloomingInPainSubmit() {
                 })
               }
             >
-              Open Form in Google Forms →
+              Share your story →
               <span className="sr-only">(opens in new tab)</span>
             </a>
             <Link

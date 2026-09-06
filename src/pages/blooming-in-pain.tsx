@@ -385,25 +385,17 @@ export default function BloomingInPain() {
             <span data-key-info>You don't need a diagnosis to contribute.</span> You need to have lived it.
             We'll work with you from there.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-3.5 rounded-md font-semibold text-base text-white hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: "var(--plum)" }}
-              onClick={() => track("outbound_click", { destination: "google_form", location: "bip_share_section" })}
-            >
-              Share your story (Google Form) →
-              <span className="sr-only">(opens in new tab)</span>
-            </a>
-            <Link
-              to="/blooming-in-pain/submit"
-              className="inline-flex items-center px-6 py-3.5 rounded-md font-semibold text-base border border-border text-foreground hover:bg-muted transition-colors"
-            >
-              View Embedded Form
-            </Link>
-          </div>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-3.5 rounded-md font-semibold text-base text-white hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: "var(--plum)" }}
+            onClick={() => track("outbound_click", { destination: "google_form", location: "bip_share_section" })}
+          >
+            Share your story →
+            <span className="sr-only">(opens in new tab)</span>
+          </a>
           <p className="mt-5 text-sm text-muted-foreground">
             Stories are reviewed before publication. We'll be in touch within
             two weeks.
