@@ -5,7 +5,6 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
 import { StoryCarousel, Story } from "@/components/story-carousel";
-import { SocialLinks } from "@/components/social-links";
 
 // ── Data ───────────────────────────────────────────────────────────
 const stories: Story[] = [
@@ -241,15 +240,12 @@ export default function BloomingInPain() {
         style={{ backgroundColor: "var(--ground)" }}
       >
         <div className="max-w-[70ch] mx-auto">
-          <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
-            <p
-              className="text-xs font-semibold uppercase tracking-widest"
-              style={{ color: "var(--bloom)" }}
-            >
-              Initiative by Pratik Aggarwal
-            </p>
-            <SocialLinks />
-          </div>
+          <p
+            className="text-xs font-semibold uppercase tracking-widest mb-5"
+            style={{ color: "var(--bloom)" }}
+          >
+            Initiative by Pratik Aggarwal
+          </p>
 
           <h1
             className="text-5xl md:text-7xl text-foreground mb-8 tracking-tight"
