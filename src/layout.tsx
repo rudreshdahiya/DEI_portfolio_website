@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router";
 import { track } from "@vercel/analytics";
 import { AccessibilityWidget } from "@/components/accessibility-widget";
 import { ReadingRuler } from "@/components/reading-ruler";
+import { SocialLinks } from "@/components/social-links";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -52,10 +53,10 @@ export function Layout() {
             Pratik Aggarwal
           </Link>
 
-          {/* Desktop navigation & accessibility control */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop navigation & accessibility control & social icons */}
+          <div className="hidden md:flex items-center gap-6">
             <ul
-              className="flex items-center gap-8 list-none m-0 p-0"
+              className="flex items-center gap-6 list-none m-0 p-0"
               role="list"
             >
               {navLinks.map((link) => (
@@ -69,6 +70,12 @@ export function Layout() {
                 </li>
               ))}
             </ul>
+
+            <div className="h-4 w-px bg-border" aria-hidden="true" />
+
+            <SocialLinks />
+
+            <div className="h-4 w-px bg-border" aria-hidden="true" />
 
             {/* Inclusivity / Reading Modes Widget */}
             <AccessibilityWidget />

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Link } from "react-router";
+import { ChevronDown } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
 import { StoryCarousel, Story } from "@/components/story-carousel";
+import { SocialLinks } from "@/components/social-links";
 
 // ── Data ───────────────────────────────────────────────────────────
 const stories: Story[] = [
@@ -125,9 +128,30 @@ const stories: Story[] = [
   },
 ];
 
+const faqItems = [
+  {
+    q: "What is an invisible disability?",
+    a: "An invisible disability is a physical, mental, or neurological condition that is not immediately apparent to others — fibromyalgia, chronic fatigue, lupus, anxiety disorders, endometriosis, and hundreds more. People with invisible disabilities often face disbelief and the burden of having to prove their condition, because they 'don't look sick.' Blooming in Pain exists to tell the truth about what these conditions feel like from the inside.",
+  },
+  {
+    q: "Can I contribute without a formal diagnosis?",
+    a: "Yes. Getting a diagnosis for an invisible condition is itself often a long, difficult, gatekept process. You don't need a name for what you have. If you have lived experience of an invisible or chronic condition — whether named or not — your story belongs here. We'll work with you from there.",
+  },
+  {
+    q: "What kinds of conditions are covered here?",
+    a: "The full range: fibromyalgia, chronic fatigue syndrome (ME/CFS), lupus, endometriosis, anxiety, depression, PTSD, Crohn's, IBS, multiple sclerosis, POTS, PCOS, chronic migraine, and more. We also welcome stories about navigating healthcare, employment, and relationships with an invisible condition — not just the condition itself.",
+  },
+  {
+    q: "How is this different from a support group?",
+    a: "Blooming in Pain is a storytelling platform, not a support group. A support group is structured around helping members cope. This platform is structured around bearing witness — creating a public record of what life with invisible disability actually looks like. It's closer to literary non-fiction than peer support.",
+  },
+];
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function BloomingInPain() {
+  const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
+
   return (
     <div>
       <PageMeta
@@ -217,12 +241,15 @@ export default function BloomingInPain() {
         style={{ backgroundColor: "var(--ground)" }}
       >
         <div className="max-w-[70ch] mx-auto">
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-5"
-            style={{ color: "var(--bloom)" }}
-          >
-            Initiative by Pratik Aggarwal
-          </p>
+          <div className="flex items-center justify-between gap-4 mb-5 flex-wrap">
+            <p
+              className="text-xs font-semibold uppercase tracking-widest"
+              style={{ color: "var(--bloom)" }}
+            >
+              Initiative by Pratik Aggarwal
+            </p>
+            <SocialLinks />
+          </div>
 
           <h1
             className="text-5xl md:text-7xl text-foreground mb-8 tracking-tight"
@@ -308,7 +335,7 @@ export default function BloomingInPain() {
         </div>
       </section>
 
-      {/* ── FAQ ───────────────────────────────────────────────────────── */}
+      {/* ── FAQ (Hover-expandable) ───────────────────────────────────────── */}
       <section
         aria-labelledby="bip-faq-heading"
         className="px-6 py-20 border-t border-border"
@@ -321,38 +348,41 @@ export default function BloomingInPain() {
           >
             Questions about the platform
           </h2>
-          <dl className="divide-y divide-border">
-            {[
-              {
-                q: "What is an invisible disability?",
-                a: "An invisible disability is a physical, mental, or neurological condition that is not immediately apparent to others — fibromyalgia, chronic fatigue, lupus, anxiety disorders, endometriosis, and hundreds more. People with invisible disabilities often face disbelief and the burden of having to prove their condition, because they 'don't look sick.' Blooming in Pain exists to tell the truth about what these conditions feel like from the inside.",
-              },
-              {
-                q: "Can I contribute without a formal diagnosis?",
-                a: "Yes. Getting a diagnosis for an invisible condition is itself often a long, difficult, gatekept process. You don't need a name for what you have. If you have lived experience of an invisible or chronic condition — whether named or not — your story belongs here. We'll work with you from there.",
-              },
-              {
-                q: "What kinds of conditions are covered here?",
-                a: "The full range: fibromyalgia, chronic fatigue syndrome (ME/CFS), lupus, endometriosis, anxiety, depression, PTSD, Crohn's, IBS, multiple sclerosis, POTS, PCOS, chronic migraine, and more. We also welcome stories about navigating healthcare, employment, and relationships with an invisible condition — not just the condition itself.",
-              },
-              {
-                q: "How is this different from a support group?",
-                a: "Blooming in Pain is a storytelling platform, not a support group. A support group is structured around helping members cope. This platform is structured around bearing witness — creating a public record of what life with invisible disability actually looks like. It's closer to literary non-fiction than peer support.",
-              },
-            ].map(({ q, a }) => (
-              <div key={q} className="py-8">
-                <dt
-                  className="text-lg font-semibold text-foreground mb-3 leading-snug"
-                  style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+          <div className="divide-y divide-border border-y border-border">
+            {faqItems.map((item, index) => {
+              const isOpen = activeFaqIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="py-6 transition-colors group cursor-pointer"
+                  onMouseEnter={() => setActiveFaqIndex(index)}
+                  onMouseLeave={() => setActiveFaqIndex(null)}
+                  onClick={() => setActiveFaqIndex(isOpen ? null : index)}
                 >
-                  {q}
-                </dt>
-                <dd className="text-base text-muted-foreground leading-relaxed max-w-[70ch]">
-                  {a}
-                </dd>
-              </div>
-            ))}
-          </dl>
+                  <div className="flex items-center justify-between gap-4">
+                    <h3
+                      className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors leading-snug"
+                      style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+                    >
+                      {item.q}
+                    </h3>
+                    <ChevronDown
+                      className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                        isOpen ? "rotate-180 text-primary" : "group-hover:translate-y-0.5"
+                      }`}
+                    />
+                  </div>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 text-base text-muted-foreground leading-relaxed max-w-[70ch] ${
+                      isOpen ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0 mt-0"
+                    }`}
+                  >
+                    <p>{item.a}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -400,109 +430,6 @@ export default function BloomingInPain() {
             Stories are reviewed before publication. We'll be in touch within
             two weeks.
           </p>
-        </div>
-      </section>
-
-      {/* ── Follow ────────────────────────────────────────────────────── */}
-      <section
-        aria-labelledby="follow-heading"
-        className="px-6 py-16 md:py-20 border-t border-border"
-      >
-        <div className="max-w-5xl mx-auto">
-          <h2
-            id="follow-heading"
-            className="text-3xl md:text-4xl text-foreground mb-10"
-            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-          >
-            Stay connected
-          </h2>
-
-          <div className="grid sm:grid-cols-2 gap-5">
-
-            {/* Instagram */}
-            <a
-              href="https://instagram.com/blooming.in.pain"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-8 md:p-10 rounded-2xl border border-border bg-card hover:border-secondary/50 transition-colors"
-              aria-label="Follow @blooming.in.pain on Instagram (opens in new tab)"
-            >
-              <p
-                className="text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ color: "var(--bloom)" }}
-              >
-                Instagram
-              </p>
-              <p
-                className="text-3xl text-foreground mb-3 group-hover:text-primary transition-colors"
-                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-              >
-                @blooming.in.pain
-              </p>
-              <p className="text-base text-muted-foreground mb-7 leading-relaxed">
-                Short posts, community moments, and the kind of things that
-                don't make it into an essay — but still need to be said.
-              </p>
-              <span
-                className="inline-flex items-center text-sm font-semibold underline underline-offset-4"
-                style={{ color: "var(--plum)" }}
-              >
-                Follow on Instagram →
-                <span className="sr-only">(opens in new tab)</span>
-              </span>
-            </a>
-
-            {/* Medium */}
-            <a
-              href="https://medium.com/@BloomingInPain"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-8 md:p-10 rounded-2xl border border-border bg-card hover:border-secondary/50 transition-colors"
-              aria-label="Read Blooming in Pain on Medium (opens in new tab)"
-              onClick={() => track("outbound_click", { destination: "medium", location: "follow_section" })}
-            >
-              <p
-                className="text-xs font-semibold uppercase tracking-widest mb-4"
-                style={{ color: "var(--bloom)" }}
-              >
-                Medium
-              </p>
-              <p
-                className="text-3xl text-foreground mb-3 group-hover:text-primary transition-colors"
-                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-              >
-                @BloomingInPain
-              </p>
-              <p className="text-base text-muted-foreground mb-7 leading-relaxed">
-                Long-form personal essays and guest pieces — stories told in
-                full, without the word count running out.
-              </p>
-              <span
-                className="inline-flex items-center text-sm font-semibold underline underline-offset-4"
-                style={{ color: "var(--plum)" }}
-              >
-                Read on Medium →
-                <span className="sr-only">(opens in new tab)</span>
-              </span>
-            </a>
-
-          </div>
-
-          {/* Newsletter note */}
-          <div className="mt-10 pt-10 border-t border-border max-w-[60ch]">
-            <p className="text-base text-muted-foreground leading-relaxed">
-              We send a short newsletter a couple of times a month — new
-              stories, occasional resources, nothing more. No pitch, no
-              algorithm.{" "}
-              <Link
-                to="/contact"
-                className="font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
-                style={{ color: "var(--plum)" }}
-              >
-                Subscribe here.
-              </Link>
-            </p>
-          </div>
         </div>
       </section>
 
