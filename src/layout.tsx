@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, Outlet } from "react-router";
 import { track } from "@vercel/analytics";
+import { AccessibilityWidget } from "@/components/accessibility-widget";
+import { ReadingRuler } from "@/components/reading-ruler";
 
 const navLinks = [
   { href: "/about", label: "About" },
@@ -50,57 +52,65 @@ export function Layout() {
             Pratik Aggarwal
           </Link>
 
-          {/* Desktop links */}
-          <ul
-            className="hidden md:flex items-center gap-8 list-none m-0 p-0"
-            role="list"
-          >
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  to={link.href}
-                  className="text-sm text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          {/* Mobile hamburger */}
-          <button
-            ref={hamburgerRef}
-            aria-label={mobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={mobileNavOpen}
-            aria-controls="mobile-nav"
-            className="md:hidden p-2 -mr-2 text-foreground hover:text-primary transition-colors"
-            onClick={() => setMobileNavOpen((prev) => !prev)}
-          >
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* Desktop navigation & accessibility control */}
+          <div className="hidden md:flex items-center gap-8">
+            <ul
+              className="flex items-center gap-8 list-none m-0 p-0"
+              role="list"
             >
-              {mobileNavOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="8" x2="21" y2="8" />
-                  <line x1="3" y1="16" x2="21" y2="16" />
-                </>
-              )}
-            </svg>
-          </button>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="text-sm text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Inclusivity / Reading Modes Widget */}
+            <AccessibilityWidget />
+          </div>
+
+          {/* Mobile accessibility widget & hamburger */}
+          <div className="flex md:hidden items-center gap-3">
+            <AccessibilityWidget />
+            <button
+              ref={hamburgerRef}
+              aria-label={mobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-nav"
+              className="p-2 -mr-2 text-foreground hover:text-primary transition-colors"
+              onClick={() => setMobileNavOpen((prev) => !prev)}
+            >
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {mobileNavOpen ? (
+                  <>
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </>
+                ) : (
+                  <>
+                    <line x1="3" y1="8" x2="21" y2="8" />
+                    <line x1="3" y1="16" x2="21" y2="16" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
         </nav>
 
         {/* Mobile menu */}
@@ -128,6 +138,9 @@ export function Layout() {
           </div>
         )}
       </header>
+
+      {/* ── Reading Ruler overlay (visible only when Focus Reading mode is active) */}
+      <ReadingRuler />
 
       {/* ── Main content ────────────────────────────────────────────────── */}
       <main id="main-content" className="flex-1 pb-20 md:pb-0" tabIndex={-1}>

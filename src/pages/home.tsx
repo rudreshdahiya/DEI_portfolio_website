@@ -952,10 +952,10 @@ export default function Home() {
 
           <div className="space-y-6 text-base md:text-lg leading-relaxed" style={{ color: "var(--ink)" }}>
             <p>
-              Pratik works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together lived experience, community engagement, research, advocacy, facilitation, and storytelling to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
+              Pratik works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together <span data-key-info>lived experience, community engagement, research, advocacy, facilitation, and storytelling</span> to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
             </p>
             <p>
-              He works with organisations, institutions, teams, and individuals through consultancy, disability and accessibility training, community-based training and engagement, research, facilitation, and strategic support. Whether you are looking to make a programme more inclusive, build the capacity of your team, meaningfully engage with the disability community, review an existing approach, or simply understand where you may be getting it wrong, Pratik brings both professional expertise and lived understanding to the conversation.
+              He works with organisations, institutions, teams, and individuals through consultancy, disability and accessibility training, community-based training and engagement, research, facilitation, and strategic support. Whether you are looking to make a programme more inclusive, build the capacity of your team, meaningfully engage with the disability community, review an existing approach, or simply understand where you may be getting it wrong, <span data-key-info>Pratik brings both professional expertise and lived understanding to the conversation</span>.
             </p>
           </div>
         </div>
@@ -1030,7 +1030,7 @@ export default function Home() {
                 Disability, Poverty &amp; Inclusive Education (Ep. 32)
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Pratik Aggarwal (Director at ASTHA) discusses the systemic intersection of disability rights, urban poverty in Delhi slums, and inclusive education.
+                <span data-key-info>Pratik Aggarwal (Director at ASTHA) discusses the systemic intersection of disability rights, urban poverty in Delhi slums, and inclusive education.</span>
               </p>
               <div className="pt-2">
                 <a
@@ -1251,14 +1251,14 @@ export default function Home() {
               style={{ fontSize: "1.0625rem", color: "var(--ink)", lineHeight: 1.7 }}
             >
               <p>
-                Pratik has fibromyalgia — chronic widespread pain, fatigue,
-                and cognitive difficulty that leaves no visible trace. No
+                <span data-key-info>Pratik has fibromyalgia — chronic widespread pain, fatigue,
+                and cognitive difficulty that leaves no visible trace.</span> No
                 definitive test, no clear origin, and a very high likelihood
                 of disbelief.
               </p>
               <p>
-                It's not separate from his work. It's what makes it personal,
-                grounded, and harder to dismiss.
+                <span data-key-info>It's not separate from his work. It's what makes it personal,
+                grounded, and harder to dismiss.</span>
               </p>
             </div>
 

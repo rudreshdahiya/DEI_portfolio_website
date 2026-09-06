@@ -259,10 +259,10 @@ export default function About() {
           <section aria-label="Professional practice and skills in disability inclusion">
             <div className="space-y-6 text-lg text-foreground leading-relaxed">
               <p>
-                Pratik Aggarwal works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together lived experience, community engagement, research, advocacy, facilitation, and storytelling to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
+                Pratik Aggarwal works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together <span data-key-info>lived experience, community engagement, research, advocacy, facilitation, and storytelling</span> to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
               </p>
               <p>
-                For over nine years, he has led field-based programmes, policy reviews, and institutional training. As Director of ASTHA — a Delhi-based organisation working with children with disabilities in urban informal settlements — he works face-to-face with disability in its most unprotected forms: in homes without reliable sanitation, in families navigating multi-layered crises, and in systems unprepared to provide accessible care.
+                For over nine years, he has led field-based programmes, policy reviews, and institutional training. <span data-key-info>As Director of ASTHA — a Delhi-based organisation working with children with disabilities in urban informal settlements</span> — he works face-to-face with disability in its most unprotected forms: in homes without reliable sanitation, in families navigating multi-layered crises, and in systems unprepared to provide accessible care.
               </p>
               <p>
                 His work spans consultancy, corporate DEI and disability training, NGO capacity building, government advisory, and spatial accessibility. Notably, he co-created <span className="font-semibold">Umang Vatika</span> at Safdarjung Hospital, North India's first government sensory garden designed for neurodivergent children, and led disability rights advocacy following emergency crisis events like the Delhi <em>Viklang Basti</em> fire.
@@ -288,13 +288,13 @@ export default function About() {
                 Lived Authority &amp; Invisible Disability
               </h2>
               <p>
-                Running alongside his professional practice is his own lived reality: Pratik has fibromyalgia, a chronic condition characterised by widespread pain, fatigue, and cognitive difficulty that leaves no visible trace on medical scans or routine charts.
+                Running alongside his professional practice is his own lived reality: <span data-key-info>Pratik has fibromyalgia, a chronic condition characterised by widespread pain, fatigue, and cognitive difficulty that leaves no visible trace</span> on medical scans or routine charts.
               </p>
               <p>
                 What he learned through years of diagnostic uncertainty and medical disbelief was the grinding exhaustion of proof — the constant requirement to justify your body's reality to doctors, employers, and social institutions. Pain, he realised, is socially acceptable primarily when it is legible. When it isn't, society defaults to doubt.
               </p>
               <p>
-                Rather than treating his condition as a separate private struggle, Pratik turned that lived reality into the cornerstone of his work. It provides an unromanticised understanding of what it costs to be disabled in an inaccessible world, and a deep impatience with inclusion efforts that stay comfortable.
+                Rather than treating his condition as a separate private struggle, <span data-key-info>Pratik turned that lived reality into the cornerstone of his work</span>. It provides an unromanticised understanding of what it costs to be disabled in an inaccessible world, and a deep impatience with inclusion efforts that stay comfortable.
               </p>
             </div>
 
@@ -318,7 +318,7 @@ export default function About() {
                 Blooming in Pain
               </h2>
               <p>
-                In 2021, Pratik founded <em>Blooming in Pain</em>, a storytelling platform dedicated to people living with invisible chronic illnesses and disabilities — fibromyalgia, endometriosis, lupus, chronic fatigue, and psychosocial conditions.
+                In 2021, <span data-key-info>Pratik founded <em>Blooming in Pain</em>, a storytelling platform dedicated to people living with invisible chronic illnesses and disabilities</span> — fibromyalgia, endometriosis, lupus, chronic fatigue, and psychosocial conditions.
               </p>
               <p>
                 The platform was born out of a simple gap: the absence of honest, un-sanitised stories about living with persistent illness without falling into dramatic overcoming tropes or tragedy arcs. Today, Blooming in Pain serves as a vital community space where lived accounts are documented, shared, and believed.
