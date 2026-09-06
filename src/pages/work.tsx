@@ -20,7 +20,10 @@ interface Engagement {
   year: string;
   role: Role;
   description: string;
-  featured?: boolean; // shows a photo placeholder above the entry
+  featured?: boolean; // shows a photo above the entry
+  photoUrl?: string;
+  photoAlt?: string;
+  url?: string;
 }
 
 interface Group {
@@ -55,6 +58,8 @@ const groups: Group[] = [
         description:
           "Guest lecture series for postgraduate psychology students on invisible disability, chronic illness, and the burden of proof in medical and workplace contexts.",
         featured: true,
+        photoUrl: "/images/work-engagements_1.jpeg",
+        photoAlt: "Pratik Aggarwal speaking at Delhi University",
       },
       {
         event: "TISS Mumbai",
@@ -70,6 +75,9 @@ const groups: Group[] = [
         role: "Trainer",
         description:
           "Full-day corporate sensitization workshop on disability language, inclusive communication, and accessible programme design for foundation staff.",
+        featured: true,
+        photoUrl: "/images/work-engagements_4.jpeg",
+        photoAlt: "Pratik Aggarwal facilitating training session for HCL Foundation",
       },
       {
         event: "Tech Mahindra Foundation — Training of Trainers",
@@ -92,8 +100,10 @@ const groups: Group[] = [
         year: "2024",
         role: "Keynote",
         description:
-          "Keynote address at India's largest disability arts and culture festival on invisible disability, identity, and what genuine inclusion requires from arts and public spaces.",
+          "Keynote address and curated art exhibition by people living with pain at India's largest disability arts and culture festival — highlighting invisible disability, lived authority, and accessible creative expression.",
         featured: true,
+        photoUrl: "/images/work-engagements_2.jpeg",
+        photoAlt: "Pratik Aggarwal delivering keynote at Purple Fest Goa",
       },
       {
         event: "Delhi Master Plan 2041",
@@ -148,6 +158,8 @@ const groups: Group[] = [
         description:
           "Capacity-building workshop for district-level child rights officers in Bihar on disability-inclusive programming — from policy to frontline practice.",
         featured: true,
+        photoUrl: "/images/work-engagements_3.jpeg",
+        photoAlt: "Pratik Aggarwal leading workshop with UNICEF Bihar officers",
       },
       {
         event: "Kirori Mal College",
@@ -183,6 +195,76 @@ const groups: Group[] = [
       },
     ],
   },
+  {
+    id: "media-podcasts",
+    category: "Media Features & Podcasts",
+    title: "Podcasts, Ground Reports & Publications",
+    entries: [
+      {
+        event: "Disability, Poverty & Inclusive Education (Podcast Ep. 32)",
+        org: "YouTube Podcast",
+        year: "2024",
+        role: "Speaker",
+        description:
+          "In-depth podcast interview discussing frontline community work, disability rights, poverty, and inclusive education in India.",
+        url: "https://www.youtube.com/watch?v=eUSRzBr0FFc&t=1345s",
+      },
+      {
+        event: "Nothing About Us, Without Us: Disability Rights in the Classroom",
+        org: "Postcards Series #6",
+        year: "2024",
+        role: "Speaker",
+        description:
+          "Podcast episode on rights-based education, lived authority, and classroom inclusion.",
+        url: "https://youtu.be/onm9zJjB_PI?si=EcPvzmQ1VJkHIxrn",
+      },
+      {
+        event: "Safdarjung Hospital Sensory Garden ('Umang Vatika')",
+        org: "The Better India, Indian Express & DD News",
+        year: "2024",
+        role: "Advisory",
+        description:
+          "National media coverage on North India's first government sensory garden for neurodivergent children, created in collaboration with ASTHA.",
+        url: "https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102",
+      },
+      {
+        event: "Delhi 'Viklang Basti' Fire & Wheelchair Advocacy",
+        org: "The Print Ground Report",
+        year: "2024",
+        role: "Advisory",
+        description:
+          "Field reporting on emergency crisis response, disability rights advocacy, and wheelchair access in informal settlements.",
+        url: "https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/",
+      },
+      {
+        event: "India's Persons With Disabilities Left Out As NFHS-6 Omits Data",
+        org: "Outlook India",
+        year: "2024",
+        role: "Advisory",
+        description:
+          "Critical commentary on systemic data omission of persons with disabilities in national health surveys.",
+        url: "https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data",
+      },
+      {
+        event: "Disability Care Lags in Delhi Slums & School Violations",
+        org: "Times of India & Citizen Matters",
+        year: "2023",
+        role: "Advisory",
+        description:
+          "Expert insights on informal settlement care deficits and urban school non-compliance with the Rights of Persons with Disabilities Act.",
+        url: "https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms",
+      },
+      {
+        event: "Thirty Years of Working with Communities",
+        org: "Samuhik Pahal",
+        year: "2023",
+        role: "Lecturer",
+        description:
+          "Published reflections on 30 years of rights-based community engagement and organizational development.",
+        url: "https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/",
+      },
+    ],
+  },
 ];
 
 // ── Role pill ─────────────────────────────────────────────────────────────────
@@ -199,31 +281,34 @@ function RolePill({ role }: { role: Role }) {
   );
 }
 
-// ── Photo placeholder ─────────────────────────────────────────────────────────
+// ── Photo component ────────────────────────────────────────────────────────────
 
-function EventPhoto() {
+function EventPhoto({ src, alt }: { src?: string; alt?: string }) {
   return (
     <figure className="mb-0">
       <div
-        className="relative w-full rounded-t-xl overflow-hidden"
-        style={{ aspectRatio: "16 / 6" }}
-        aria-hidden="true"
+        className="relative w-full rounded-t-xl overflow-hidden bg-muted"
+        style={{ aspectRatio: "16 / 7" }}
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(140deg, #EDE9EF 0%, #D8D0DC 50%, #C8BDD2 100%)",
-          }}
-          aria-hidden="true"
-        />
-        <span
-          className="absolute inset-0 flex items-center justify-center text-sm italic"
-          style={{ color: "rgba(30,26,36,0.2)" }}
-          aria-hidden="true"
-        >
-          [Photo placeholder]
-        </span>
+        {src ? (
+          <img
+            src={src}
+            alt={alt || "Event photograph"}
+            className="w-full h-full object-cover object-center"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center text-sm italic"
+            style={{
+              background:
+                "linear-gradient(140deg, #EDE9EF 0%, #D8D0DC 50%, #C8BDD2 100%)",
+              color: "rgba(30,26,36,0.2)",
+            }}
+            aria-hidden="true"
+          >
+            [Photo placeholder]
+          </div>
+        )}
       </div>
     </figure>
   );
@@ -364,7 +449,7 @@ export default function Work() {
                     {/* Featured photo — sits flush above the entry row */}
                     {entry.featured && (
                       <div className={i > 0 ? "mt-8" : ""}>
-                        <EventPhoto />
+                        <EventPhoto src={entry.photoUrl} alt={entry.photoAlt} />
                       </div>
                     )}
 
@@ -403,6 +488,21 @@ export default function Work() {
                       <p className="text-base text-muted-foreground leading-relaxed max-w-[65ch]">
                         {entry.description}
                       </p>
+
+                      {/* Optional Link */}
+                      {entry.url && (
+                        <div className="mt-3">
+                          <a
+                            href={entry.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-xs font-semibold underline underline-offset-4"
+                            style={{ color: "var(--plum)" }}
+                          >
+                            View feature / watch video →
+                          </a>
+                        </div>
+                      )}
                     </div>
                   </li>
                 ))}

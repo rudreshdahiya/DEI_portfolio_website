@@ -123,6 +123,17 @@ Notes
 
 ---
 
+## Media & Asset Integration
+
+Status: Complete
+
+* [x] Integrated real engagement photos (`/images/work-engagements_2.jpeg`, `/images/work-engagements_3.jpeg`)
+* [x] Integrated About page portrait image (`/images/pratik-about-page.jpeg`)
+* [x] Added Media Features & Podcasts section (YouTube podcasts, Safdarjung Hospital sensory garden, Outlook India, Times of India, Samuhik Pahal)
+* [x] Wired 9 curated Blooming in Pain story PDFs/HTMLs in `/public/medium/`
+
+---
+
 ## Launch Checklist
 
 * [x] Contact page complete
@@ -132,8 +143,8 @@ Notes
 * [x] Accessibility review complete (code audit — screen reader test pending)
 * [x] Story submission page (/blooming-in-pain/submit)
 * [x] Wire Formspree endpoint on contact form + story submission form — copy `.env.example` to `.env.local` and fill in real form IDs before deploying
+* [x] Production build passes (`npm run build`)
 * [ ] Create OG image (1200×630px → public/og-image.jpg)
 * [ ] Confirm domain → update SITE_URL in page-meta.tsx + index.html
-* [ ] Production build passes (npm run build)
 * [ ] Deploy to Vercel
 * [ ] Final QA review

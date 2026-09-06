@@ -111,11 +111,13 @@ function PullQuote({
 // ── Reusable portrait placeholder ─────────────────────────────────────────────
 
 function Portrait({
+  src,
   alt,
   caption,
   aspectRatio = "16/7",
   size = "full",
 }: {
+  src?: string;
   alt: string;
   caption: string;
   aspectRatio?: string;
@@ -124,26 +126,29 @@ function Portrait({
   return (
     <figure className={`my-14 ${size === "contained" ? "max-w-[480px] mx-auto" : "-mx-4 md:-mx-12"}`}>
       <div
-        className="relative w-full rounded-xl overflow-hidden"
+        className="relative w-full rounded-xl overflow-hidden bg-muted"
         style={{ aspectRatio }}
-        role="img"
-        aria-label={alt}
       >
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(140deg, #EDE9EF 0%, #D8D0DC 55%, #C8BDD2 100%)",
-          }}
-          aria-hidden="true"
-        />
-        <span
-          className="absolute inset-0 flex items-center justify-center text-sm italic px-6 text-center"
-          style={{ color: "rgba(30,26,36,0.2)" }}
-          aria-hidden="true"
-        >
-          [{alt}]
-        </span>
+        {src ? (
+          <img
+            src={src}
+            alt={alt}
+            className="w-full h-full object-cover object-center"
+          />
+        ) : (
+          <div
+            className="absolute inset-0 flex items-center justify-center text-sm italic px-6 text-center"
+            style={{
+              background:
+                "linear-gradient(140deg, #EDE9EF 0%, #D8D0DC 55%, #C8BDD2 100%)",
+              color: "rgba(30,26,36,0.2)",
+            }}
+            aria-label={alt}
+            role="img"
+          >
+            [{alt}]
+          </div>
+        )}
       </div>
       <figcaption className="mt-3 text-sm text-muted-foreground text-center italic">
         {caption}
@@ -236,11 +241,10 @@ export default function About() {
             className="text-5xl md:text-6xl text-foreground mb-5 tracking-tight"
             style={{ fontFamily: "'Fraunces', Georgia, serif", lineHeight: 1.07 }}
           >
-            My story
+            Practice &amp; Story
           </h1>
           <p className="text-lg text-muted-foreground max-w-[52ch] leading-relaxed">
-            On living with fibromyalgia, the work it led me towards, and the
-            platform I built because I couldn't find the stories I needed.
+            Working at the intersection of disability rights, accessibility, community engagement, public policy, and storytelling to build practices beyond compliance.
           </p>
 
           <AskAI />
@@ -251,145 +255,76 @@ export default function About() {
       <div className="px-6 py-16">
         <div className="max-w-[70ch] mx-auto">
 
-          {/* ── 1. Lead: living with fibromyalgia ─────────────────────── */}
-          <section aria-label="Living with persistent pain">
+          {/* ── 1. Lead: Professional Practice & Skills ───────────────── */}
+          <section aria-label="Professional practice and skills in disability inclusion">
             <div className="space-y-6 text-lg text-foreground leading-relaxed">
               <p>
-                There are two kinds of medical appointments I've learned to
-                dread. The ones where the doctor looks at your chart, finds
-                nothing, and tells you to rest. And the ones where the doctor
-                looks at you — really looks — and you can see them calculating
-                whether you appear unwell enough to be taken seriously.
+                Pratik Aggarwal works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together lived experience, community engagement, research, advocacy, facilitation, and storytelling to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
               </p>
               <p>
-                I have fibromyalgia. It means I live with pain that has no
-                single clear origin, doesn't appear on most scans, and doesn't
-                follow the rules people expect pain to follow. On a difficult
-                day, getting out of bed is an act of negotiation between what I
-                need to do and what my body will allow. On a better day, I can
-                work, think clearly, and do most of what I love. From the
-                outside, both days look the same.
+                For over nine years, he has led field-based programmes, policy reviews, and institutional training. As Director of ASTHA — a Delhi-based organisation working with children with disabilities in urban informal settlements — he works face-to-face with disability in its most unprotected forms: in homes without reliable sanitation, in families navigating multi-layered crises, and in systems unprepared to provide accessible care.
               </p>
               <p>
-                What I wasn't prepared for, when the diagnosis eventually came,
-                was the exhaustion of proof. The way every new doctor, every HR
-                form, every sceptical colleague, every well-meaning family
-                member required a fresh round of justification. Pain, it turns
-                out, is socially acceptable primarily when it is legible — when
-                it can be photographed, graphed, categorised. Mine wasn't. And
-                that meant it often felt, in a very real and grinding sense,
-                like it wasn't permitted to exist.
-              </p>
-              <p>
-                There is a particular loneliness in invisible illness. It isn't
-                just the pain itself. It's the performance of wellness you learn
-                to maintain around it — at work, in relationships, in the
-                doctor's office — because to stop performing is to invite
-                doubt. And doubt, when you're already in pain, is its own
-                kind of damage.
+                His work spans consultancy, corporate DEI and disability training, NGO capacity building, government advisory, and spatial accessibility. Notably, he co-created <span className="font-semibold">Umang Vatika</span> at Safdarjung Hospital, North India's first government sensory garden designed for neurodivergent children, and led disability rights advocacy following emergency crisis events like the Delhi <em>Viklang Basti</em> fire.
               </p>
             </div>
 
             <PullQuote accent="teal">
-              "Pain is socially acceptable when it's legible. Mine wasn't —
-              which meant it often felt like it wasn't permitted to exist."
+              "Inclusion isn't a checklist slide or a policy clause. It is the unromanticised, daily commitment to building spaces that honour lived complexity."
             </PullQuote>
           </section>
 
           <Portrait
-            alt="Portrait photograph of Pratik Aggarwal"
-            caption="Pratik Aggarwal — disability inclusion expert, writer, and Director of ASTHA."
+            src="/images/work-engagements_1.jpeg"
+            alt="Pratik Aggarwal conducting disability inclusion workshop"
+            caption="Pratik Aggarwal — facilitating community-based disability training and capacity-building workshops."
             aspectRatio="16/9"
           />
 
-          {/* ── 2. The turn: from survival to advocacy ─────────────────── */}
-          <section aria-label="How lived experience became advocacy">
+          {/* ── 2. Lived Authority & Fibromyalgia Narrative ─────────────── */}
+          <section aria-label="Lived authority and personal origin story">
             <div className="space-y-6 text-lg text-foreground leading-relaxed">
+              <h2 className="text-2xl font-serif text-foreground mt-8 mb-4" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                Lived Authority &amp; Invisible Disability
+              </h2>
               <p>
-                At some point — and I couldn't tell you the exact date, because
-                it wasn't a moment so much as a slow accumulation — I stopped
-                trying to make my pain legible on other people's terms. I
-                stopped calibrating my self-description to what a listener might
-                accept, and I started trying to understand my own experience
-                without editing it first.
+                Running alongside his professional practice is his own lived reality: Pratik has fibromyalgia, a chronic condition characterised by widespread pain, fatigue, and cognitive difficulty that leaves no visible trace on medical scans or routine charts.
               </p>
               <p>
-                That shift is, I think, where the advocacy came from. Not from
-                expertise — though expertise followed — but from the particular
-                clarity that comes when you stop performing and start paying
-                careful attention to what is actually there.
+                What he learned through years of diagnostic uncertainty and medical disbelief was the grinding exhaustion of proof — the constant requirement to justify your body's reality to doctors, employers, and social institutions. Pain, he realised, is socially acceptable primarily when it is legible. When it isn't, society defaults to doubt.
               </p>
               <p>
-                I started writing. At first because I needed to process what
-                was happening to me, then because I kept encountering people
-                with invisible disabilities who were in the same place I'd been
-                — isolated, doubted, exhausted, and unable to find stories that
-                reflected their reality without either dramatising it or
-                sanitising it into something more palatable.
-              </p>
-              <p>
-                Blooming in Pain began as a question I couldn't stop asking:
-                where were the stories for people like us? Not the triumphant
-                overcoming narratives where suffering is the price of
-                enlightenment. Not the tragedy arcs. Just honest accounts of
-                what it's like to live — fully, imperfectly, sometimes in
-                significant pain — in a world that finds that kind of complexity
-                inconvenient. I couldn't find them. So I started building the
-                space where they could exist, and where the people who needed
-                them would be believed.
+                Rather than treating his condition as a separate private struggle, Pratik turned that lived reality into the cornerstone of his work. It provides an unromanticised understanding of what it costs to be disabled in an inaccessible world, and a deep impatience with inclusion efforts that stay comfortable.
               </p>
             </div>
 
             <PullQuote accent="plum">
-              "I couldn't find the stories I needed. So I started building
-              the space where they could exist — and where the people who
-              needed them would be believed."
+              "Nine years ago, I decided that what I live with every day could become the most useful thing I offer."
             </PullQuote>
           </section>
 
-          {/* ── 3. The work: professional path ─────────────────────────── */}
-          <section aria-label="Professional work in disability inclusion">
-            <div className="space-y-6 text-lg text-foreground leading-relaxed">
-              <p>
-                Before the writing, and running alongside it, there was the
-                field work.
-              </p>
-              <p>
-                For eight years, I worked alongside children with disabilities
-                in Delhi's urban slums through ASTHA, the organisation I now
-                direct. It brought me face to face with disability in its most
-                unprotected forms — not in corporate DEI workshops or policy
-                seminars, but in homes without reliable sanitation, in families
-                navigating four or five simultaneous crises, in the lives of
-                children who had no word for what was different about them
-                and no system prepared to find out.
-              </p>
-              <p>
-                You cannot work with disability in that context without
-                understanding how it weaves together with poverty, with
-                homelessness, with access to healthcare that barely reaches the
-                families who need it most, with gender in all the ways gender
-                shapes what kind of help a person is considered worth giving. A
-                girl with a learning disability in a family without stable
-                housing has needs that no single framework covers. That is where
-                I learned to think in intersections — to resist the clean
-                category, to stay with the complexity.
-              </p>
-              <p>
-                Those years also gave me something that no amount of training
-                can fully replicate: an unromanticised understanding of what it
-                costs to be disabled in a world not built for you, and a deep,
-                settled impatience with inclusion that stays comfortable.
-              </p>
-            </div>
-          </section>
-
           <Portrait
-            alt="Pratik Aggarwal with families supported by ASTHA in Delhi"
-            caption="Community outreach with ASTHA, New Delhi — work with children with disabilities in urban poverty."
+            src="/images/pratik-about-page.jpeg"
+            alt="Portrait photograph of Pratik Aggarwal"
+            caption="Pratik Aggarwal — disability inclusion expert, researcher, and founder of Blooming in Pain."
             aspectRatio="3/2"
             size="contained"
           />
+
+          {/* ── 3. Storytelling & Blooming in Pain ──────────────────────── */}
+          <section aria-label="Storytelling and Blooming in Pain platform">
+            <div className="space-y-6 text-lg text-foreground leading-relaxed">
+              <h2 className="text-2xl font-serif text-foreground mt-8 mb-4" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                Blooming in Pain
+              </h2>
+              <p>
+                In 2021, Pratik founded <em>Blooming in Pain</em>, a storytelling platform dedicated to people living with invisible chronic illnesses and disabilities — fibromyalgia, endometriosis, lupus, chronic fatigue, and psychosocial conditions.
+              </p>
+              <p>
+                The platform was born out of a simple gap: the absence of honest, un-sanitised stories about living with persistent illness without falling into dramatic overcoming tropes or tragedy arcs. Today, Blooming in Pain serves as a vital community space where lived accounts are documented, shared, and believed.
+              </p>
+            </div>
+          </section>
 
           {/* ── 4. Credibility (understated) ──────────────────────────── */}
           <section aria-label="Roles, publications, and affiliations">
@@ -415,21 +350,31 @@ export default function About() {
                   </span>
                 </li>
                 <li className="text-base text-foreground leading-snug">
-                  Published in{" "}
-                  <cite className="not-italic font-semibold">
-                    The Journal of Pain
-                  </cite>{" "}
+                  Co-creator of <span className="font-semibold">Umang Vatika</span>{" "}
                   <span className="text-muted-foreground">
-                    — on invisible chronic pain, healthcare access, and the
-                    politics of medical legitimacy
+                    — North India’s first government sensory garden for children with disabilities at Safdarjung Hospital, featured in{" "}
+                    <a href="https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Better India</a>,{" "}
+                    <a href="https://indianexpress.com/article/cities/delhi/from-visual-art-installations-to-mud-pits-sensory-garden-for-neurodivergent-children-opens-at-delhis-safdarjung-hospital-10461086/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Indian Express</a>, and{" "}
+                    <a href="https://ddnews.gov.in/inauguration-of-umang-vatika-at-vmmc-and-safdarjung-hospital-the-first-government-sensory-garden-in-north-india/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">DD News</a>.
                   </span>
                 </li>
                 <li className="text-base text-foreground leading-snug">
-                  Op-Ed in{" "}
-                  <cite className="not-italic font-semibold">The Telegraph</cite>{" "}
+                  Author in{" "}
+                  <cite className="not-italic font-semibold">
+                    <a href="https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Samuhik Pahal</a>
+                  </cite>{" "}
                   <span className="text-muted-foreground">
-                    — on disability, identity, and the language we use to talk
-                    about bodies that don't conform
+                    — "Thirty years of working with communities: Reflections and Opinions" on community-led rights advocacy.
+                  </span>
+                </li>
+                <li className="text-base text-foreground leading-snug">
+                  Featured & Quoted Expert in National Media{" "}
+                  <span className="text-muted-foreground">
+                    — including ground reporting in{" "}
+                    <a href="https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Print</a> (Viklang Basti fire advocacy),{" "}
+                    <a href="https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Outlook India</a> (NFHS-6 policy analysis),{" "}
+                    <a href="https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Times of India</a>, and{" "}
+                    <a href="https://citizenmatters.in/most-urban-schools-violate-law-exclude-children-with-disabilities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Citizen Matters</a>.
                   </span>
                 </li>
               </ul>

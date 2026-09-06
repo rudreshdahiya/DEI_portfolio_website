@@ -11,7 +11,7 @@ The website serves two primary audiences:
 1. Decision-makers looking to hire, partner, invite, or collaborate with Pratik.
 2. Community members looking to connect with Blooming in Pain and share their stories.
 
-The website should balance emotional storytelling with professional credibility.
+The website balances emotional storytelling with professional credibility.
 
 ---
 
@@ -25,7 +25,7 @@ Generate qualified inquiries from:
 * Multilateral organizations
 * Educational institutions
 
-Success metric:
+Success metrics:
 
 * Partnership inquiries
 * Speaking invitations
@@ -67,19 +67,19 @@ Avoid:
 
 # Design System
 
-Color Palette
+Color Palette ("Made Visible" System)
 
-* Ink Navy: #1B3A5B
-* Healing Teal: #2E8B8B
-* Invisible Plum: #6E4C7E
-* Warm Sand: #F7F3EC
-* Soft Cloud: #FFFFFF
-* Quiet Grey: #5A6472
+* Ink: `--ink` (`#1E1A24`) — Headings & primary text
+* Ground: `--ground` (`#F6F4F7`) — Main background
+* Surface: `--surface` (`#EFECEF`) — Secondary card background
+* Plum: `--plum` (`#5C2A57`) — Primary brand accent, links, buttons
+* Bloom: `--bloom` (`#B84472`) — Accent, eyebrows, focus rings (WCAG 2.1 AA compliant, 4.67:1+ ratio)
+* Sage: `--sage` (`#4F6F5C`) — Secondary accent, badge chips
 
 Typography
 
-* Headings: Fraunces
-* Body: Atkinson Hyperlegible
+* Headings: `Fraunces` (serif)
+* Body: `Public Sans` (sans-serif)
 
 Design Principles
 
@@ -89,8 +89,6 @@ Design Principles
 * Accessible
 * Human
 
-The website should feel trustworthy, warm, and thoughtful.
-
 ---
 
 # Accessibility Requirements
@@ -99,14 +97,12 @@ WCAG 2.1 AA compliance is mandatory.
 
 Always maintain:
 
-* Semantic HTML
-* Keyboard navigation
-* Focus states
-* Accessible forms
-* Proper heading hierarchy
-* Alt text
-* Sufficient contrast
-* Reduced motion support
+* Semantic HTML (one h1 per page, strict hierarchy)
+* Keyboard navigation & focus-visible rings (`2px solid var(--bloom)`)
+* Focus management on forms & mobile nav Escape key listener
+* Accessible forms with `label[for]`, `aria-required`, `aria-invalid`, `aria-describedby`
+* Accessible alt text for real images
+* Reduced motion support (`prefers-reduced-motion` fallbacks)
 
 Accessibility is a launch blocker.
 
@@ -114,59 +110,40 @@ Accessibility is a launch blocker.
 
 # Site Architecture
 
-Pages
+Routes (`src/main.tsx`):
 
-* Home
-* About
-* Services
-* Work & Engagements
-* Blooming in Pain
-* Contact
-* Accessibility Statement
-
-Navigation should remain simple and low cognitive load.
-
----
-
-# CTA Hierarchy
-
-Primary CTA
-
-* Work With Me
-* Partner With Me
-* Book a Talk
-
-Secondary CTA
-
-* Join the Community
-* Read Stories
-
-The website should prioritize inquiry generation while still supporting community engagement.
+* `/` → `home.tsx`
+* `/about` → `about.tsx`
+* `/services` → `services.tsx`
+* `/work` → `work.tsx`
+* `/blooming-in-pain` → `blooming-in-pain.tsx`
+* `/blooming-in-pain/submit` → `blooming-in-pain-submit.tsx`
+* `/contact` → `contact.tsx`
+* `/accessibility` → `accessibility.tsx`
 
 ---
 
 # Technical Stack
 
-Current Stack
+Current Stack:
 
-* React
-* TypeScript
+* React 19 + TypeScript
 * Vite
-* React Router
-* Tailwind CSS
+* React Router v7
+* Tailwind CSS v4
 * Shadcn UI
+* Vercel Analytics (`@vercel/analytics`)
+* Helmet Provider (`react-helmet-async`)
 
-Deployment
+Forms:
 
-* Vercel
+* Formspree via environment variables (`VITE_CONTACT_FORM_ENDPOINT`, `VITE_STORY_FORM_ENDPOINT`)
 
-Forms
+Machine-Readable Profile & AI GEO/AEO:
 
-* Formspree or Tally
-
-Analytics
-
-* Vercel Analytics
+* `public/llms.txt`
+* Schema.org JSON-LD (Person, Organization, ItemList, Event, FAQPage, ContactPage, BreadcrumbList)
+* "Ask Claude" and "Ask ChatGPT" pills on about page
 
 ---
 
@@ -183,8 +160,6 @@ When completing meaningful work:
 1. Update CHANGELOG.md
 2. Update TODO.md
 3. Document architectural decisions
-
-Do not introduce features outside the approved PRD without justification.
 
 Always prioritize:
 

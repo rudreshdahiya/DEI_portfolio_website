@@ -14,22 +14,22 @@ const stats = [
 
 // Expanded org list for the marquee — duplicated in JSX for seamless loop
 const orgLogos = [
-  { name: "UNICEF",             initials: "UN",  bg: "#E8F4FA", color: "#00689D" },
-  { name: "HCL Foundation",     initials: "HCL", bg: "#FEF0E6", color: "#C44B00" },
-  { name: "Tech Mahindra",      initials: "TM",  bg: "#F2EAF7", color: "#5C1F7A" },
-  { name: "ASTHA",              initials: "AS",  bg: "#E2EDE7", color: "#1F3D2A" },
-  { name: "Delhi University",   initials: "DU",  bg: "#E6EBF1", color: "#1B3A5B" },
-  { name: "TISS Mumbai",        initials: "TI",  bg: "#F7E8E8", color: "#8B1A1A" },
-  { name: "Purple Fest Goa",    initials: "PF",  bg: "#EDE4EF", color: "#3D1E3C" },
-  { name: "NDMA + UN India",    initials: "ND",  bg: "#E6EFF6", color: "#3D6B8F" },
-  { name: "HRLN",               initials: "HR",  bg: "#EBF2EA", color: "#2B5329" },
-  { name: "Keystone Institute", initials: "KI",  bg: "#F5F0E6", color: "#6B4B00" },
-  { name: "Embassy of Spain",   initials: "ES",  bg: "#F9E8E8", color: "#AA151B" },
-  { name: "Embassy of Finland", initials: "FI",  bg: "#E6EBF5", color: "#003580" },
-  { name: "ARNEC",              initials: "AR",  bg: "#E2EDE7", color: "#1F3D2A" },
-  { name: "Delhi 2041 / DDA",   initials: "DD",  bg: "#ECEEF6", color: "#4A4A8A" },
-  { name: "Kirori Mal College", initials: "KM",  bg: "#EEF0F2", color: "#5A6472" },
-  { name: "SLIC",               initials: "SL",  bg: "#E6EBF1", color: "#1B3A5B" },
+  { name: "UNICEF", initials: "UN", bg: "#E8F4FA", color: "#00689D" },
+  { name: "HCL Foundation", initials: "HCL", bg: "#FEF0E6", color: "#C44B00" },
+  { name: "Tech Mahindra", initials: "TM", bg: "#F2EAF7", color: "#5C1F7A" },
+  { name: "ASTHA", initials: "AS", bg: "#E2EDE7", color: "#1F3D2A" },
+  { name: "Delhi University", initials: "DU", bg: "#E6EBF1", color: "#1B3A5B" },
+  { name: "TISS Mumbai", initials: "TI", bg: "#F7E8E8", color: "#8B1A1A" },
+  { name: "Purple Fest Goa", initials: "PF", bg: "#EDE4EF", color: "#3D1E3C" },
+  { name: "NDMA + UN India", initials: "ND", bg: "#E6EFF6", color: "#3D6B8F" },
+  { name: "HRLN", initials: "HR", bg: "#EBF2EA", color: "#2B5329" },
+  { name: "Keystone Institute", initials: "KI", bg: "#F5F0E6", color: "#6B4B00" },
+  { name: "Embassy of Spain", initials: "ES", bg: "#F9E8E8", color: "#AA151B" },
+  { name: "Embassy of Finland", initials: "FI", bg: "#E6EBF5", color: "#003580" },
+  { name: "ARNEC", initials: "AR", bg: "#E2EDE7", color: "#1F3D2A" },
+  { name: "Delhi 2041 / DDA", initials: "DD", bg: "#ECEEF6", color: "#4A4A8A" },
+  { name: "Kirori Mal College", initials: "KM", bg: "#EEF0F2", color: "#5A6472" },
+  { name: "SLIC", initials: "SL", bg: "#E6EBF1", color: "#1B3A5B" },
 ];
 
 const offerings = [
@@ -59,20 +59,108 @@ const offerings = [
   },
 ];
 
+const podcasts = [
+  {
+    title: "Disability, Poverty & Inclusive Education (Part 2)",
+    series: "Podcast Ep. 32 — Part 2",
+    description: "In-depth conversation with Pratik Aggarwal (ASTHA NGO) on disability rights, frontline community work, and inclusive education in India.",
+    embedUrl: "https://www.youtube-nocookie.com/embed/eUSRzBr0FFc?start=1345",
+    linkUrl: "https://www.youtube.com/watch?v=eUSRzBr0FFc&t=1345s",
+  },
+  {
+    title: "Nothing About Us, Without Us: Disability Rights in the Classroom",
+    series: "Postcards Series #6",
+    description: "Podcast episode discussing rights-based education, lived authority, and classroom inclusion.",
+    embedUrl: "https://www.youtube-nocookie.com/embed/onm9zJjB_PI",
+    linkUrl: "https://youtu.be/onm9zJjB_PI?si=EcPvzmQ1VJkHIxrn",
+  },
+  {
+    title: "Disability, Poverty & Inclusive Education (Part 1)",
+    series: "Podcast Ep. 32 — Part 1",
+    description: "Examining urban informal settlements, community support systems, and institutional accountability.",
+    embedUrl: "https://www.youtube-nocookie.com/embed/bokwVsDd6H8?start=1021",
+    linkUrl: "https://www.youtube.com/watch?v=bokwVsDd6H8&t=1021s",
+  },
+];
+
+const mediaHighlights = [
+  {
+    outlet: "The Better India",
+    category: "Sensory Garden Pioneer",
+    title: "At Safdarjung Hospital, ‘Umang Vatika’ Lets Children With Disabilities Play Freely & Safely",
+    description: "North India’s first government sensory garden designed for neurodivergent children in collaboration with ASTHA.",
+    url: "https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102",
+  },
+  {
+    outlet: "The Indian Express",
+    category: "Sensory Garden Feature",
+    title: "From visual art installations to mud pits: Sensory garden for neurodivergent children opens at Delhi’s Safdarjung Hospital",
+    description: "Visual art installations, mud pits, and accessible sensory pathways in New Delhi.",
+    url: "https://indianexpress.com/article/cities/delhi/from-visual-art-installations-to-mud-pits-sensory-garden-for-neurodivergent-children-opens-at-delhis-safdarjung-hospital-10461086/",
+  },
+  {
+    outlet: "DD News",
+    category: "National Broadcast",
+    title: "वीएमएमसी एवं सफदरजंग अस्पताल में ‘उमंग वाटिका’ का उद्घाटन — उत्तर भारत का पहला सरकारी सेंसरी गार्डन",
+    description: "DD News national television coverage on North India's first government sensory garden.",
+    url: "https://ddnews.gov.in/inauguration-of-umang-vatika-at-vmmc-and-safdarjung-hospital-the-first-government-sensory-garden-in-north-india/",
+  },
+  {
+    outlet: "The Print",
+    category: "Ground Report",
+    title: "How Delhi’s 'Viklang Basti' lost everything in a fire and fought to get new wheelchairs",
+    description: "Field reporting on emergency crisis response, disability rights advocacy, and wheelchair access.",
+    url: "https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/",
+  },
+  {
+    outlet: "Outlook India",
+    category: "Policy & Data",
+    title: "India’s Persons With Disabilities Left Out As NFHS-6 Fact Sheets Omit Disability Data",
+    description: "Critical commentary on systemic data omission of persons with disabilities in national health surveys.",
+    url: "https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data",
+  },
+  {
+    outlet: "Times of India",
+    category: "Media Quote",
+    title: "Out of sight, out of support: Disability care lags in Delhi’s slums in most trying of times",
+    description: "Expert opinion on informal settlement care deficits during climate and health shocks.",
+    url: "https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms",
+  },
+  {
+    outlet: "Citizen Matters",
+    category: "Education Rights",
+    title: "Most urban schools violate law, exclude children with disabilities",
+    description: "Analysis of urban school non-compliance with the Rights of Persons with Disabilities Act.",
+    url: "https://citizenmatters.in/most-urban-schools-violate-law-exclude-children-with-disabilities/",
+  },
+  {
+    outlet: "Samuhik Pahal",
+    category: "Thought Leadership",
+    title: "Thirty years of working with communities: Reflections and Opinions",
+    description: "Reflections on 30 years of rights-based community engagement and organizational learning.",
+    url: "https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/",
+  },
+];
+
 const storyPreviews = [
   {
-    tag: "Chronic Pain",
-    title: "The Day I Called in Sick (And Wasn't 'Really' Sick)",
+    tag: "Fibromyalgia",
+    title: "Sujatha Rao’s Journey with Fibromyalgia: Finding Hope (by Sujatha Rao)",
     href: "/blooming-in-pain",
   },
   {
-    tag: "Work & Disability",
-    title: "Disclosing at Work: What I Wish Someone Had Told Me",
+    tag: "Empowerment",
+    title: "Zanna Barrett’s Journey: Chronic Pain to Empowerment (by Zanna Barrett)",
     href: "/blooming-in-pain",
   },
   {
-    tag: "Community",
-    title: "When Your Body Says No and Your Calendar Says Yes",
+    tag: "ME / CFS",
+    title: "Beyond Diagnosis: ME/CFS & Invisible Challenges (Community Voice)",
+    href: "/blooming-in-pain",
+  },
+  {
+    tag: "Tracheostomy Care",
+    title: "Living With a Tracheostomy and Chronic Illness (Community Voice)",
     href: "/blooming-in-pain",
   },
 ];
@@ -187,11 +275,11 @@ function AbstractInvisible() {
         aria-hidden="true"
       >
         {/* Cluster 1 — tight pair */}
-        <line x1="0" y1="34"  x2="400" y2="34"  stroke="var(--plum)" strokeWidth="0.6" opacity="0.10" />
-        <line x1="0" y1="46"  x2="400" y2="46"  stroke="var(--plum)" strokeWidth="0.85" opacity="0.16" />
+        <line x1="0" y1="34" x2="400" y2="34" stroke="var(--plum)" strokeWidth="0.6" opacity="0.10" />
+        <line x1="0" y1="46" x2="400" y2="46" stroke="var(--plum)" strokeWidth="0.85" opacity="0.16" />
 
         {/* Gap, then single */}
-        <line x1="0" y1="76"  x2="400" y2="76"  stroke="var(--plum)" strokeWidth="0.5" opacity="0.08" />
+        <line x1="0" y1="76" x2="400" y2="76" stroke="var(--plum)" strokeWidth="0.5" opacity="0.08" />
 
         {/* Blip 1 — small ECG spike */}
         <path
@@ -375,51 +463,14 @@ function MadeVisibleReveal() {
           inset: 0,
           opacity: revealed ? 1 : 0,
           transition: transitionCss,
-          background: "linear-gradient(155deg, var(--ground) 0%, #D4CBD8 60%, #C8BDD2 100%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "2rem",
-          textAlign: "center",
+          background: "var(--ground)",
         }}
       >
-        <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span
-            style={{
-              fontFamily: "'Fraunces', Georgia, serif",
-              fontSize: "clamp(5rem, 18vw, 7.5rem)",
-              fontWeight: 300,
-              color: "var(--plum)",
-              opacity: 0.14,
-              lineHeight: 1,
-            }}
-          >
-            PA
-          </span>
-        </div>
-        <div style={{ paddingBottom: "0.5rem" }}>
-          <p
-            style={{
-              fontFamily: "'Fraunces', Georgia, serif",
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              color: "var(--ink)",
-              marginBottom: "0.25rem",
-            }}
-          >
-            Pratik Aggarwal
-          </p>
-          <p
-            style={{
-              fontSize: "0.8125rem",
-              color: "var(--muted-text)",
-              fontStyle: "italic",
-            }}
-          >
-            [Portrait — coming soon]
-          </p>
-        </div>
+        <img
+          src="/images/pratik-homepage-hero.jpeg"
+          alt="Portrait of Pratik Aggarwal"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
 
       {/* --bloom border fires on reveal */}
@@ -779,7 +830,7 @@ function OfferItem({ title, outcome, href }: { title: string; outcome: string; h
 
 export default function Home() {
   const revealOffer = useReveal<HTMLDivElement>();
-  const revealBip   = useReveal<HTMLDivElement>();
+  const revealBip = useReveal<HTMLDivElement>();
   const revealSplit = useReveal<HTMLDivElement>();
 
   return (
@@ -858,43 +909,53 @@ export default function Home() {
                 Start a partnership
               </Link>
               <Link
-                to="/about"
+                to="/work"
                 className="text-base underline underline-offset-4 transition-colors"
                 style={{ color: "var(--ink)", minHeight: "44px", display: "inline-flex", alignItems: "center" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "var(--plum)")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
+                onClick={() => track("cta_clicked", { label: "Explore my work", location: "hero" })}
               >
-                Read my story
+                Explore my work →
               </Link>
             </div>
           </div>
 
-          {/* Portrait placeholder */}
+          {/* Portrait of Pratik */}
           <div
-            className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden order-first md:order-last"
-            role="img"
-            aria-label="Portrait of Pratik Aggarwal, disability inclusion expert"
+            className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden order-first md:order-last bg-muted"
           >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: "linear-gradient(155deg, var(--ground) 0%, #D4CBD8 60%, #C8BDD2 100%)",
-              }}
-              aria-hidden="true"
+            <img
+              src="/images/pratik-about-page.jpeg"
+              alt="Portrait photograph of Pratik Aggarwal, disability inclusion expert"
+              className="w-full h-full object-cover object-center"
             />
-            <span
-              className="absolute inset-0 flex items-center justify-center text-8xl font-light select-none"
-              style={{
-                fontFamily: "'Fraunces', Georgia, serif",
-                color: "var(--plum)",
-                opacity: 0.12,
-              }}
-              aria-hidden="true"
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. PROFESSIONAL PRACTICE & APPROACH ─────────────────────────── */}
+      <section aria-labelledby="approach-heading" className="px-6 py-16 md:py-20 border-t border-border" style={{ backgroundColor: "var(--ground)" }}>
+        <div className="max-w-5xl mx-auto grid md:grid-cols-[240px_1fr] gap-8 md:gap-16 items-start">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2" style={{ letterSpacing: "0.14em" }}>
+              Core Practice
+            </p>
+            <h2
+              id="approach-heading"
+              className="text-2xl md:text-3xl text-foreground font-serif leading-snug"
+              style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
             >
-              PA
-            </span>
-            <p className="absolute bottom-4 left-4 text-xs italic" style={{ color: "var(--muted-text)", opacity: 0.7 }} aria-hidden="true">
-              [Portrait photo]
+              Disability Inclusion Beyond Compliance
+            </h2>
+          </div>
+
+          <div className="space-y-6 text-base md:text-lg leading-relaxed" style={{ color: "var(--ink)" }}>
+            <p>
+              Pratik works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together lived experience, community engagement, research, advocacy, facilitation, and storytelling to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
+            </p>
+            <p>
+              He works with organisations, institutions, teams, and individuals through consultancy, disability and accessibility training, community-based training and engagement, research, facilitation, and strategic support. Whether you are looking to make a programme more inclusive, build the capacity of your team, meaningfully engage with the disability community, review an existing approach, or simply understand where you may be getting it wrong, Pratik brings both professional expertise and lived understanding to the conversation.
             </p>
           </div>
         </div>
@@ -902,7 +963,7 @@ export default function Home() {
 
       <div className="border-t border-border" aria-hidden="true" />
 
-      {/* ── 2. STATS + ORG MARQUEE ──────────────────────────────────────── */}
+      {/* ── 3. STATS + ORG MARQUEE ──────────────────────────────────────── */}
       <section aria-label="Experience and selected partners" className="py-16">
 
         {/* Animated stats */}
@@ -929,7 +990,236 @@ export default function Home() {
 
       <div className="border-t border-border" aria-hidden="true" />
 
-      {/* ── 3. MADE VISIBLE ─────────────────────────────────────────────── */}
+      {/* ── PODCASTS & MEDIA HIGHLIGHTS ─────────────────────────────────── */}
+      <section aria-labelledby="media-heading" className="px-6 py-20 border-t border-border" style={{ backgroundColor: "var(--ground)" }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-baseline justify-between gap-4 mb-10 border-b border-border pb-6">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-1" style={{ letterSpacing: "0.14em" }}>
+                Podcasts &amp; Press Features
+              </p>
+              <h2
+                id="media-heading"
+                className="text-3xl md:text-4xl text-foreground font-serif"
+                style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
+              >
+                In the News &amp; Discussions
+              </h2>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-md">
+              Selected podcast conversations, national ground reports, policy critiques, and media features.
+            </p>
+          </div>
+
+          {/* Featured Podcast Player Embed */}
+          <div className="grid lg:grid-cols-12 gap-8 mb-12 items-center bg-card p-6 rounded-2xl border border-border">
+            <div className="lg:col-span-7 aspect-video rounded-xl overflow-hidden shadow-xs border border-border bg-black">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/eUSRzBr0FFc?start=1345"
+                title="Disability, Poverty & Inclusive Education - Pratik Aggarwal (ASTHA NGO) Podcast Ep. 32 Part 2"
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+            <div className="lg:col-span-5 space-y-4">
+              <span className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full" style={{ backgroundColor: "#EDE4EF", color: "#3D1E3C" }}>
+                Featured Podcast Episode
+              </span>
+              <h3 className="text-2xl font-serif leading-snug" style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}>
+                Disability, Poverty &amp; Inclusive Education (Ep. 32)
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Pratik Aggarwal (Director at ASTHA) discusses the systemic intersection of disability rights, urban poverty in Delhi slums, and inclusive education.
+              </p>
+              <div className="pt-2">
+                <a
+                  href="https://www.youtube.com/watch?v=eUSRzBr0FFc&t=1345s"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm font-semibold underline underline-offset-4"
+                  style={{ color: "var(--plum)" }}
+                >
+                  Watch full video on YouTube →
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Podcasts Grid with Embedded Video Players */}
+          <div className="grid md:grid-cols-2 gap-6 mb-14">
+            {podcasts.slice(1).map((pod) => (
+              <div key={pod.title} className="p-5 rounded-2xl border border-border bg-card flex flex-col justify-between space-y-4">
+                <div className="aspect-video rounded-xl overflow-hidden shadow-xs border border-border bg-black">
+                  <iframe
+                    src={pod.embedUrl}
+                    title={pod.title}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground block mb-1">
+                    {pod.series}
+                  </span>
+                  <h4 className="text-base font-semibold text-foreground mb-2 leading-snug">
+                    {pod.title}
+                  </h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {pod.description}
+                  </p>
+                </div>
+                <a
+                  href={pod.linkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-semibold underline underline-offset-4 pt-1 inline-block"
+                  style={{ color: "var(--plum)" }}
+                >
+                  Watch on YouTube →
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {/* National Media Grid */}
+          <div>
+            <h3 className="text-xl font-serif mb-6" style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}>
+              National Media Features &amp; Thought Leadership
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {mediaHighlights.map((item) => (
+                <a
+                  key={item.title}
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-5 rounded-xl border border-border bg-card flex flex-col justify-between hover:border-muted-foreground/30 transition-all hover:shadow-xs"
+                >
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider block mb-2 px-2 py-0.5 rounded w-fit" style={{ backgroundColor: "#E2EDE7", color: "#1F3D2A" }}>
+                      {item.outlet}
+                    </span>
+                    <h4 className="text-sm font-semibold text-foreground leading-snug mb-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground line-clamp-3 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold underline underline-offset-4 mt-4 block" style={{ color: "var(--plum)" }}>
+                    Read feature →
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="border-t border-border" aria-hidden="true" />
+
+      {/* ── 4. WHAT I OFFER ─────────────────────────────────────────────── */}
+      <section aria-labelledby="offer-heading" className="px-6 py-14 border-t border-border">
+        <div className="reveal max-w-5xl mx-auto flex flex-col md:flex-row md:items-start gap-6 md:gap-16" ref={revealOffer}>
+          <h2
+            id="offer-heading"
+            className="md:w-36 shrink-0 text-xs font-semibold uppercase tracking-widest pt-5"
+            style={{ color: "var(--muted-text)", letterSpacing: "0.14em" }}
+          >
+            What I offer
+          </h2>
+          <ul className="flex-1 divide-y divide-border list-none m-0 p-0">
+            {offerings.map((item) => (
+              <OfferItem key={item.title} {...item} />
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── 5. BLOOMING IN PAIN ─────────────────────────────────────────── */}
+      <section
+        aria-labelledby="bip-heading"
+        className="px-6 py-12 border-t border-border"
+        style={{ backgroundColor: "var(--ground)" }}
+      >
+        <div className="reveal max-w-5xl mx-auto" ref={revealBip}>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 mb-7">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: "var(--sage)" }}>
+                Community Platform Founded by Pratik
+              </p>
+              <h2
+                id="bip-heading"
+                className="text-2xl md:text-3xl"
+                style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
+              >
+                Blooming in Pain: Centering Community Voices
+              </h2>
+            </div>
+            <div className="flex items-center gap-6">
+              <a
+                href="https://instagram.com/blooming.in.pain"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-semibold underline underline-offset-4 transition-colors hover:text-primary"
+                style={{ color: "var(--ink)" }}
+                onClick={() => track("outbound_click", { destination: "instagram", location: "blooming_in_pain_section" })}
+              >
+                Instagram<span className="sr-only"> (opens in new tab)</span>
+              </a>
+              <Link
+                to="/blooming-in-pain"
+                className="text-sm font-semibold underline underline-offset-4 transition-colors"
+                style={{ color: "var(--sage)" }}
+              >
+                Read stories →
+              </Link>
+            </div>
+          </div>
+
+          <ul className="divide-y divide-border list-none m-0 p-0" role="list">
+            {storyPreviews.map((story) => (
+              <li key={story.title}>
+                <Link
+                  to={story.href}
+                  className="group flex items-center gap-5 py-4"
+                  aria-label={`Read: ${story.title}`}
+                  style={{ textDecoration: "none" }}
+                >
+                  <span
+                    className="text-xs font-semibold uppercase tracking-widest shrink-0 w-28"
+                    style={{ color: "var(--sage)" }}
+                  >
+                    {story.tag}
+                  </span>
+                  <span
+                    className="flex-1 text-base transition-colors group-hover:text-primary"
+                    style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
+                  >
+                    {story.title}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="shrink-0 text-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                    style={{ color: "var(--sage)" }}
+                  >
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ── 5. SELECTED ENGAGEMENTS ─────────────────────────────────────── */}
+      <EngagementsSection />
+
+      <div className="border-t border-border" aria-hidden="true" />
+
+      {/* ── 6. MADE VISIBLE ─────────────────────────────────────────────── */}
       <section aria-labelledby="mv-heading" className="px-6 py-20 md:py-28">
         <div className="max-w-5xl mx-auto grid md:grid-cols-[320px_1fr] gap-14 md:gap-20 items-center">
 
@@ -1023,105 +1313,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div className="border-t border-border" aria-hidden="true" />
-
-      {/* ── 4. WHAT I OFFER ─────────────────────────────────────────────── */}
-      <section aria-labelledby="offer-heading" className="px-6 py-14 border-t border-border">
-        <div className="reveal max-w-5xl mx-auto flex flex-col md:flex-row md:items-start gap-6 md:gap-16" ref={revealOffer}>
-          <h2
-            id="offer-heading"
-            className="md:w-36 shrink-0 text-xs font-semibold uppercase tracking-widest pt-5"
-            style={{ color: "var(--muted-text)", letterSpacing: "0.14em" }}
-          >
-            What I offer
-          </h2>
-          <ul className="flex-1 divide-y divide-border list-none m-0 p-0">
-            {offerings.map((item) => (
-              <OfferItem key={item.title} {...item} />
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── 5. BLOOMING IN PAIN ─────────────────────────────────────────── */}
-      <section
-        aria-labelledby="bip-heading"
-        className="px-6 py-12 border-t border-border"
-        style={{ backgroundColor: "var(--ground)" }}
-      >
-        <div className="reveal max-w-5xl mx-auto" ref={revealBip}>
-          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3 mb-7">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: "var(--sage)" }}>
-                Initiative
-              </p>
-              <h2
-                id="bip-heading"
-                className="text-2xl md:text-3xl"
-                style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
-              >
-                Blooming in Pain
-              </h2>
-            </div>
-            <div className="flex items-center gap-6">
-              <a
-                href="https://instagram.com/blooming.in.pain"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-semibold underline underline-offset-4 transition-colors hover:text-primary"
-                style={{ color: "var(--ink)" }}
-                onClick={() => track("outbound_click", { destination: "instagram", location: "blooming_in_pain_section" })}
-              >
-                Instagram<span className="sr-only"> (opens in new tab)</span>
-              </a>
-              <Link
-                to="/blooming-in-pain"
-                className="text-sm font-semibold underline underline-offset-4 transition-colors"
-                style={{ color: "var(--sage)" }}
-              >
-                Read stories →
-              </Link>
-            </div>
-          </div>
-
-          <ul className="divide-y divide-border list-none m-0 p-0" role="list">
-            {storyPreviews.map((story) => (
-              <li key={story.title}>
-                <Link
-                  to={story.href}
-                  className="group flex items-center gap-5 py-4"
-                  aria-label={`Read: ${story.title}`}
-                  style={{ textDecoration: "none" }}
-                >
-                  <span
-                    className="text-xs font-semibold uppercase tracking-widest shrink-0 w-28"
-                    style={{ color: "var(--sage)" }}
-                  >
-                    {story.tag}
-                  </span>
-                  <span
-                    className="flex-1 text-base transition-colors group-hover:text-primary"
-                    style={{ fontFamily: "'Fraunces', Georgia, serif", color: "var(--ink)" }}
-                  >
-                    {story.title}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="shrink-0 text-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ color: "var(--sage)" }}
-                  >
-                    →
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ── 6. SELECTED ENGAGEMENTS ─────────────────────────────────────── */}
-      <EngagementsSection />
 
       {/* ── 7. THE SPLIT ────────────────────────────────────────────────── */}
       <section

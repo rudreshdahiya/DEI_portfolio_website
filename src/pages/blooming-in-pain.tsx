@@ -4,75 +4,105 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-
-// In production replace with fetched Medium RSS or API data.
-// Each card links out to the real Medium post.
+// ── Data ───────────────────────────────────────────────────────────
 const stories = [
   {
     id: 1,
-    tag: "Chronic Pain",
-    title: "The Language of Invisible Pain",
+    tag: "Holistic Wellness",
+    title: "Sujatha Rao’s Journey with Fibromyalgia: Finding Hope",
     excerpt:
-      "There are no words in the standard vocabulary for the specific weight of waking up in pain before you've had the chance to remember who you are.",
-    readTime: "7 min",
-    author: "Pratik Aggarwal",
-    href: "https://medium.com/@BloomingInPain",
-    imgTint: "sand",
+      "Sujatha Rao shares her inspiring journey living with fibromyalgia, processing loss, and reclaiming agency through holistic well-being.",
+    readTime: "6 min",
+    author: "Sujatha Rao",
+    href: "/medium/Sujatha%20Rao%20shares%20her%20inspiring%20journey%20with%20Fibromyalgia,%20finding%20hope%20amidst%20pain%20and%20loss,%20discovering%20the%20power%20of%20holistic%20wellness%20_%20Medium.pdf",
+    imgTint: "plum",
   },
   {
     id: 2,
-    tag: "Society",
-    title: "What 'You Look Fine' Actually Costs",
+    tag: "Empowerment",
+    title: "Zanna Barrett’s Journey: Chronic Pain to Empowerment",
     excerpt:
-      "Every time someone says it — even with kindness — you spend a moment recalculating whether your experience of your own body can be trusted.",
+      "Zanna Barrett reflects on transforming chronic pain into community advocacy, self-definition, and collective strength.",
     readTime: "5 min",
-    author: "Riya Menon",
-    href: "https://medium.com/@BloomingInPain",
-    imgTint: "plum",
+    author: "Zanna Barrett",
+    href: "/medium/Zanna%20Barrett%E2%80%99s%20Journey_%20Chronic%20Pain%20to%20Empowerment%20_%20Medium.pdf",
+    imgTint: "sand",
   },
   {
     id: 3,
-    tag: "Work",
-    title: "On Working While Disabled and Keeping It Secret",
+    tag: "ME / CFS",
+    title: "Beyond Diagnosis: ME/CFS & Invisible Challenges",
     excerpt:
-      "The energy it takes to hide a condition is energy borrowed from the future — from your evenings, your weekends, your recovery time.",
-    readTime: "8 min",
-    author: "Arun K.",
-    href: "https://medium.com/@BloomingInPain",
-    imgTint: "sand",
-  },
-  {
-    id: 4,
-    tag: "Diagnosis",
-    title: "When the Diagnosis Comes Late",
-    excerpt:
-      "By the time I got a name for what was happening to me, I had spent six years believing I was the problem. The diagnosis was a relief and a grief at once.",
-    readTime: "6 min",
-    author: "Priya Sharma",
-    href: "https://medium.com/@BloomingInPain",
+      "Navigating Myalgic Encephalomyelitis / Chronic Fatigue Syndrome — post-exertional malaise and the daily reality of un-legible symptoms.",
+    readTime: "7 min",
+    author: "Community Member",
+    href: "/medium/_Beyond%20Diagnosis_%20ME_CFS%20%26%20Invisible%20Challenges_%20_%20Medium.pdf",
     imgTint: "plum",
   },
   {
-    id: 5,
-    tag: "Personal",
-    title: "The Good Day Trap",
+    id: 4,
+    tag: "Tracheostomy Care",
+    title: "Living With a Tracheostomy and Chronic Illness",
     excerpt:
-      "On good days I try to do everything I couldn't do last week. Then I pay for it for three days after. It took me years to understand this was a pattern, not a failure.",
+      "A rare personal narrative on managing complex airway care alongside chronic systemic illness while navigating public spaces.",
     readTime: "5 min",
-    author: "Meera V.",
-    href: "https://medium.com/@BloomingInPain",
+    author: "Community Member",
+    href: "/medium/Living%20With%20a%20Tracheostomy%20and%20Chronic%20Illness%20_%20Medium.pdf",
     imgTint: "sand",
   },
   {
-    id: 6,
-    tag: "Community",
-    title: "Finding People Who Don't Need It Explained",
+    id: 5,
+    tag: "Endometriosis",
+    title: "Endometriosis and Chronic Pain: Navigating Life & Diagnosis",
     excerpt:
-      "There's a specific relief in a room — or a thread, or a message — where you don't have to start from the beginning every single time.",
+      "Exploring severe chronic pelvic pain, surgical delays, and finding validation when symptoms are dismissed by medical systems.",
+    readTime: "6 min",
+    author: "Community Member",
+    href: "/medium/Endometriosis%20and%20Chronic%20Pain%20Story%20_%20Medium.pdf",
+    imgTint: "plum",
+  },
+  {
+    id: 6,
+    tag: "Long COVID & Fibro",
+    title: "Overcoming Fibromyalgia & Long-COVID: A Journey of Persistence",
+    excerpt:
+      "Exploring the compounding realities of post-viral Long COVID and chronic fibromyalgia, and finding community solidarity in collective healing.",
+    readTime: "6 min",
+    author: "Community Member",
+    href: "/medium/Overcoming%20Fibromyalgia%20%26%20Long-COVID_%20Journey%20_%20Medium.pdf",
+    imgTint: "sand",
+  },
+  {
+    id: 7,
+    tag: "Pelvic Pain & Stigma",
+    title: "She Thought It Was Just Another Infection: Reclaiming Peace & Power",
+    excerpt:
+      "Breaking silence around taboo pelvic pain and chronic infections that disrupt bodily autonomy, peace, and daily living.",
+    readTime: "5 min",
+    author: "Community Contributor",
+    href: "/medium/She%20Thought%20It%20Was%20Just%20Another%20Yeast%20Infection,%20But%20It%20Stole%20Her%20Peace%20and%20Power%20_%20by%20Pratik%20Aggarwal%20_%20Medium.html",
+    imgTint: "plum",
+  },
+  {
+    id: 8,
+    tag: "Neuroplastic Pain",
+    title: "Why Pain Persists Even When Tests Are Normal",
+    excerpt:
+      "Understanding nervous system sensitization, medical normalcy, and validating chronic symptoms that don't show up on conventional scans.",
+    readTime: "5 min",
+    author: "Community Contributor",
+    href: "/medium/Why%20Pain%20Persists%20Even%20When%20Tests%20Are%20Normal%20_%20Medium.pdf",
+    imgTint: "sand",
+  },
+  {
+    id: 9,
+    tag: "Founder Note",
+    title: "Understanding the Unseen: A Neuropsychologist’s Journey",
+    excerpt:
+      "A neuropsychologist shares his lived experience of chronic pain and invisible illness, and why he founded Blooming in Pain to build community.",
     readTime: "4 min",
-    author: "Kavya R.",
-    href: "https://medium.com/@BloomingInPain",
+    author: "Pratik Aggarwal",
+    href: "/medium/Living%20with%20Chronic%20Pain_%20A%20Psychologist%E2%80%99s%20Story%20_%20Medium.html",
     imgTint: "plum",
   },
 ];

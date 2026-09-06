@@ -61,122 +61,34 @@ Stack: Vite + React 19 + TypeScript + React Router + Tailwind CSS v4 + Shadcn UI
 | 2026-06-20 | Mad-Libs conversational contact form. `contact.tsx` rewritten: radio card form replaced with inline sentence — "Hi Pratik, I'm [name] from [org], reaching out about [select]. Reach me at [email]." Each blank is a real labeled field (sr-only labels, aria-required, aria-invalid, aria-describedby). Error summary block links to erroring fields via anchor href. Submit with Formspree, success state, analytics tracking unchanged. Added `.ml-field` / `.ml-select` CSS classes to `app.css` for underline-only inline field treatment with focus (--bloom) and error (--destructive) states. `about.tsx`: replaced hardcoded hex colors (#1B6B6B, #6E4C7E) with CSS variable references (var(--sage), var(--plum)). |
 | 2026-06-20 | `llms.txt` added at `public/llms.txt`. Machine-readable profile of Pratik for AI systems: identity, expertise, services, engagements, Blooming in Pain, publications, values, and what he is not. "Ask Claude" and "Ask ChatGPT" pill links added to the about page header — pre-filled deep links pointing to `pratikaggarwal.in/llms.txt`, following the pattern from thatgurjot.com. |
 | 2026-06-20 | Testimonials section added to home page. `TestimonialsSection` component with 4 testimonials (HCL Foundation, UNICEF India, NDMA, Blooming in Pain community). Click/keyboard disclosure pattern: each card shows name + role + teaser by default; "Read more ↓" button expands full quote with max-height CSS transition. `aria-expanded` + `aria-controls` + `aria-label` on each button. Escape key collapses open card. `prefers-reduced-motion`: all quotes shown expanded on initial render (lazy `useState` initializer avoids flash). Section inserted between Selected Engagements and the split CTA on the home page. |
-
-# CHANGELOG.md
-
-# Project
-
-Pratik Aggarwal Personal Brand Website
+| 2026-09-06 | Real media features & photo asset integration pass across site. (1) `work.tsx`: Integrated real engagement photographs (`/images/work-engagements_2.jpeg` for Purple Fest Goa and `/images/work-engagements_3.jpeg` for UNICEF Bihar); created "Media Features & Podcasts" section with YouTube podcast episodes, Safdarjung Hospital sensory garden coverage, Outlook India, Times of India, and Samuhik Pahal; updated `EventPhoto` component to render real image tags. (2) `home.tsx`: Embedded podcasts and national media feature grid (The Better India, Indian Express, Outlook India, Times of India, Samuhik Pahal). (3) `about.tsx`: Integrated real portrait photograph (`/images/pratik-about-page.jpeg`), updated Umang Vatika sensory garden citations, and linked national press coverage. (4) `blooming-in-pain.tsx`: Wired 9 curated community stories linking to archived Medium publication PDFs/HTMLs in `/public/medium/` (Sujatha Rao, Zanna Barrett, ME/CFS, Tracheostomy, Endometriosis, Long COVID, Neuroplastic Pain, Neuropsychologist Founder Story). (5) Code health: resolved syntax formatting issue in `blooming-in-pain.tsx`, verified `npx tsc --noEmit` with 0 errors, and confirmed clean production build (`npm run build`). |
 
 ---
 
 ## Current Status
 
-### Completed
+### Completed Pages & Components
 
-Pages Created
-
-* Home
-* About
-* Services
-* Work & Engagements
-* Blooming in Pain
-
-Global Components
-
-* Header Navigation
-* Mobile Navigation
-* Footer
-
-Brand Foundation
-
-* Initial site architecture established
-* Core navigation established
-* Professional positioning defined
-* Blooming in Pain integrated into site structure
-
-Technical Foundation
-
-* React application configured
-* Routing configured
-* Tailwind configured
-* Shadcn configured
+* **Home Page** (`/`): Hero word cycler, Made Visible reveal interaction, Engagements section, YouTube Podcasts grid, National Media feature cards, Blooming in Pain platform block, Split CTA.
+* **About Page** (`/about`): Portrait image (`pratik-about-page.jpeg`), ASTHA field work story, Blooming in Pain origin, Umang Vatika sensory garden citations, Samuhik Pahal author link, national media press links, "Ask AI" widget linked to `llms.txt`.
+* **Services Page** (`/services`): Strategic DEI Consulting, Workshops, Advocacy, Research & Policy pillars, FAQ section with JSON-LD schema.
+* **Work & Engagements** (`/work`): Keynote photo cards (`work-engagements_2.jpeg`, `work-engagements_3.jpeg`), Media Features & Podcasts section, category filter, role pills, outbound links.
+* **Blooming in Pain** (`/blooming-in-pain`): 9 curated community stories linking to Medium PDFs/HTMLs in `/public/medium/`, story submission page (`/blooming-in-pain/submit`), community FAQ.
+* **Contact Page** (`/contact`): Mad-Libs conversational form, accessible fields, error summary, Formspree integration (`VITE_CONTACT_FORM_ENDPOINT`).
+* **Accessibility Page** (`/accessibility`): Commitment statement, WCAG 2.1 AA audit compliance, reporting channels.
+* **Technical & SEO/GEO Foundation**: `llms.txt`, Schema.org JSON-LD structured data on all 7 pages, `sitemap.xml`, `robots.txt`, Vercel Analytics.
 
 ---
 
-## Outstanding Work
+## Outstanding Work Before Deployment
 
-### High Priority
+### Pre-Launch Checklist
 
-Contact Page
+* [x] All 7 core pages built & WCAG 2.1 AA audited
+* [x] Formspree endpoints wired via `.env` variables
+* [x] Analytics & SEO JSON-LD structured data configured
+* [x] `llms.txt` active
+* [ ] Create `public/og-image.jpg` social sharing banner (1200x630px)
+* [ ] Update final domain in `src/components/page-meta.tsx` and `index.html` upon deployment
+* [ ] Screen reader smoke test (VoiceOver / NVDA)
 
-Status: Not Complete
-
-Requirements
-
-* Accessible contact form
-* Inquiry routing
-* Partner inquiry flow
-* Speaking inquiry flow
-* Community inquiry flow
-* Success state
-* Validation
-
-Accessibility Statement Page
-
-Status: Missing
-
-Requirements
-
-* Accessibility commitment
-* WCAG statement
-* Contact method for accessibility issues
-
----
-
-### Medium Priority
-
-Analytics
-
-* Vercel Analytics setup
-* CTA tracking
-* Contact conversion tracking
-
-SEO
-
-* Meta titles
-* Meta descriptions
-* Open Graph tags
-* Structured data
-
----
-
-### Low Priority
-
-Future Enhancements
-
-* Testimonials
-* Speaker profile PDF
-* Story submission workflow
-* Social content integration
-
----
-
-## Architectural Decisions
-
-* Accessibility-first design
-* Partner/Hire remains primary conversion path
-* Blooming in Pain content remains externally hosted
-* ASTHA acts as credibility signal rather than primary brand
-* Minimal navigation and low cognitive load preferred
-
----
-
-## Next Session
-
-1. Complete Contact page
-2. Build Accessibility page
-3. Run PRD compliance audit
-4. Implement analytics
-5. Complete SEO pass
-6. Conduct accessibility review
