@@ -19,12 +19,18 @@ interface StoryCarouselProps {
 }
 
 export function StoryCarousel({ stories }: StoryCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const count = stories.length;
+  // Duplicate stories array 3 times for seamless infinite looping
+  const extendedStories = [...stories, ...stories, ...stories];
+
+  // Start at the beginning of the middle set (index = count)
+  const [currentIndex, setCurrentIndex] = useState(count);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [cardsToShow, setCardsToShow] = useState(3);
   const touchStartX = useRef<number | null>(null);
 
-  // Responsive cards to show
+  // Responsive card column layout
   useEffect(() => {
     function updateCardsToShow() {
       if (window.innerWidth < 640) {
@@ -40,27 +46,39 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
     return () => window.removeEventListener("resize", updateCardsToShow);
   }, []);
 
-  const totalStories = stories.length;
-  const maxIndex = totalStories - 1;
-
   const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
-  }, [maxIndex]);
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  }, []);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
-  }, [maxIndex]);
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  }, []);
 
-  // Autoplay timer
+  // Handle seamless wrap-around when transition finishes
+  const handleTransitionEnd = () => {
+    if (currentIndex >= count * 2) {
+      // Reached the end set, seamlessly jump to equivalent index in middle set
+      setIsTransitioning(false);
+      setCurrentIndex(currentIndex - count);
+    } else if (currentIndex < count) {
+      // Reached the start set, seamlessly jump to equivalent index in middle set
+      setIsTransitioning(false);
+      setCurrentIndex(currentIndex + count);
+    }
+  };
+
+  // Autoplay ticker
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 4500);
     return () => clearInterval(interval);
   }, [isPaused, nextSlide]);
 
-  // Touch handlers for swipe on mobile/tablet
+  // Touch handlers for mobile swipe
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -75,6 +93,9 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
     touchStartX.current = null;
   };
 
+  // Active story index in original 0-8 range for indicator
+  const activeDisplayIndex = ((currentIndex % count) + count) % count;
+
   return (
     <div
       className="relative w-full overflow-hidden py-4"
@@ -87,17 +108,20 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
       aria-roledescription="carousel"
       aria-label="Blooming in Pain stories"
     >
-      {/* Top Carousel Navigation Header */}
+      {/* Navigation & Status Header */}
       <div className="flex items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Story {currentIndex + 1} of {totalStories}
+            Story {activeDisplayIndex + 1} of {count}
           </span>
-          {isPaused && (
-            <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-muted text-muted-foreground">
-              Paused
-            </span>
-          )}
+          <span className="inline-flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-muted text-muted-foreground">
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${
+                isPaused ? "bg-amber-500" : "bg-emerald-500 animate-pulse"
+              }`}
+            />
+            {isPaused ? "Paused" : "Looping"}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -106,7 +130,7 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
             size="icon"
             onClick={prevSlide}
             aria-label="Previous story"
-            className="w-9 h-9 rounded-full border-border hover:bg-muted"
+            className="w-9 h-9 rounded-full border-border hover:bg-muted transition-transform active:scale-95"
           >
             ←
           </Button>
@@ -115,24 +139,26 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
             size="icon"
             onClick={nextSlide}
             aria-label="Next story"
-            className="w-9 h-9 rounded-full border-border hover:bg-muted"
+            className="w-9 h-9 rounded-full border-border hover:bg-muted transition-transform active:scale-95"
           >
             →
           </Button>
         </div>
       </div>
 
-      {/* Track */}
+      {/* Infinite Track Container */}
       <div className="overflow-hidden rounded-xl">
         <div
-          className="flex transition-transform duration-500 ease-out"
+          className="flex"
+          onTransitionEnd={handleTransitionEnd}
           style={{
             transform: `translateX(-${currentIndex * (100 / cardsToShow)}%)`,
+            transition: isTransitioning ? "transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1)" : "none",
           }}
         >
-          {stories.map((story) => (
+          {extendedStories.map((story, idx) => (
             <div
-              key={story.id}
+              key={`${story.id}-${idx}`}
               className="flex-none px-2.5"
               style={{ width: `${100 / cardsToShow}%` }}
               role="group"
@@ -140,7 +166,7 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
               aria-label={`${story.title} by ${story.author}`}
             >
               <Card className="flex flex-col h-full bg-card border-border shadow-sm hover:shadow-md transition-all duration-300 group overflow-hidden">
-                {/* Card Image */}
+                {/* Image & Tag */}
                 <div
                   className="relative w-full overflow-hidden flex-none bg-muted"
                   style={{ aspectRatio: "16/9" }}
@@ -152,13 +178,12 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
                     loading="lazy"
                   />
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"
+                    className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-75"
                     aria-hidden="true"
                   />
-                  {/* Tag Overlay */}
                   <span
-                    className="absolute bottom-3 left-3 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full text-white backdrop-blur-md"
-                    style={{ backgroundColor: "rgba(107, 70, 193, 0.85)" }}
+                    className="absolute bottom-3 left-3 text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full text-white backdrop-blur-md shadow-sm"
+                    style={{ backgroundColor: "rgba(107, 70, 193, 0.88)" }}
                   >
                     {story.tag}
                   </span>
@@ -184,7 +209,7 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
                       href={story.mediumUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity"
+                      className="inline-flex items-center gap-1 text-xs font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity shrink-0 ml-2"
                       style={{ color: "var(--plum)" }}
                       onClick={() =>
                         track("outbound_click", {
@@ -204,20 +229,23 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
         </div>
       </div>
 
-      {/* Pagination Dots */}
+      {/* Pagination Indicator Dots */}
       <div className="flex justify-center items-center gap-2 mt-6">
         {stories.map((story, idx) => (
           <button
             key={story.id}
-            onClick={() => setCurrentIndex(idx)}
-            aria-label={`Go to slide ${idx + 1}: ${story.title}`}
+            onClick={() => {
+              setIsTransitioning(true);
+              setCurrentIndex(count + idx);
+            }}
+            aria-label={`Go to story ${idx + 1}: ${story.title}`}
             className={`h-2 rounded-full transition-all duration-300 ${
-              idx === currentIndex
+              idx === activeDisplayIndex
                 ? "w-8"
                 : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
             }`}
             style={{
-              backgroundColor: idx === currentIndex ? "var(--plum)" : undefined,
+              backgroundColor: idx === activeDisplayIndex ? "var(--plum)" : undefined,
             }}
           />
         ))}

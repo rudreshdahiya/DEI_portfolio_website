@@ -8,7 +8,7 @@ import { StoryCarousel, Story } from "@/components/story-carousel";
 const stories: Story[] = [
   {
     id: 1,
-    tag: "Endometriosis",
+    tag: "Endometriosis & Surgery",
     title: "Living with Endometriosis: Srinikhita Pole’s Story of Chronic Pain, Surgery, and Resilience",
     excerpt:
       "Srinikhita Pole reflects on living with severe endometriosis, navigating major surgeries, and discovering resilience amidst chronic pelvic pain.",
@@ -21,7 +21,7 @@ const stories: Story[] = [
   },
   {
     id: 2,
-    tag: "Founder Note",
+    tag: "Neuropsychology & Pain",
     title: "Understanding the Unseen: A Neuropsychologist’s Personal Journey with Chronic Pain",
     excerpt:
       "A neuropsychologist shares his lived experience of chronic pain and invisible illness, and why he founded Blooming in Pain to build community.",
@@ -34,7 +34,7 @@ const stories: Story[] = [
   },
   {
     id: 3,
-    tag: "Chronic Illness",
+    tag: "Youth & Chronic Illness",
     title: "Living with Pain: Varshal’s Story of Strength and Stillness",
     excerpt:
       "Varshal shares her journey after her body suddenly turned against her at a young age, finding inner quiet, strength, and acceptance.",
@@ -47,10 +47,10 @@ const stories: Story[] = [
   },
   {
     id: 4,
-    tag: "Pelvic Pain & Stigma",
+    tag: "Vulvodynia & Misdiagnosis",
     title: "She Thought It Was Just Another Yeast Infection: Years of Misdiagnosis & Pelvic Pain",
     excerpt:
-      "Breaking silence around taboo pelvic pain and chronic infections that disrupt bodily autonomy, peace, and daily living.",
+      "Phillipa Baines’ brutally honest journey through vulvodynia, medical gaslighting, and the radical courage it took to reclaim her life.",
     readTime: "6 min",
     author: "Pratik Aggarwal",
     mediumUrl:
@@ -60,7 +60,7 @@ const stories: Story[] = [
   },
   {
     id: 5,
-    tag: "Patient Advocacy",
+    tag: "Medical Trauma & Advocacy",
     title: "Kevin James’ Unyielding Fight: Surviving Iatrogenic Injuries & Misdiagnoses",
     excerpt:
       "Navigating complex medical trauma, iatrogenic harm, and the emotional journey from systemic medical disbelief to fierce self-advocacy.",
@@ -73,7 +73,7 @@ const stories: Story[] = [
   },
   {
     id: 6,
-    tag: "Caregiving & Allyship",
+    tag: "Caregiving & Partner Support",
     title: "Shabnam Rakhiba’s Guide to Love and Care: Standing by Someone with Chronic Pain",
     excerpt:
       "An insightful guide for partners, family, and allies on providing meaningful care, emotional grounding, and active support for loved ones with chronic pain.",
@@ -86,7 +86,7 @@ const stories: Story[] = [
   },
   {
     id: 7,
-    tag: "Global Advocacy",
+    tag: "Global Patient Advocacy",
     title: "Rising from the Abyss: Virginia McIntyre’s Journey to International Advocacy",
     excerpt:
       "From chronic pain patient to global patient advocate, Virginia McIntyre shares how processing deep illness transformed her into a champion for disability rights.",
@@ -99,7 +99,7 @@ const stories: Story[] = [
   },
   {
     id: 8,
-    tag: "Resilience & Art",
+    tag: "Dance, Movement & Pain",
     title: "The Last Dance: Abitha P Sunil Rises Through Pain",
     excerpt:
       "Abitha P Sunil reflects on dance, movement, and bodily expression while navigating the unyielding onset of chronic pain.",
@@ -112,7 +112,7 @@ const stories: Story[] = [
   },
   {
     id: 9,
-    tag: "Lived Experience",
+    tag: "Identity & Loss",
     title: "I Am Changed: Navigating Life, Loss, and Identity with Chronic Illness",
     excerpt:
       "A reflective personal essay on grief, body identity, and letting go of who you were to embrace who you are today.",
