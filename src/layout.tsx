@@ -2,7 +2,6 @@ import { useState, useRef, useEffect } from "react";
 import { Link, Outlet } from "react-router";
 import { track } from "@vercel/analytics";
 import { AccessibilityWidget } from "@/components/accessibility-widget";
-import { ReadingRuler } from "@/components/reading-ruler";
 import { SocialLinks } from "@/components/social-links";
 
 const navLinks = [
@@ -47,23 +46,26 @@ export function Layout() {
         >
           <Link
             to="/"
-            className="text-lg font-semibold text-foreground hover:text-primary transition-colors"
+            className="flex items-center gap-2.5 text-lg font-semibold text-foreground hover:text-primary transition-colors group shrink-0"
             style={{ fontFamily: "'Fraunces', Georgia, serif" }}
           >
-            Pratik Aggarwal
+            <div className="w-8 h-8 rounded-full bg-plum text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs tracking-wider">
+              PA
+            </div>
+            <span className="font-semibold tracking-tight">Pratik Aggarwal</span>
           </Link>
 
           {/* Desktop navigation & accessibility control */}
           <div className="hidden md:flex items-center gap-8">
             <ul
-              className="flex items-center gap-8 list-none m-0 p-0"
+              className="flex items-center justify-between gap-8 list-none m-0 p-0"
               role="list"
             >
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="text-sm text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors"
+                    className="text-sm font-medium text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors whitespace-nowrap"
                   >
                     {link.label}
                   </Link>
@@ -71,7 +73,7 @@ export function Layout() {
               ))}
             </ul>
 
-            {/* Inclusivity / Reading Modes Widget */}
+            {/* Accessibility Widget */}
             <AccessibilityWidget />
           </div>
 
@@ -140,8 +142,6 @@ export function Layout() {
         )}
       </header>
 
-      {/* ── Reading Ruler overlay (visible only when Focus Reading mode is active) */}
-      <ReadingRuler />
 
       {/* ── Main content ────────────────────────────────────────────────── */}
       <main id="main-content" className="flex-1 pb-20 md:pb-0" tabIndex={-1}>
