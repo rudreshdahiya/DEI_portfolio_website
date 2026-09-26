@@ -297,12 +297,12 @@ const pillars: ServicePillar[] = [
     icon: GraduationCap,
     audienceLabel: "Universities, Global Summits & Cultural Platforms",
     tagline: "Delivering keynotes, university lectures, and public summit interventions that challenge conventional disability narratives with lived authority.",
-    featuredImage: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    featuredImage: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
     imageAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
     imageCaption: "Delivering keynote address & opening national pain art exhibition at Purple Fest 2024.",
     galleryImages: [
       {
-        url: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+        url: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
         alt: "Delivering keynote address at Purple Fest",
         caption: "Delhi Purple Fest Keynote Address",
       },

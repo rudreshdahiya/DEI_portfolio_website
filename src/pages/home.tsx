@@ -106,7 +106,7 @@ const audiencePersonas: AudiencePersona[] = [
     ],
     ctaLabel: "Invite Pratik to Speak →",
     ctaHref: "/services#talks",
-    photoUrl: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    photoUrl: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
     photoAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
     photoCaption: "Keynote Address on Lived Authority",
   },
@@ -690,7 +690,7 @@ export default function Home() {
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
               <img
-                src="/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg"
+                src="/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg"
                 alt="Pratik Aggarwal delivering keynote at Delhi Purple Fest"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />

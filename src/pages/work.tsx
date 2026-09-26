@@ -69,7 +69,7 @@ const galleryPhotos: GalleryPhoto[] = [
   },
   {
     id: "pf-1",
-    src: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    src: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
     title: "Purple Fest — Keynote & Advocacy Session",
     category: "purplefest",
     categoryLabel: "Purple Fest",
@@ -253,7 +253,7 @@ const groups: Group[] = [
         description:
           "Keynote address & opening landmark national art exhibition featuring 27 artists living with invisible conditions at India's largest disability arts festival.",
         featured: true,
-        photoUrl: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+        photoUrl: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
         photoAlt: "Pratik Aggarwal delivering keynote at Purple Fest Goa",
       },
       {
