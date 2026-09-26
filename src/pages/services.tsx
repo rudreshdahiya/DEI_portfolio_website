@@ -15,6 +15,7 @@ import {
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
+import { ClickableImage } from "@/components/image-lightbox";
 
 // ── Types & Data ──────────────────────────────────────────────────────────────
 
@@ -562,9 +563,12 @@ export default function Services() {
 
             {/* Featured Pratik Portrait Card */}
             <div className="relative w-full max-w-[240px] aspect-[4/3] rounded-xl overflow-hidden border-2 border-border shadow-md shrink-0 bg-card hidden lg:block">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG"
                 alt="Pratik Aggarwal receiving Jai Vakeel Foundation Award for ASTHA"
+                title="Jai Vakeel Foundation Award"
+                caption="Receiving award on behalf of ASTHA"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover object-top"
               />
             </div>
@@ -731,14 +735,14 @@ export default function Services() {
                     <div className="grid grid-cols-3 gap-2 sm:gap-3">
                       {pillar.galleryImages.map((imgItem, imgIdx) => (
                         <div key={imgIdx} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                          <img
+                          <ClickableImage
                             src={imgItem.url}
                             alt={imgItem.alt}
-                            loading="lazy"
-                            decoding="async"
+                            caption={imgItem.caption}
+                            containerClassName="w-full h-full"
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2.5 text-white">
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2.5 text-white pointer-events-none">
                             <p className="text-[11px] font-medium text-white/95 leading-tight">
                               {imgItem.caption}
                             </p>

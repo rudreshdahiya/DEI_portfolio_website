@@ -4,6 +4,7 @@ import { track } from "@vercel/analytics";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { Building2, Users, GraduationCap, Landmark, Sparkles } from "lucide-react";
+import { ClickableImage } from "@/components/image-lightbox";
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -276,14 +277,14 @@ function useCountUp(target: number, duration = 3000) {
 function AnimatedStat({ numeric, suffix, label }: { numeric: number; suffix: string; label: string }) {
   const { count, containerRef } = useCountUp(numeric, 3000);
   return (
-    <div ref={containerRef} className="p-3.5 rounded-xl border border-border bg-card/80 shadow-2xs">
+    <div ref={containerRef} className="p-2 sm:p-3.5 rounded-xl border border-border bg-card/80 shadow-2xs text-center sm:text-left flex flex-col justify-center">
       <p
-        className="text-2xl sm:text-3xl text-foreground font-extrabold mb-0.5 font-serif tabular-nums"
+        className="text-xl sm:text-3xl text-foreground font-extrabold mb-0.5 font-serif tabular-nums"
         aria-label={`${numeric}${suffix} ${label}`}
       >
         {count}{suffix}
       </p>
-      <p className="text-[11px] text-muted-foreground leading-tight">{label}</p>
+      <p className="text-[10px] sm:text-[11px] text-muted-foreground leading-snug sm:leading-tight">{label}</p>
     </div>
   );
 }
@@ -452,7 +453,7 @@ export default function Home() {
               </div>
 
               {/* 3 Count-up Stat Boxes directly under text */}
-              <div className="grid grid-cols-3 gap-3.5 pt-1">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3.5 pt-1">
                 {stats.map((stat) => (
                   <AnimatedStat key={stat.label} {...stat} />
                 ))}
@@ -651,74 +652,92 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png"
                 alt="Pratik Aggarwal speaking on global policy panel at ARNEC Manila"
+                title="Global Policy"
+                caption="ARNEC Conference, Manila"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Global Policy</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ARNEC Conference, Manila</p>
               </div>
             </div>
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG"
                 alt="Pratik Aggarwal receiving organizational award for ASTHA"
+                title="Leadership Award"
+                caption="Jai Vakeel Award to ASTHA"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Leadership Award</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Jai Vakeel Award to ASTHA</p>
               </div>
             </div>
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG"
                 alt="Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital"
+                title="Accessible Design"
+                caption="Umang Vatika Sensory Garden"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Accessible Design</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Umang Vatika Sensory Garden</p>
               </div>
             </div>
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg"
                 alt="Pratik Aggarwal delivering keynote at Delhi Purple Fest"
+                title="National Keynote"
+                caption="Delhi Purple Fest 2024"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">National Keynote</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Delhi Purple Fest 2024</p>
               </div>
             </div>
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg"
                 alt="Pratik Aggarwal conducting Training of Trainers for Tech Mahindra Foundation"
+                title="Capacity Building"
+                caption="ToT Workshop, Tech Mahindra"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Capacity Building</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ToT Workshop, Tech Mahindra</p>
               </div>
             </div>
 
             <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
-              <img
+              <ClickableImage
                 src="/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg"
                 alt="Pratik Aggarwal addressing students at Kirori Mal College Delhi University"
+                title="Academic Keynote"
+                caption="Kirori Mal College, DU"
+                containerClassName="w-full h-full"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Academic Keynote</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Kirori Mal College, DU</p>
               </div>

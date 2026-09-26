@@ -5,6 +5,7 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
 import { StoryCarousel, Story } from "@/components/story-carousel";
+import { ClickableImage } from "@/components/image-lightbox";
 
 // ── Data ───────────────────────────────────────────────────────────
 const stories: Story[] = [
@@ -310,53 +311,57 @@ export default function BloomingInPain() {
               {/* Real Exhibition & Community Photo Grid (4 Distinct Photos) */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                  <img
+                  <ClickableImage
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_9605.jpeg"
                     alt="Blooming in Pain Art Exhibition Pavilion at Purple Fest Goa"
-                    loading="lazy"
-                    decoding="async"
+                    title="Exhibition Pavilion"
+                    caption="Blooming in Pain Exhibition at Purple Fest Goa"
+                    containerClassName="w-full h-full"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end pointer-events-none">
                     <span className="text-[10px] text-white font-medium">Exhibition Pavilion</span>
                   </div>
                 </div>
 
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                  <img
+                  <ClickableImage
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_9606.jpeg"
                     alt="Curated visual artworks by 27 artists with invisible chronic illness"
-                    loading="lazy"
-                    decoding="async"
+                    title="27 Pain Artists"
+                    caption="Visual artworks by 27 artists living with chronic pain"
+                    containerClassName="w-full h-full"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end pointer-events-none">
                     <span className="text-[10px] text-white font-medium">27 Pain Artists</span>
                   </div>
                 </div>
 
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                  <img
+                  <ClickableImage
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_0090.jpg"
                     alt="Community listening circle and dialogue session on invisible pain"
-                    loading="lazy"
-                    decoding="async"
+                    title="Listening Circles"
+                    caption="Community dialogue and listening circle"
+                    containerClassName="w-full h-full"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end pointer-events-none">
                     <span className="text-[10px] text-white font-medium">Listening Circles</span>
                   </div>
                 </div>
 
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                  <img
+                  <ClickableImage
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_0124.jpg"
                     alt="Interactive storytelling workspace and artwork creation"
-                    loading="lazy"
-                    decoding="async"
+                    title="Storytelling Workspace"
+                    caption="Interactive photobook storytelling workshop"
+                    containerClassName="w-full h-full"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end pointer-events-none">
                     <span className="text-[10px] text-white font-medium">Storytelling Workspace</span>
                   </div>
                 </div>

@@ -4,6 +4,7 @@ import { Sparkles, Bot, HelpCircle, CheckCircle2, X } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
+import { ClickableImage } from "@/components/image-lightbox";
 
 // ── Ask AI widget ─────────────────────────────────────────────────────────────
 
@@ -260,9 +261,11 @@ function Portrait({
         style={{ aspectRatio }}
       >
         {src ? (
-          <img
+          <ClickableImage
             src={src}
             alt={alt}
+            caption={caption}
+            containerClassName="w-full h-full"
             className="w-full h-full object-cover object-center"
           />
         ) : (
