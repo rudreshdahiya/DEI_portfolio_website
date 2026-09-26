@@ -1,20 +1,30 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { AccessibilityWidget } from "@/components/accessibility-widget";
 import { SocialLinks } from "@/components/social-links";
 import { LightboxProvider } from "@/components/image-lightbox";
+import { Home, User, Briefcase, HeartHandshake, Mail, ArrowRight, X, Menu } from "lucide-react";
 
-const navLinks = [
+const desktopNavLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/blooming-in-pain", label: "Blooming in Pain" },
   { href: "/contact", label: "Contact" },
 ];
 
+const mobileNavItems = [
+  { href: "/", label: "Home", icon: Home, desc: "Overview & key impact metrics" },
+  { href: "/about", label: "About Pratik", icon: User, desc: "Advocacy & lived authority" },
+  { href: "/services", label: "Services & Pillars", icon: Briefcase, desc: "Training, Advisory, Keynotes & Research" },
+  { href: "/blooming-in-pain", label: "Blooming in Pain", icon: HeartHandshake, desc: "Storytelling & community work" },
+  { href: "/contact", label: "Contact & Booking", icon: Mail, desc: "Partnerships & inquiries" },
+];
+
 export function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const location = useLocation();
 
   useEffect(() => {
     if (!mobileNavOpen) return;
@@ -26,6 +36,18 @@ export function Layout() {
     };
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileNavOpen]);
+
+  // Lock body scroll when mobile drawer is open for a native app feel
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileNavOpen]);
 
   return (
@@ -63,11 +85,13 @@ export function Layout() {
                 className="flex items-center justify-between gap-8 list-none m-0 p-0"
                 role="list"
               >
-                {navLinks.map((link) => (
+                {desktopNavLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="text-sm font-medium text-foreground hover:text-primary underline-offset-4 hover:underline transition-colors whitespace-nowrap"
+                      className={`text-sm font-medium transition-colors underline-offset-4 hover:underline whitespace-nowrap ${
+                        location.pathname === link.href ? "text-plum font-bold" : "text-foreground hover:text-primary"
+                      }`}
                     >
                       {link.label}
                     </Link>
@@ -87,76 +111,117 @@ export function Layout() {
                 aria-label={mobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={mobileNavOpen}
                 aria-controls="mobile-nav"
-                className="p-2 -mr-2 text-foreground hover:text-primary transition-colors"
+                className="p-2 -mr-2 text-foreground hover:text-plum transition-colors cursor-pointer"
                 onClick={() => setMobileNavOpen((prev) => !prev)}
               >
-                <svg
-                  aria-hidden="true"
-                  focusable="false"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  {mobileNavOpen ? (
-                    <>
-                      <line x1="18" y1="6" x2="6" y2="18" />
-                      <line x1="6" y1="6" x2="18" y2="18" />
-                    </>
-                  ) : (
-                    <>
-                      <line x1="3" y1="8" x2="21" y2="8" />
-                      <line x1="3" y1="16" x2="21" y2="16" />
-                    </>
-                  )}
-                </svg>
+                {mobileNavOpen ? (
+                  <X className="w-5 h-5 text-plum" />
+                ) : (
+                  <Menu className="w-5 h-5 text-foreground" />
+                )}
               </button>
             </div>
           </nav>
 
-          {/* Mobile menu drawer */}
+          {/* ── App-Like Mobile Navigation Bottom Sheet Drawer (Thumb Zone UX) ── */}
           {mobileNavOpen &&
             createPortal(
               <>
+                {/* Backdrop Overlay */}
                 <div
-                  className="fixed inset-0 top-[60px] z-[9998] bg-black/40 backdrop-blur-xs md:hidden"
+                  className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-xs md:hidden animate-in fade-in duration-200"
                   onClick={() => setMobileNavOpen(false)}
                   aria-hidden="true"
                 />
+
+                {/* Bottom Sheet Modal */}
                 <div
                   id="mobile-nav"
-                  className="fixed inset-x-0 top-[60px] z-[9999] md:hidden border-b border-border bg-background/98 backdrop-blur-md shadow-xl animate-in slide-in-from-top-2 duration-200"
+                  className="fixed inset-x-0 bottom-0 z-[9999] md:hidden rounded-t-3xl border-t-2 border-plum/40 bg-card shadow-2xl overflow-hidden max-h-[88vh] flex flex-col animate-in slide-in-from-bottom duration-300"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    color: "var(--ink)",
+                  }}
+                  role="dialog"
+                  aria-label="Navigation Menu"
                 >
-                  <ul
-                    className="max-w-5xl mx-auto px-6 py-4 list-none m-0 p-0 space-y-1"
-                    role="list"
-                  >
-                    {navLinks.map((link) => (
-                      <li key={link.href} className="border-b border-border/60 last:border-0">
+                  {/* Drag Handle Indicator */}
+                  <div className="w-12 h-1.5 rounded-full bg-border/80 mx-auto my-3 shrink-0" aria-hidden="true" />
+
+                  {/* Header Row inside sheet */}
+                  <div className="flex items-center justify-between px-6 pb-3 border-b border-border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-plum text-white text-[10px] font-bold flex items-center justify-center">
+                        PA
+                      </div>
+                      <span className="text-sm font-bold font-serif text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                        Navigation Menu
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setMobileNavOpen(false)}
+                      className="p-1 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
+                      aria-label="Close menu"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Scrollable Navigation List */}
+                  <div className="p-4 space-y-1.5 overflow-y-auto max-h-[55vh]">
+                    {mobileNavItems.map((item) => {
+                      const IconComp = item.icon;
+                      const isActive = location.pathname === item.href;
+                      return (
                         <Link
-                          to={link.href}
-                          className="block py-3.5 text-base font-semibold text-foreground hover:text-plum transition-colors"
+                          key={item.href}
+                          to={item.href}
                           onClick={() => setMobileNavOpen(false)}
+                          className={`flex items-center gap-3.5 p-3 rounded-2xl transition-all border ${
+                            isActive
+                              ? "bg-plum/10 border-plum/40 text-plum font-bold shadow-2xs"
+                              : "bg-card/50 border-border text-foreground hover:bg-muted"
+                          }`}
                         >
-                          {link.label}
+                          <div
+                            className={`p-2.5 rounded-xl shrink-0 ${
+                              isActive ? "bg-plum text-white" : "bg-muted text-plum"
+                            }`}
+                          >
+                            <IconComp className="w-4 h-4" />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <span className="text-sm font-bold block leading-tight">
+                              {item.label}
+                            </span>
+                            <span className="text-[11px] text-muted-foreground block truncate mt-0.5">
+                              {item.desc}
+                            </span>
+                          </div>
+                          <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${isActive ? "text-plum translate-x-0.5" : "text-muted-foreground/40"}`} />
                         </Link>
-                      </li>
-                    ))}
-                    <li className="pt-3">
-                      <Link
-                        to="/contact"
-                        className="flex items-center justify-center w-full py-3 rounded-xl font-semibold text-sm text-white shadow-sm transition-opacity hover:opacity-90"
-                        style={{ backgroundColor: "var(--plum)" }}
-                        onClick={() => setMobileNavOpen(false)}
-                      >
-                        Start a Partnership →
-                      </Link>
-                    </li>
-                  </ul>
+                      );
+                    })}
+                  </div>
+
+                  {/* Primary CTA in Thumb Zone */}
+                  <div className="p-4 border-t border-border bg-muted/40 shrink-0 space-y-2">
+                    <Link
+                      to="/contact"
+                      className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl text-sm font-bold text-white shadow-md transition-all active:scale-[0.99] cursor-pointer"
+                      style={{ backgroundColor: "var(--plum)" }}
+                      onClick={() => setMobileNavOpen(false)}
+                    >
+                      <span>Start a Partnership</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <div className="text-center">
+                      <span className="text-[11px] text-muted-foreground">
+                        Disability Inclusion & DEI Consultancy
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </>,
               document.body
