@@ -270,29 +270,30 @@ export function AccessibilityWidget() {
         </div>
       )}
 
-      {/* ── Panel Popover ─────────────────────────────────────────── */}
+      {/* ── Panel Popover (Desktop) / Bottom Sheet Drawer (Mobile) ───────── */}
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[1px]"
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity"
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
           />
 
           <div
             ref={panelRef}
-            className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border-2 border-plum/40 bg-card shadow-2xl z-50 overflow-hidden"
+            className="fixed inset-x-0 bottom-0 md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 z-50 w-full md:w-96 rounded-t-3xl md:rounded-2xl border-t-2 md:border-2 border-plum/40 bg-card shadow-2xl overflow-hidden max-h-[85vh] md:max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-300 md:animate-none"
             style={{
               backgroundColor: "var(--surface)",
               color: "var(--ink)",
-              maxHeight: "85vh",
-              overflowY: "auto",
             }}
             role="dialog"
             aria-label="Accessibility & Display Modes"
           >
+            {/* Mobile Drag/Handle indicator */}
+            <div className="w-12 h-1 rounded-full bg-border/80 mx-auto my-2 md:hidden" aria-hidden="true" />
+
             {/* Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between p-3.5 border-b border-border bg-card/95 backdrop-blur-md gap-3">
+            <div className="sticky top-0 z-10 flex items-center justify-between p-4 sm:p-3.5 border-b border-border bg-card/95 backdrop-blur-md gap-3">
               <div className="flex items-center gap-2.5 min-w-0 flex-1">
                 <div className="p-2 rounded-xl bg-plum/10 text-plum flex items-center justify-center shrink-0">
                   <AccessibilityBadgeIcon className="w-5 h-5 text-plum" />

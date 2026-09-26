@@ -11,6 +11,8 @@ import {
   HeartHandshake,
   BookOpen,
   Camera,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
@@ -455,6 +457,11 @@ const faqItems = [
 export default function Services() {
   const [selectedAudience, setSelectedAudience] = useState<PillarId>("all");
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
+  const [expandedPillars, setExpandedPillars] = useState<Record<string, boolean>>({});
+
+  const togglePillarExpand = (id: string) => {
+    setExpandedPillars((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   useRevealAll([selectedAudience]);
 
@@ -650,100 +657,121 @@ export default function Services() {
                 </div>
               </div>
 
-              {/* Main Pillar Details (Full Width) */}
-              <div className="space-y-6">
+              {/* Main Pillar Details & Mobile Shutter Container */}
+              <div className="space-y-5">
                 <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal max-w-prose">
                   {pillar.leadDescription}
                 </p>
 
-                {/* Structured Sections (for Pillars 1 & 2) */}
-                {pillar.sections && pillar.sections.length > 0 && (
-                  <div className="space-y-4 pt-2">
-                    {pillar.sections.map((section, idx) => (
-                      <div key={idx} className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-2.5">
-                        <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
-                          {section.title}
-                        </h3>
-                        <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
-                          {section.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="flex items-start gap-2 text-foreground/90 leading-snug">
-                              <span className="text-plum font-bold shrink-0">·</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                {/* Mobile Shutter Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => togglePillarExpand(pillar.id)}
+                  className="md:hidden flex items-center justify-between w-full px-4 py-3 rounded-xl border border-plum/30 bg-plum/5 text-xs font-bold text-plum transition-all hover:bg-plum/10 cursor-pointer shadow-2xs"
+                >
+                  <span>
+                    {expandedPillars[pillar.id]
+                      ? "Hide Pillar Deliverables & Photos ↑"
+                      : "View Offerings, Deliverables & Photos ↓"}
+                  </span>
+                  {expandedPillars[pillar.id] ? (
+                    <ChevronUp className="w-4 h-4 text-plum shrink-0" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-plum shrink-0" />
+                  )}
+                </button>
+
+                {/* Collapsible Shutter Content (Hidden on mobile by default unless expanded, always visible on md:) */}
+                <div className={`space-y-6 ${expandedPillars[pillar.id] ? "block animate-in fade-in duration-200" : "hidden md:block"}`}>
+                  {/* Structured Sections (for Pillars 1 & 2) */}
+                  {pillar.sections && pillar.sections.length > 0 && (
+                    <div className="space-y-4 pt-2">
+                      {pillar.sections.map((section, idx) => (
+                        <div key={idx} className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-2.5">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                            {section.title}
+                          </h3>
+                          <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
+                            {section.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="flex items-start gap-2 text-foreground/90 leading-snug">
+                                <span className="text-plum font-bold shrink-0">·</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Bullet Includes List (for Pillars 3 & 4) */}
+                  {pillar.includes && pillar.includes.length > 0 && (
+                    <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-3">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                        Key Offerings &amp; Deliverables
+                      </h3>
+                      <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
+                        {pillar.includes.map((inc, i) => (
+                          <li key={i} className="flex items-start gap-2 text-foreground/90 leading-snug">
+                            <span className="text-plum font-bold shrink-0">✓</span>
+                            <span>{inc}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Engagements Showcase */}
+                  {pillar.engagements.length > 0 && (
+                    <div className="space-y-3 pt-3 border-t border-border/60">
+                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                        Selected Live Engagements &amp; Reference Work:
+                      </p>
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        {pillar.engagements.map((eng) => (
+                          <div key={eng.title} className="p-3.5 rounded-xl border border-border bg-card space-y-1 shadow-2xs">
+                            <div className="flex items-center justify-between text-[11px] font-bold text-plum">
+                              <span>{eng.org}</span>
+                              <span className="text-muted-foreground font-mono">{eng.year}</span>
+                            </div>
+                            <h4 className="text-xs font-semibold text-foreground">{eng.title}</h4>
+                            <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{eng.description}</p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Bullet Includes List (for Pillars 3 & 4) */}
-                {pillar.includes && pillar.includes.length > 0 && (
-                  <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-3">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
-                      Key Offerings &amp; Deliverables
-                    </h3>
-                    <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
-                      {pillar.includes.map((inc, i) => (
-                        <li key={i} className="flex items-start gap-2 text-foreground/90 leading-snug">
-                          <span className="text-plum font-bold shrink-0">✓</span>
-                          <span>{inc}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Engagements Showcase */}
-                {pillar.engagements.length > 0 && (
-                  <div className="space-y-3 pt-3 border-t border-border/60">
-                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                      Selected Live Engagements &amp; Reference Work:
-                    </p>
-                    <div className="grid sm:grid-cols-3 gap-3">
-                      {pillar.engagements.map((eng) => (
-                        <div key={eng.title} className="p-3.5 rounded-xl border border-border bg-card space-y-1 shadow-2xs">
-                          <div className="flex items-center justify-between text-[11px] font-bold text-plum">
-                            <span>{eng.org}</span>
-                            <span className="text-muted-foreground font-mono">{eng.year}</span>
-                          </div>
-                          <h4 className="text-xs font-semibold text-foreground">{eng.title}</h4>
-                          <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{eng.description}</p>
-                        </div>
-                      ))}
                     </div>
-                  </div>
-                )}
+                  )}
 
-                {/* Bottom Horizontal Photo Strip for each pillar */}
-                {pillar.galleryImages && pillar.galleryImages.length > 0 && (
-                  <div className="pt-5 border-t border-border/60 space-y-3">
-                    <p className="text-xs font-bold uppercase tracking-widest text-plum flex items-center gap-2">
-                      <Camera className="w-3.5 h-3.5 text-plum" />
-                      Fieldwork &amp; Engagements in Action
-                    </p>
-                    <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                      {pillar.galleryImages.map((imgItem, imgIdx) => (
-                        <div key={imgIdx} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
-                          <ClickableImage
-                            src={imgItem.url}
-                            alt={imgItem.alt}
-                            caption={imgItem.caption}
-                            containerClassName="w-full h-full"
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2.5 text-white pointer-events-none">
-                            <p className="text-[11px] font-medium text-white/95 leading-tight">
-                              {imgItem.caption}
-                            </p>
+                  {/* Bottom Horizontal Photo Strip for each pillar */}
+                  {pillar.galleryImages && pillar.galleryImages.length > 0 && (
+                    <div className="pt-5 border-t border-border/60 space-y-3">
+                      <p className="text-xs font-bold uppercase tracking-widest text-plum flex items-center gap-2">
+                        <Camera className="w-3.5 h-3.5 text-plum" />
+                        Fieldwork &amp; Engagements in Action
+                      </p>
+                      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                        {pillar.galleryImages.map((imgItem, imgIdx) => (
+                          <div key={imgIdx} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                            <ClickableImage
+                              src={imgItem.url}
+                              alt={imgItem.alt}
+                              caption={imgItem.caption}
+                              containerClassName="w-full h-full"
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2.5 text-white pointer-events-none">
+                              <p className="text-[11px] font-medium text-white/95 leading-tight">
+                                {imgItem.caption}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 {/* Action CTA & Suited For */}
                 <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-border/80">

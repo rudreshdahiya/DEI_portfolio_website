@@ -117,29 +117,46 @@ export function Layout() {
             </div>
           </nav>
 
-          {/* Mobile menu */}
+          {/* Mobile menu drawer */}
           {mobileNavOpen && (
-            <div
-              id="mobile-nav"
-              className="md:hidden border-t border-border bg-background"
-            >
-              <ul
-                className="max-w-5xl mx-auto px-6 py-4 list-none m-0 p-0"
-                role="list"
+            <>
+              <div
+                className="fixed inset-0 top-[60px] z-30 bg-black/40 backdrop-blur-xs md:hidden"
+                onClick={() => setMobileNavOpen(false)}
+                aria-hidden="true"
+              />
+              <div
+                id="mobile-nav"
+                className="fixed inset-x-0 top-[60px] z-40 md:hidden border-b border-border bg-background/98 backdrop-blur-md shadow-xl animate-in slide-in-from-top-2 duration-200"
               >
-                {navLinks.map((link) => (
-                  <li key={link.href} className="border-b border-border last:border-0">
+                <ul
+                  className="max-w-5xl mx-auto px-6 py-4 list-none m-0 p-0 space-y-1"
+                  role="list"
+                >
+                  {navLinks.map((link) => (
+                    <li key={link.href} className="border-b border-border/60 last:border-0">
+                      <Link
+                        to={link.href}
+                        className="block py-3.5 text-base font-semibold text-foreground hover:text-plum transition-colors"
+                        onClick={() => setMobileNavOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                  <li className="pt-3">
                     <Link
-                      to={link.href}
-                      className="block py-4 text-base text-foreground hover:text-primary transition-colors"
+                      to="/contact"
+                      className="flex items-center justify-center w-full py-3 rounded-xl font-semibold text-sm text-white shadow-sm transition-opacity hover:opacity-90"
+                      style={{ backgroundColor: "var(--plum)" }}
                       onClick={() => setMobileNavOpen(false)}
                     >
-                      {link.label}
+                      Start a Partnership →
                     </Link>
                   </li>
-                ))}
-              </ul>
-            </div>
+                </ul>
+              </div>
+            </>
           )}
         </header>
 
