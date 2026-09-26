@@ -655,7 +655,7 @@ export default function Services() {
 
               {/* Main Pillar Details (Full Width) */}
               <div className="space-y-6">
-                <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal">
+                <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal max-w-prose">
                   {pillar.leadDescription}
                 </p>
 
@@ -727,7 +727,7 @@ export default function Services() {
                       <Camera className="w-3.5 h-3.5 text-plum" />
                       Fieldwork &amp; Engagements in Action
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-3 gap-2 sm:gap-3">
                       {pillar.galleryImages.map((imgItem, imgIdx) => (
                         <div key={imgIdx} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
                           <img
@@ -795,10 +795,17 @@ export default function Services() {
               return (
                 <div
                   key={index}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isOpen}
                   className="py-5 transition-colors group cursor-pointer"
-                  onMouseEnter={() => setActiveFaqIndex(index)}
-                  onMouseLeave={() => setActiveFaqIndex(null)}
                   onClick={() => setActiveFaqIndex(isOpen ? null : index)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveFaqIndex(isOpen ? null : index);
+                    }
+                  }}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <h3

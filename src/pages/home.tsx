@@ -490,7 +490,7 @@ export default function Home() {
                   }}
                 />
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3.5 text-white">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-plum-light">Keynote Speaker &amp; Practitioner</p>
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-white/80">Keynote Speaker &amp; Practitioner</p>
                   <p className="text-xs text-white/90">ARNEC Asia Pacific Conference, Manila</p>
                 </div>
               </div>
@@ -547,7 +547,8 @@ export default function Home() {
                   }}
                 >
                   <IconComponent className="w-4 h-4 shrink-0" />
-                  <span>{persona.label}</span>
+                  <span className="sm:hidden">{persona.shortLabel}</span>
+                  <span className="hidden sm:inline">{persona.label}</span>
                 </button>
               );
             })}
@@ -614,7 +615,7 @@ export default function Home() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-white">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Sector Context</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-white/80">Sector Context</p>
                     <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
                       {currentPersona.photoCaption}
                     </p>
@@ -658,7 +659,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Global Policy</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Global Policy</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ARNEC Conference, Manila</p>
               </div>
             </div>
@@ -670,7 +671,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Leadership Award</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Leadership Award</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Jai Vakeel Award to ASTHA</p>
               </div>
             </div>
@@ -682,7 +683,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Accessible Design</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Accessible Design</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Umang Vatika Sensory Garden</p>
               </div>
             </div>
@@ -694,7 +695,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">National Keynote</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">National Keynote</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Delhi Purple Fest 2024</p>
               </div>
             </div>
@@ -706,7 +707,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Capacity Building</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Capacity Building</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ToT Workshop, Tech Mahindra</p>
               </div>
             </div>
@@ -718,7 +719,7 @@ export default function Home() {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Academic Keynote</span>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/80">Academic Keynote</span>
                 <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Kirori Mal College, DU</p>
               </div>
             </div>

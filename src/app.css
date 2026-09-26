@@ -53,7 +53,7 @@
   --ground:  #F6F4F7;   /* lilac-white base */
   --surface: #FFFFFF;   /* cards, panels */
   --ink:     #1E1A24;   /* primary text — plum-black */
-  --muted-text: #595260; /* secondary text */
+  --muted-text: #504852; /* secondary text — darkened for ~5.5:1 contrast on ground */
   --plum:    #5C2A57;   /* primary brand + CTA */
   --bloom:   #B84472;   /* reveal / hover / focus accent — darkened to 4.67:1 on ground (AA) */
   --sage:    #4F6F5C;   /* community path */

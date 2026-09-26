@@ -13,7 +13,9 @@ const navLinks = [
 
 export function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const footerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!mobileNavOpen) return;
@@ -26,6 +28,18 @@ export function Layout() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [mobileNavOpen]);
+
+  // Hide sticky CTA when footer is visible
+  useEffect(() => {
+    const el = footerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -144,13 +158,15 @@ export function Layout() {
 
 
       {/* ── Main content ────────────────────────────────────────────────── */}
-      <main id="main-content" className="flex-1 pb-20 md:pb-0" tabIndex={-1}>
+      <main id="main-content" className="flex-1 pb-24 md:pb-0" tabIndex={-1}>
         <Outlet />
       </main>
 
-      {/* ── Sticky mobile CTA — single primary action (hidden on md+) ─── */}
+      {/* ── Sticky mobile CTA — auto-hides when footer is visible ──────── */}
       <div
-        className="fixed bottom-0 inset-x-0 z-50 md:hidden border-t border-border backdrop-blur-sm"
+        className={`fixed bottom-0 inset-x-0 z-50 md:hidden border-t border-border backdrop-blur-sm transition-transform duration-300 ${
+          footerVisible ? "translate-y-full" : "translate-y-0"
+        }`}
         style={{
           paddingBottom: "env(safe-area-inset-bottom, 0px)",
           backgroundColor: "rgba(246,244,247,0.97)",
@@ -174,7 +190,7 @@ export function Layout() {
       </div>
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-border bg-background py-8">
+      <footer ref={footerRef} className="border-t border-border bg-background py-8">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex flex-wrap items-center gap-2 text-center md:text-left">
             <span className="font-semibold text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
