@@ -254,9 +254,9 @@ export default function About() {
             </PullQuote>
 
             <Portrait
-              src="/images/Pratik%20Pictures/RPWD%20Workshop%20for%20People%20with%20Disabilities/WhatsApp%20Image%202026-08-24%20at%202.03.24%20PM%20(1).jpeg"
-              alt="Pratik Aggarwal facilitating RPwD Act disability inclusion workshop"
-              caption="Pratik Aggarwal — facilitating community-based disability rights training and capacity-building workshops."
+              src="/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG"
+              alt="Pratik Aggarwal receiving Jai Vakeel Foundation Award for ASTHA"
+              caption="Pratik Aggarwal — Executive Director at ASTHA receiving organizational leadership recognition."
               aspectRatio="16/9"
             />
           </section>
@@ -300,10 +300,76 @@ export default function About() {
             <Portrait
               src="/images/Pratik%20Pictures/BloomingInPain/IMG_9605.jpeg"
               alt="Pratik Aggarwal at Blooming in Pain National Art Exhibition"
-              caption="Pratik Aggarwal — Executive Director at ASTHA, researcher, and founder of Blooming in Pain."
+              caption="Pratik Aggarwal — founder of Blooming in Pain, opening national pain art exhibition at Purple Fest Goa."
               aspectRatio="16/9"
               size="contained"
             />
+          </section>
+
+          {/* ── Non-Repeating Fieldwork Photography Archive Grid ─────────────── */}
+          <section aria-label="Fieldwork photography archive" className="pt-6 border-t border-border/80 space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-plum">Archive Gallery</p>
+                <h3 className="text-xl font-serif font-bold text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                  Field Engagements &amp; Community Advocacy
+                </h3>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                <img
+                  src="/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG"
+                  alt="Safdarjung Hospital Umang Vatika Sensory Garden"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                  <span className="text-[10px] text-white font-medium">Umang Vatika Sensory Garden</span>
+                </div>
+              </div>
+
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                <img
+                  src="/images/Pratik%20Pictures/RPWD%20Workshop%20for%20People%20with%20Disabilities/WhatsApp%20Image%202026-08-24%20at%202.03.24%20PM%20(1).jpeg"
+                  alt="RPwD Act Rights Workshop"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                  <span className="text-[10px] text-white font-medium">RPwD Rights Training</span>
+                </div>
+              </div>
+
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                <img
+                  src="/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg"
+                  alt="Kirori Mal College Delhi University Seminar"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                  <span className="text-[10px] text-white font-medium">Academic Seminar DU</span>
+                </div>
+              </div>
+
+              <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                <img
+                  src="/images/Pratik%20Pictures/Disasters%20and%20Disability/IMGL3083.JPG"
+                  alt="Disaster Risk Reduction and Disability Policy Dialogue"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                  <span className="text-[10px] text-white font-medium">Disaster Policy Dialogue</span>
+                </div>
+              </div>
+            </div>
           </section>
 
           {/* ── Roles & Publications Section ────────────────────────────────── */}

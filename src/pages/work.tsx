@@ -475,6 +475,8 @@ export default function Work() {
                   <img
                     src={photo.src}
                     alt={photo.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <span className="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/70 text-white backdrop-blur-xs">

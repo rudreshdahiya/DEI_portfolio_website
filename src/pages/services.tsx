@@ -114,6 +114,7 @@ interface ServicePillar {
   featuredImage?: string;
   imageAlt?: string;
   imageCaption?: string;
+  galleryImages?: { url: string; alt: string; caption: string }[];
   leadDescription: string;
   sections?: StructuredSection[];
   includes?: string[];
@@ -133,6 +134,23 @@ const pillars: ServicePillar[] = [
     featuredImage: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
     imageAlt: "Pratik Aggarwal facilitating Training of Trainers capacity-building session for Tech Mahindra Foundation",
     imageCaption: "Facilitating Training of Trainers (ToT) workplace sensitization and capacity-building workshop.",
+    galleryImages: [
+      {
+        url: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
+        alt: "Tech Mahindra Foundation Training of Trainers workshop",
+        caption: "Tech Mahindra ToT Workshop",
+      },
+      {
+        url: "/images/Pratik%20Pictures/RPWD%20Workshop%20for%20People%20with%20Disabilities/WhatsApp%20Image%202026-08-24%20at%202.03.24%20PM%20(1).jpeg",
+        alt: "RPwD Act Rights & Capacity Building Session",
+        caption: "RPwD Act Rights Workshop",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg",
+        alt: "Disability Inclusion Seminar at Kirori Mal College DU",
+        caption: "University Disability Sensitization",
+      },
+    ],
     leadDescription: "Training is a major pillar of Pratik's practice. Grounded in rights-based frameworks and 9+ years of lived and professional experience, these interactive sessions equip teams to understand disability beyond basic compliance.",
     sections: [
       {
@@ -198,6 +216,23 @@ const pillars: ServicePillar[] = [
     featuredImage: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
     imageAlt: "Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital",
     imageCaption: "North India's 1st government sensory garden 'Umang Vatika' at Safdarjung Hospital, New Delhi.",
+    galleryImages: [
+      {
+        url: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
+        alt: "Umang Vatika Sensory Garden at Safdarjung Hospital",
+        caption: "Umang Vatika Sensory Garden Advisory",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6637%20(1)%20(1).jpg",
+        alt: "Accessible sensory pathways at Safdarjung Hospital",
+        caption: "Sensory Pathways & Universal Design",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Disasters%20and%20Disability/IMGL3083.JPG",
+        alt: "Disaster Risk Reduction and Disability Advisory Consultation",
+        caption: "Disaster Risk Reduction Advisory",
+      },
+    ],
     leadDescription: "Advising organisations on embedding disability reality into their core operations, public infrastructure, and policy systems — moving away from separate add-ons towards universal design.",
     sections: [
       {
@@ -265,6 +300,23 @@ const pillars: ServicePillar[] = [
     featuredImage: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
     imageAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
     imageCaption: "Delivering keynote address & opening national pain art exhibition at Purple Fest 2024.",
+    galleryImages: [
+      {
+        url: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+        alt: "Delivering keynote address at Purple Fest",
+        caption: "Delhi Purple Fest Keynote Address",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg",
+        alt: "Speaking on global policy panel at ARNEC Asia Pacific Conference Manila",
+        caption: "ARNEC Asia Pacific Summit Keynote",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG",
+        alt: "Acceptance speech for Jai Vakeel Foundation Award for ASTHA",
+        caption: "Jai Vakeel Leadership Speech",
+      },
+    ],
     leadDescription: "Grounding policy, research, and human stories in lived authority. Pratik delivers compelling keynote addresses, guest lectures, and panel interventions that move audiences beyond passive awareness into active empathy.",
     includes: [
       "Keynote addresses on invisible disability, chronic pain, and lived authority",
@@ -306,6 +358,23 @@ const pillars: ServicePillar[] = [
     featuredImage: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
     imageAlt: "Pratik Aggarwal presenting research paper at ARNEC Asia Pacific Conference Manila",
     imageCaption: "Presenting research and policy advocacy at ARNEC Asia Pacific Conference, Manila.",
+    galleryImages: [
+      {
+        url: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
+        alt: "ARNEC Manila Global Research Presentation",
+        caption: "ARNEC Manila Global Policy Research",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/IMG-20251212-WA0085.jpg",
+        alt: "Research paper documentation and Samuhik Pahal Contributing Editor",
+        caption: "Samuhik Pahal Journal Author",
+      },
+      {
+        url: "/images/Pratik%20Pictures/Panelist%20-%20Child%20Protection%20and%20Disability/IMG_9844.jpg",
+        alt: "Panelist presentation on child protection and disability research",
+        caption: "Child Protection Policy Research",
+      },
+    ],
     leadDescription: "Helping organisations not just with what they do, but how it is documented, evaluated, communicated, and rendered fully disability-inclusive across print, web, and digital channels.",
     includes: [
       "Grant & proposal writing for social impact & disability projects",
@@ -592,75 +661,104 @@ export default function Services() {
                 </div>
               </div>
 
-              {/* Main Content Layout — Image (if available) + Details */}
-              <div className="grid lg:grid-cols-12 gap-8 items-start">
-                
-                {/* Visual Image Side (for Pillars 1, 2, 3) */}
-                {pillar.featuredImage && (
-                  <div className="lg:col-span-5 space-y-3">
-                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-sm bg-muted">
-                      <img
-                        src={pillar.featuredImage}
-                        alt={pillar.imageAlt || pillar.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    {pillar.imageCaption && (
-                      <p className="text-xs text-muted-foreground italic leading-snug">
-                        {pillar.imageCaption}
-                      </p>
-                    )}
+              {/* Main Pillar Details (Full Width) */}
+              <div className="space-y-6">
+                <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal">
+                  {pillar.leadDescription}
+                </p>
+
+                {/* Structured Sections (for Pillars 1 & 2) */}
+                {pillar.sections && pillar.sections.length > 0 && (
+                  <div className="space-y-4 pt-2">
+                    {pillar.sections.map((section, idx) => (
+                      <div key={idx} className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-2.5">
+                        <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                          {section.title}
+                        </h3>
+                        <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
+                          {section.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="flex items-start gap-2 text-foreground/90 leading-snug">
+                              <span className="text-plum font-bold shrink-0">·</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
                 )}
 
-                {/* Right / Main Details Column */}
-                <div className={pillar.featuredImage ? "lg:col-span-7 space-y-6" : "lg:col-span-12 space-y-6"}>
-                  <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal">
-                    {pillar.leadDescription}
-                  </p>
+                {/* Bullet Includes List (for Pillars 3 & 4) */}
+                {pillar.includes && pillar.includes.length > 0 && (
+                  <div className="p-4 sm:p-5 rounded-xl border border-border/80 bg-ground/40 space-y-3">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                      Key Offerings &amp; Deliverables
+                    </h3>
+                    <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
+                      {pillar.includes.map((inc, i) => (
+                        <li key={i} className="flex items-start gap-2 text-foreground/90 leading-snug">
+                          <span className="text-plum font-bold shrink-0">✓</span>
+                          <span>{inc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
-                  {/* Structured Sections (for Pillars 1 & 2) */}
-                  {pillar.sections && pillar.sections.length > 0 && (
-                    <div className="space-y-4 pt-2">
-                      {pillar.sections.map((section, idx) => (
-                        <div key={idx} className="p-4 rounded-xl border border-border/80 bg-ground/40 space-y-2">
-                          <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
-                            {section.title}
-                          </h3>
-                          <ul className="grid sm:grid-cols-2 gap-2 list-none m-0 p-0 text-xs sm:text-sm">
-                            {section.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className="flex items-start gap-2 text-foreground/90">
-                                <span className="text-plum font-bold shrink-0">·</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                {/* Engagements Showcase */}
+                {pillar.engagements.length > 0 && (
+                  <div className="space-y-3 pt-3 border-t border-border/60">
+                    <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                      Selected Live Engagements &amp; Reference Work:
+                    </p>
+                    <div className="grid sm:grid-cols-3 gap-3">
+                      {pillar.engagements.map((eng) => (
+                        <div key={eng.title} className="p-3.5 rounded-xl border border-border bg-card space-y-1 shadow-2xs">
+                          <div className="flex items-center justify-between text-[11px] font-bold text-plum">
+                            <span>{eng.org}</span>
+                            <span className="text-muted-foreground font-mono">{eng.year}</span>
+                          </div>
+                          <h4 className="text-xs font-semibold text-foreground">{eng.title}</h4>
+                          <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{eng.description}</p>
                         </div>
                       ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* Bullet Includes List (for Pillars 3 & 4) */}
-                  {pillar.includes && pillar.includes.length > 0 && (
-                    <div className="p-4 rounded-xl border border-border/80 bg-ground/40 space-y-3">
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
-                        Key Offerings &amp; Deliverables
-                      </h3>
-                      <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
-                        {pillar.includes.map((inc, i) => (
-                          <li key={i} className="flex items-start gap-2 text-foreground/90">
-                            <span className="text-plum font-bold shrink-0">✓</span>
-                            <span>{inc}</span>
-                          </li>
-                        ))}
-                      </ul>
+                {/* Bottom Horizontal Photo Strip for each pillar */}
+                {pillar.galleryImages && pillar.galleryImages.length > 0 && (
+                  <div className="pt-5 border-t border-border/60 space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-widest text-plum flex items-center gap-2">
+                      <Camera className="w-3.5 h-3.5 text-plum" />
+                      Fieldwork &amp; Engagements in Action
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {pillar.galleryImages.map((imgItem, imgIdx) => (
+                        <div key={imgIdx} className="relative aspect-[16/10] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
+                          <img
+                            src={imgItem.url}
+                            alt={imgItem.alt}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent p-2.5 text-white">
+                            <p className="text-[11px] font-medium text-white/95 leading-tight">
+                              {imgItem.caption}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {/* Suited For Tags */}
-                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                {/* Action CTA & Suited For */}
+                <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-border/80">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Suited For:</span>
                     {pillar.suitedFor.map((tag) => (
                       <span key={tag} className="text-xs font-medium px-2.5 py-1 rounded-md bg-muted text-foreground border border-border/60">
@@ -669,38 +767,13 @@ export default function Services() {
                     ))}
                   </div>
 
-                  {/* Engagements Showcase */}
-                  {pillar.engagements.length > 0 && (
-                    <div className="space-y-3 pt-3 border-t border-border/60">
-                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                        Selected Live Engagements &amp; Reference Work:
-                      </p>
-                      <div className="grid sm:grid-cols-2 gap-3">
-                        {pillar.engagements.map((eng) => (
-                          <div key={eng.title} className="p-3.5 rounded-lg border border-border/80 bg-card space-y-1">
-                            <div className="flex items-center justify-between text-[11px] font-bold text-plum">
-                              <span>{eng.org}</span>
-                              <span className="text-muted-foreground font-mono">{eng.year}</span>
-                            </div>
-                            <h4 className="text-xs font-semibold text-foreground">{eng.title}</h4>
-                            <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{eng.description}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Action CTA */}
-                  <div className="pt-3">
-                    <Link
-                      to="/contact"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-xs sm:text-sm text-white transition-opacity shadow-sm hover:opacity-90"
-                      style={{ backgroundColor: "var(--plum)" }}
-                    >
-                      {pillar.ctaLabel}
-                    </Link>
-                  </div>
-
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white transition-opacity shadow-sm hover:opacity-90 shrink-0"
+                    style={{ backgroundColor: "var(--plum)" }}
+                  >
+                    {pillar.ctaLabel}
+                  </Link>
                 </div>
               </div>
             </article>

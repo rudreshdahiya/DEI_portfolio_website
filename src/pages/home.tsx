@@ -41,6 +41,9 @@ interface AudiencePersona {
   keyHighlights: string[];
   ctaLabel: string;
   ctaHref: string;
+  photoUrl: string;
+  photoAlt: string;
+  photoCaption: string;
 }
 
 const audiencePersonas: AudiencePersona[] = [
@@ -61,6 +64,9 @@ const audiencePersonas: AudiencePersona[] = [
     ],
     ctaLabel: "Explore Training & Capacity Building →",
     ctaHref: "/services#training",
+    photoUrl: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
+    photoAlt: "Pratik Aggarwal conducting Training of Trainers for Tech Mahindra Foundation",
+    photoCaption: "Interactive Capacity Building Workshop",
   },
   {
     id: "consulting",
@@ -79,6 +85,9 @@ const audiencePersonas: AudiencePersona[] = [
     ],
     ctaLabel: "Consult on Systems & Strategy →",
     ctaHref: "/services#consulting",
+    photoUrl: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
+    photoAlt: "Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital",
+    photoCaption: "Sensory Infrastructure & Universal Design",
   },
   {
     id: "talks",
@@ -97,6 +106,9 @@ const audiencePersonas: AudiencePersona[] = [
     ],
     ctaLabel: "Invite Pratik to Speak →",
     ctaHref: "/services#talks",
+    photoUrl: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    photoAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
+    photoCaption: "Keynote Address on Lived Authority",
   },
   {
     id: "research",
@@ -115,6 +127,9 @@ const audiencePersonas: AudiencePersona[] = [
     ],
     ctaLabel: "Commission Research & Writing →",
     ctaHref: "/services#research",
+    photoUrl: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
+    photoAlt: "Pratik Aggarwal presenting research paper at ARNEC Manila",
+    photoCaption: "Global Advocacy & Research Presentation",
   },
 ];
 
@@ -543,46 +558,69 @@ export default function Home() {
             className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 relative overflow-hidden"
             aria-live="polite"
           >
-            <div className="mb-3">
-              <span
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-plum/10 text-plum"
-              >
-                {currentPersona.badge}
-              </span>
-            </div>
-
-            <h3
-              className="text-2xl md:text-3xl font-serif leading-snug mb-3"
-              style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-            >
-              {currentPersona.tagline}
-            </h3>
-
-            <p className="text-sm md:text-base leading-relaxed mb-6 text-foreground/90 max-w-3xl">
-              {currentPersona.leadText}
-            </p>
-
-            {/* Key highlights */}
-            <div className="grid sm:grid-cols-2 gap-3 mb-6">
-              {currentPersona.keyHighlights.map((highlight) => (
-                <div key={highlight} className="flex items-start gap-2.5">
-                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-plum/10 text-plum text-[10px] shrink-0 mt-0.5 font-bold">
-                    ✓
+            <div className="grid lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7 space-y-4">
+                <div>
+                  <span
+                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-plum/10 text-plum"
+                  >
+                    {currentPersona.badge}
                   </span>
-                  <span className="text-xs sm:text-sm font-medium text-foreground">{highlight}</span>
                 </div>
-              ))}
-            </div>
 
-            {/* Sector Action */}
-            <div className="pt-1">
-              <Link
-                to={currentPersona.ctaHref}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs md:text-sm text-white transition-opacity shadow-sm hover:opacity-90"
-                style={{ backgroundColor: "var(--plum)" }}
-              >
-                {currentPersona.ctaLabel}
-              </Link>
+                <h3
+                  className="text-2xl md:text-3xl font-serif leading-snug"
+                  style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+                >
+                  {currentPersona.tagline}
+                </h3>
+
+                <p className="text-sm md:text-base leading-relaxed text-foreground/90">
+                  {currentPersona.leadText}
+                </p>
+
+                {/* Key highlights */}
+                <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                  {currentPersona.keyHighlights.map((highlight) => (
+                    <div key={highlight} className="flex items-start gap-2.5">
+                      <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-plum/10 text-plum text-[10px] shrink-0 mt-0.5 font-bold">
+                        ✓
+                      </span>
+                      <span className="text-xs sm:text-sm font-medium text-foreground">{highlight}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Sector Action */}
+                <div className="pt-3">
+                  <Link
+                    to={currentPersona.ctaHref}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-xs md:text-sm text-white transition-opacity shadow-sm hover:opacity-90"
+                    style={{ backgroundColor: "var(--plum)" }}
+                  >
+                    {currentPersona.ctaLabel}
+                  </Link>
+                </div>
+              </div>
+
+              {/* Persona Context Photo Card */}
+              <div className="lg:col-span-5">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border-2 border-border bg-muted/40 shadow-sm group">
+                  <img
+                    src={currentPersona.photoUrl}
+                    alt={currentPersona.photoAlt}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3 text-white">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Sector Context</p>
+                    <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                      {currentPersona.photoCaption}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

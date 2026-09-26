@@ -307,12 +307,14 @@ export default function BloomingInPain() {
                 Organised a landmark national art exhibition at <span className="font-semibold">Purple Fest Goa</span> — India’s largest inclusive disability festival — curating visual art, installations, and creative expressions created by <span className="font-bold text-plum">27 artists living with varying invisible conditions</span> and chronic pain. The exhibition brought invisible illness into public visual prominence, challenging traditional notions of disability art.
               </p>
 
-              {/* Real Exhibition Photo Grid */}
+              {/* Real Exhibition & Community Photo Grid (4 Distinct Photos) */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
                   <img
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_9605.jpeg"
-                    alt="Blooming in Pain Art Exhibition at Purple Fest Goa"
+                    alt="Blooming in Pain Art Exhibition Pavilion at Purple Fest Goa"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
@@ -320,21 +322,25 @@ export default function BloomingInPain() {
                   </div>
                 </div>
 
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
                   <img
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_9606.jpeg"
-                    alt="Curated artworks by artists with invisible chronic illness"
+                    alt="Curated visual artworks by 27 artists with invisible chronic illness"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
-                    <span className="text-[10px] text-white font-medium">27 Invisible Pain Artists</span>
+                    <span className="text-[10px] text-white font-medium">27 Pain Artists</span>
                   </div>
                 </div>
 
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
                   <img
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_0090.jpg"
                     alt="Community listening circle and dialogue session on invisible pain"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
@@ -342,10 +348,12 @@ export default function BloomingInPain() {
                   </div>
                 </div>
 
-                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-xs group bg-muted/40">
                   <img
                     src="/images/Pratik%20Pictures/BloomingInPain/IMG_0124.jpg"
                     alt="Interactive storytelling workspace and artwork creation"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity p-2 flex items-end">
