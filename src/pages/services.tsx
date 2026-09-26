@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import {
-  Building2,
   Users,
   GraduationCap,
   Landmark,
+  FileText,
   CheckCircle2,
-  ArrowRight,
-  ChevronDown,
   Sparkles,
-  Calendar,
+  Building2,
+  HeartHandshake,
+  BookOpen,
 } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
@@ -17,7 +17,7 @@ import { useRevealAll } from "@/hooks/use-reveal-all";
 
 // ── Types & Data ──────────────────────────────────────────────────────────────
 
-type AudienceType = "all" | "corporate" | "ngo" | "talks" | "advisory";
+export type PillarId = "all" | "training" | "consulting" | "talks" | "research";
 
 interface OrgLogoItem {
   name: string;
@@ -99,39 +99,72 @@ interface EngagementHighlight {
   description: string;
 }
 
+interface StructuredSection {
+  title: string;
+  items: string[];
+}
+
 interface ServicePillar {
-  id: AudienceType;
+  id: PillarId;
   number: string;
   title: string;
-  icon: typeof Building2;
+  icon: typeof Users;
   audienceLabel: string;
   tagline: string;
-  featuredImage: string;
-  imageAlt: string;
-  imageCaption: string;
-  outcome: React.ReactNode;
+  featuredImage?: string;
+  imageAlt?: string;
+  imageCaption?: string;
+  leadDescription: string;
+  sections?: StructuredSection[];
+  includes?: string[];
   engagements: EngagementHighlight[];
-  includes: string[];
   suitedFor: string[];
   ctaLabel: string;
 }
 
 const pillars: ServicePillar[] = [
   {
-    id: "corporate",
+    id: "training",
     number: "01",
-    title: "Corporate Sensitization & Workplace Inclusion",
-    icon: Building2,
-    audienceLabel: "Corporates & CSR Foundations",
-    tagline: "Shift corporate culture from slide-deck compliance to deep workplace empathy & non-visual accessibility.",
-    featuredImage: "/images/work-engagements_4.jpeg",
-    imageAlt: "Pratik Aggarwal facilitating training session for HCL Foundation",
-    imageCaption: "Facilitating corporate sensitization training for HCL Foundation staff.",
-    outcome: (
-      <>
-        Your <span className="text-plum font-bold">teams understand invisible disabilities</span>, leadership communicates accessibly, and HR policies move beyond basic compliance.
-      </>
-    ),
+    title: "Training & Capacity Building",
+    icon: Users,
+    audienceLabel: "Corporates, NGOs, Governments & Development Sector",
+    tagline: "Interactive training and capacity building delivered across organizational hierarchies — from senior leadership and HR teams to programme staff and frontline workers.",
+    featuredImage: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
+    imageAlt: "Pratik Aggarwal facilitating Training of Trainers capacity-building session for Tech Mahindra Foundation",
+    imageCaption: "Facilitating Training of Trainers (ToT) workplace sensitization and capacity-building workshop.",
+    leadDescription: "Training is a major pillar of Pratik's practice. Grounded in rights-based frameworks and 9+ years of lived and professional experience, these interactive sessions equip teams to understand disability beyond basic compliance.",
+    sections: [
+      {
+        title: "Corporate & Workplace Inclusion",
+        items: [
+          "Disability Inclusion and DEI Strategy & Culture",
+          "Disability Awareness & Lived Authority",
+          "Disability Etiquette & Inclusive Workplace Behaviors",
+          "Inclusive Communication & Accessible Language",
+        ],
+      },
+      {
+        title: "Development Sector & Rights Frameworks",
+        items: [
+          "RPwD Act 2016 and Rights-Based Frameworks",
+          "Inclusive Education & Accessible Classrooms",
+          "Early Intervention & Child Rights Advocacy",
+          "Community-Based Rehabilitation (CBR)",
+          "Caregiver and Parent Support Systems",
+          "Child Protection and Disability Inclusion",
+          "Social Protection & Government Welfare Schemes",
+        ],
+      },
+      {
+        title: "Frontline & Community Worker Training",
+        items: [
+          "Capacity building of ASHAs, Anganwadi Workers, and community health teams",
+          "Training teachers, special educators, and rehabilitation professionals",
+          "Training of Trainers (ToT) for internal sustainability across organisations",
+        ],
+      },
+    ],
     engagements: [
       {
         title: "HCL Foundation Workplace Sensitization",
@@ -140,118 +173,65 @@ const pillars: ServicePillar[] = [
         description: "Full-day workshop on disability language, non-visual access, and inclusive programme design.",
       },
       {
-        title: "Tech Mahindra Foundation — Training of Trainers",
-        org: "Tech Mahindra Foundation",
-        year: "2023",
-        description: "Designed a sustainable Training of Trainers (ToT) system to embed inclusion internally across teams.",
-      },
-    ],
-    includes: [
-      "Executive leadership & team sensitization workshops",
-      "Understanding non-visual & invisible disabilities in workplace settings",
-      "Inclusive communication & disability language guidelines",
-      "Training of Trainers (ToT) for long-term internal sustainability",
-    ],
-    suitedFor: ["Corporate HR & DEI Leaders", "CSR Foundations", "Executive Management Teams"],
-    ctaLabel: "Book Corporate Sensitization →",
-  },
-  {
-    id: "ngo",
-    number: "02",
-    title: "NGO Capacity Building & Frontline Systems",
-    icon: Users,
-    audienceLabel: "NGOs & Civil Society Organisations",
-    tagline: "Equip frontline social workers and community teams with rights-based disability delivery tools.",
-    featuredImage: "/images/work-engagements_3.jpeg",
-    imageAlt: "Pratik Aggarwal leading capacity building workshop with UNICEF Bihar officers",
-    imageCaption: "Leading disability-inclusive capacity building workshop for UNICEF Bihar child rights officers.",
-    outcome: (
-      <>
-        Your <span className="text-plum font-bold">frontline teams seamlessly connect disabled communities</span> to welfare schemes, inclusive schools, and accessible services.
-      </>
-    ),
-    engagements: [
-      {
         title: "UNICEF Bihar District Officer Training",
         org: "UNICEF India",
         year: "2023",
         description: "Capacity-building workshop for district-level child rights officers on disability-inclusive programming.",
       },
       {
-        title: "ASTHA Community Support Systems",
-        org: "ASTHA NGO",
-        year: "2015 – Present",
-        description: "Frontline social work systems connecting thousands of families with disabled children to state entitlements.",
-      },
-    ],
-    includes: [
-      "Frontline staff capacity building & rights-based training modules",
-      "Connecting disabled communities to government welfare and pension schemes",
-      "Inclusive early childhood education & child rights advocacy",
-      "Institutional policy reviews & field mentorship",
-    ],
-    suitedFor: ["Grassroots Non-Profits", "National NGOs", "Community Health Collectives"],
-    ctaLabel: "Explore NGO Capacity Building →",
-  },
-  {
-    id: "talks",
-    number: "03",
-    title: "Keynotes, University Lectures & Public Summits",
-    icon: GraduationCap,
-    audienceLabel: "Universities, Summits & Cultural Festivals",
-    tagline: "Challenging conventional disability narratives with lived authority, research, and public dialogue.",
-    featuredImage: "/images/work-engagements_2.jpeg",
-    imageAlt: "Pratik Aggarwal delivering keynote address at Purple Fest Goa",
-    imageCaption: "Delivering keynote address & opening pain art exhibition at Purple Fest Goa.",
-    outcome: (
-      <>
-        Your <span className="text-plum font-bold">audience leaves with a profound, lived understanding</span> of invisible disability, chronic pain, and social justice.
-      </>
-    ),
-    engagements: [
-      {
-        title: "Purple Fest Goa 2024 — Keynote Address",
-        org: "Disability Rights Coalition",
-        year: "2024",
-        description: "Keynote speech & curated exhibition by people living with pain at India's largest disability arts festival.",
-      },
-      {
-        title: "Delhi University Postgraduate Guest Lectures",
-        org: "University of Delhi",
+        title: "Tech Mahindra Foundation — Training of Trainers",
+        org: "Tech Mahindra Foundation",
         year: "2023",
-        description: "Lectures for MA Psychology students on invisible disability, chronic illness, and burden of proof.",
-      },
-      {
-        title: "Diplomatic Interventions — Spanish & Finnish Embassies",
-        org: "Spanish & Finnish Embassies",
-        year: "2022",
-        description: "Panels on disability arts, early intervention, and India–Europe inclusive policy exchange.",
+        description: "Designed a sustainable Training of Trainers (ToT) system to embed inclusion internally.",
       },
     ],
-    includes: [
-      "Keynote addresses on invisible disability & lived authority",
-      "University guest lectures & interactive postgraduate seminars",
-      "National & international conference panels (e.g., Purple Fest Goa, ARNEC Manila)",
-      "Public health, media, and podcast dialogue facilitation",
-    ],
-    suitedFor: ["Universities & Research Centers", "National & Global Conferences", "Public Health Platforms"],
-    ctaLabel: "Invite Pratik to Speak →",
+    suitedFor: ["Corporate HR & DEI Leaders", "NGOs & Civil Society Organisations", "Government Agencies & Frontline Health Networks", "Educational Institutions"],
+    ctaLabel: "Book Training & Capacity Building →",
   },
   {
-    id: "advisory",
-    number: "04",
-    title: "Government Policy & Accessible Infrastructure Advisory",
+    id: "consulting",
+    number: "02",
+    title: "Consulting & Advisory",
     icon: Landmark,
-    audienceLabel: "Government Bodies & Multilateral Agencies",
-    tagline: "Embedding disability realities into sensory public infrastructure, disaster planning, and national health data.",
-    featuredImage: "/images/umang-vatika-pratik.webp",
-    imageAlt: "Pratik Aggarwal at Safdarjung Hospital Umang Vatika Sensory Garden",
+    audienceLabel: "Organisations, CSR Foundations & Policy Agencies",
+    tagline: "Supporting organisations to make their programmes, policies, workplaces, and systems genuinely inclusive of persons with disabilities.",
+    featuredImage: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
+    imageAlt: "Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital",
     imageCaption: "North India's 1st government sensory garden 'Umang Vatika' at Safdarjung Hospital, New Delhi.",
-    outcome: (
-      <>
-        <span className="text-plum font-bold">Public infrastructure and emergency crisis policies</span> designed with sensory access and lived disability reality at their core.
-      </>
-    ),
+    leadDescription: "Advising organisations on embedding disability reality into their core operations, public infrastructure, and policy systems — moving away from separate add-ons towards universal design.",
+    sections: [
+      {
+        title: "Strategic Advisory & Systemic Inclusion",
+        items: [
+          "Disability Inclusion and DEI strategy development",
+          "Embedding disability inclusion within organisational systems and programmes",
+          "RPwD Act and disability-related legal & policy clarity",
+          "Accessibility and Universal Design in physical & digital spaces",
+          "Inclusive Education, Early Childhood Development & Early Intervention",
+          "Community-Based Rehabilitation and community-based approaches",
+          "Social Protection and government scheme integration",
+          "Child Protection & Disability safeguards",
+        ],
+      },
+      {
+        title: "Organisational Policies & Systems Support",
+        items: [
+          "Reviewing & developing HR policies & recruitment procedures",
+          "Accessibility & Disability Inclusion policies",
+          "Safeguarding and Child Protection policies",
+          "Internal processes, reasonable accommodation, and documentation",
+        ],
+      },
+      {
+        title: "Programme Review, Evaluation & Institutional Strengthening",
+        items: [
+          "Programme reviews & disability inclusion assessments",
+          "Institutional capacity assessments & MEL (Monitoring, Evaluation, Learning)",
+          "Programme quality reviews & accessibility audits",
+          "Impact assessment and strategic programme strengthening",
+        ],
+      },
+    ],
     engagements: [
       {
         title: "Umang Vatika Sensory Garden — Safdarjung Hospital",
@@ -272,23 +252,96 @@ const pillars: ServicePillar[] = [
         description: "Published critical research & media commentary on national health survey data omissions.",
       },
     ],
+    suitedFor: ["NGOs & Non-Profits", "CSR Foundations", "State & Central Ministries", "Hospital & Urban Planning Authorities"],
+    ctaLabel: "Consult on Advisory & Systems →",
+  },
+  {
+    id: "talks",
+    number: "03",
+    title: "Speaking, Keynotes & Public Engagement",
+    icon: GraduationCap,
+    audienceLabel: "Universities, Global Summits & Cultural Platforms",
+    tagline: "Delivering keynotes, university lectures, and public summit interventions that challenge conventional disability narratives with lived authority.",
+    featuredImage: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    imageAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
+    imageCaption: "Delivering keynote address & opening national pain art exhibition at Purple Fest 2024.",
+    leadDescription: "Grounding policy, research, and human stories in lived authority. Pratik delivers compelling keynote addresses, guest lectures, and panel interventions that move audiences beyond passive awareness into active empathy.",
     includes: [
-      "Sensory garden & accessible public space co-design",
-      "Disability-inclusive disaster risk reduction framework (NDMA + UN)",
-      "National survey & health policy critiques (NFHS-6 disability data advocacy)",
-      "Crisis response advocacy & emergency access advisory",
+      "Keynote addresses on invisible disability, chronic pain, and lived authority",
+      "University guest lectures & interactive postgraduate seminars",
+      "National & international conference panels (e.g., Purple Fest Goa, ARNEC Manila)",
+      "Diplomatic policy dialogues (e.g., Spanish & Finnish Embassies in New Delhi)",
+      "Public health, podcast, and national media dialogue facilitation",
     ],
-    suitedFor: ["State & Central Ministries", "Hospital Planning Authorities", "Multilateral Policy Agencies"],
-    ctaLabel: "Request Advisory Input →",
+    engagements: [
+      {
+        title: "Purple Fest Goa 2024 — Keynote Address",
+        org: "Disability Rights Coalition",
+        year: "2024",
+        description: "Keynote speech & curated national art exhibition featuring 27 artists living with invisible conditions.",
+      },
+      {
+        title: "Delhi University Postgraduate Guest Lectures",
+        org: "University of Delhi",
+        year: "2023",
+        description: "Lectures for MA Psychology students on invisible disability, chronic illness, and burden of proof.",
+      },
+      {
+        title: "Diplomatic Interventions — Spanish & Finnish Embassies",
+        org: "Spanish & Finnish Embassies",
+        year: "2022",
+        description: "Panels on disability arts, early intervention, and India–Europe inclusive policy exchange.",
+      },
+    ],
+    suitedFor: ["Universities & Research Centers", "National & International Summits", "Public Health Platforms", "Cultural Festivals"],
+    ctaLabel: "Invite Pratik to Speak →",
+  },
+  {
+    id: "research",
+    number: "04",
+    title: "Research, Writing & Organisational Communication",
+    icon: FileText,
+    audienceLabel: "Non-Profits, Research Institutions & Advocacy Coalitions",
+    tagline: "Supporting organisations with the writing, research, and communication work that sits behind strong programmes and effective fundraising.",
+    featuredImage: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
+    imageAlt: "Pratik Aggarwal presenting research paper at ARNEC Asia Pacific Conference Manila",
+    imageCaption: "Presenting research and policy advocacy at ARNEC Asia Pacific Conference, Manila.",
+    leadDescription: "Helping organisations not just with what they do, but how it is documented, evaluated, communicated, and rendered fully disability-inclusive across print, web, and digital channels.",
+    includes: [
+      "Grant & proposal writing for social impact & disability projects",
+      "Fundraising outreach & donor communication strategies",
+      "Programme reports, annual reports, & impact assessment reports",
+      "Research reports, policy briefs, & technical documentation",
+      "Thought leadership articles & advocacy campaign content",
+      "Editing, technical review, & website publication content",
+      "Making reports, publications, and organisational communication disability-inclusive",
+      "Making social media and digital communication accessible and disability-inclusive",
+    ],
+    engagements: [
+      {
+        title: "Contributing Editor — Samuhik Pahal",
+        org: "Samuhik Pahal Journal",
+        year: "2024",
+        description: "Author of 'Thirty years of working with communities: Reflections and Opinions' on community-led rights advocacy.",
+      },
+      {
+        title: "Ground Reports & Policy Commentary",
+        org: "The Print / Outlook India",
+        year: "2024",
+        description: "In-depth investigative writing on emergency crisis response and disability data omission.",
+      },
+    ],
+    suitedFor: ["Non-Profits & Civil Society", "Research Think Tanks", "Donor Agencies & Foundations", "Advocacy Alliances"],
+    ctaLabel: "Commission Research & Writing →",
   },
 ];
 
-const audienceFilters: { id: AudienceType; label: string; icon: typeof Building2 }[] = [
-  { id: "all", label: "Show All Pillars", icon: Sparkles },
-  { id: "corporate", label: "Corporate & Foundation", icon: Building2 },
-  { id: "ngo", label: "NGOs & Community", icon: Users },
-  { id: "talks", label: "Speaking & Keynotes", icon: GraduationCap },
-  { id: "advisory", label: "Government Advisory", icon: Landmark },
+const audienceFilters: { id: PillarId; label: string; icon: typeof Users }[] = [
+  { id: "all", label: "All 4 Service Pillars", icon: Sparkles },
+  { id: "training", label: "01. Training & Capacity", icon: Users },
+  { id: "consulting", label: "02. Consulting & Advisory", icon: Landmark },
+  { id: "talks", label: "03. Keynotes & Speaking", icon: GraduationCap },
+  { id: "research", label: "04. Research & Writing", icon: FileText },
 ];
 
 const faqItems = [
@@ -301,10 +354,10 @@ const faqItems = [
     ),
   },
   {
-    q: "Who typically engages Pratik for consulting or talks?",
+    q: "Who typically engages Pratik for consulting or training?",
     a: (
       <>
-        <span className="font-semibold text-foreground">Corporates and CSR foundations</span> seeking DEI training, <span className="font-semibold text-foreground">NGOs</span> building disability-inclusive programs, <span className="font-semibold text-foreground">universities and conferences</span> looking for keynotes on invisible disability, and <span className="font-semibold text-foreground">government bodies</span> needing policy input on sensory infrastructure and crisis access.
+        <span className="font-semibold text-foreground">Corporates and CSR foundations</span> seeking DEI training, <span className="font-semibold text-foreground">NGOs</span> building disability-inclusive programs and capacity, <span className="font-semibold text-foreground">universities and conferences</span> looking for keynotes on invisible disability, and <span className="font-semibold text-foreground">government bodies</span> needing policy input on sensory infrastructure and crisis access.
       </>
     ),
   },
@@ -317,10 +370,10 @@ const faqItems = [
     ),
   },
   {
-    q: "What's the difference between corporate sensitization and NGO capacity building?",
+    q: "Can Pratik assist our organisation with grant writing and impact reports?",
     a: (
       <>
-        Corporate sensitization <span className="font-semibold text-foreground">shifts organizational culture</span> and workplace empathy. NGO capacity building <span className="font-semibold text-foreground">equips frontline teams with delivery systems</span> — connecting communities to disability welfare schemes, designing accessible services, and training local trainers for long-term impact.
+        Yes. Under Pillar 4 (Research, Writing & Organisational Communication), Pratik supports organisations with grant writing, donor proposals, annual reports, policy briefs, and making digital and publication communications fully accessible and disability-inclusive.
       </>
     ),
   },
@@ -337,16 +390,16 @@ const faqItems = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Services() {
-  const [selectedAudience, setSelectedAudience] = useState<AudienceType>("all");
+  const [selectedAudience, setSelectedAudience] = useState<PillarId>("all");
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
 
   useRevealAll([selectedAudience]);
 
-  // Sync filter with URL hash (e.g. #corporate, #ngo, #talks, #advisory)
+  // Sync filter with URL hash (e.g. #training, #consulting, #talks, #research)
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "") as AudienceType;
-      if (hash && ["corporate", "ngo", "talks", "advisory"].includes(hash)) {
+      const hash = window.location.hash.replace("#", "") as PillarId;
+      if (hash && ["training", "consulting", "talks", "research"].includes(hash)) {
         setSelectedAudience(hash);
       }
     };
@@ -363,10 +416,10 @@ export default function Services() {
   return (
     <div>
       <PageMeta
-        title="Services & Live Engagements — Pratik Aggarwal"
-        description="Work with Pratik Aggarwal on corporate disability sensitization, NGO capacity building, keynotes, or government policy advisory. Grounded in 9+ years of practice."
+        title="Services & Core Pillars — Pratik Aggarwal"
+        description="Explore Pratik Aggarwal's 4 service pillars: Training & Capacity Building, Consulting & Advisory, Speaking & Keynotes, and Research, Writing & Organisational Communication."
         path="/services"
-        keywords="disability inclusion services India, corporate disability training, book disability keynote speaker, NGO capacity building disability, sensory garden consultant"
+        keywords="disability inclusion services India, corporate disability training, book disability keynote speaker, NGO capacity building disability, sensory garden consultant, research writing non profit"
       />
       <JsonLd
         schema={[
@@ -391,9 +444,9 @@ export default function Services() {
           {
             "@context": "https://schema.org",
             "@type": "ItemList",
-            name: "Disability Inclusion Engagement Pillars — Pratik Aggarwal",
+            name: "4 Consolidated Service Pillars — Pratik Aggarwal",
             description:
-              "Disability inclusion consulting, keynotes, workshops, and advisory by Pratik Aggarwal.",
+              "Training & Capacity Building, Consulting & Advisory, Keynotes & Speaking, and Research, Writing & Communication by Pratik Aggarwal.",
             itemListElement: pillars.map((pillar, idx) => ({
               "@type": "ListItem",
               position: idx + 1,
@@ -431,7 +484,7 @@ export default function Services() {
                   }}
                 />
                 <p className="text-xs font-bold uppercase tracking-widest text-plum">
-                  Services &amp; Live Engagements
+                  Service Pillars &amp; Work
                 </p>
               </div>
               <h1
@@ -441,382 +494,234 @@ export default function Services() {
                 Building Disability Inclusion in Practice
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Explore Pratik's 4 core engagement pillars — backed by real-world keynotes, corporate training sessions, community programs, and government policy advisory.
+                4 coherent service pillars — bringing together interactive training, institutional advisory, keynote speaking, and rigorous research &amp; communication.
               </p>
             </div>
 
             {/* Featured Pratik Portrait Card */}
             <div className="relative w-full max-w-[240px] aspect-[4/3] rounded-xl overflow-hidden border-2 border-border shadow-md shrink-0 bg-card hidden lg:block">
               <img
-                src="/images/pratik-about-page.jpeg"
-                alt="Pratik Aggarwal profile"
-                className="w-full h-full object-cover"
+                src="/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG"
+                alt="Pratik Aggarwal receiving Jai Vakeel Foundation Award for ASTHA"
+                className="w-full h-full object-cover object-top"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white">
-                Pratik Aggarwal
-              </span>
             </div>
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap gap-2.5 pt-2">
-            {audienceFilters.map((filter) => {
-              const Icon = filter.icon;
-              const isSelected = selectedAudience === filter.id;
-              return (
-                <button
-                  key={filter.id}
-                  type="button"
-                  onClick={() => setSelectedAudience(filter.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all duration-200 cursor-pointer border ${
-                    isSelected
-                      ? "bg-plum text-white border-plum shadow-md scale-[1.02]"
-                      : "bg-card text-foreground border-border hover:border-plum/40 hover:bg-muted"
-                  }`}
-                  style={{
-                    backgroundColor: isSelected ? "var(--plum)" : undefined,
-                    color: isSelected ? "#FFFFFF" : undefined,
-                  }}
-                >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  {filter.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Dynamic Filter Reset */}
-          {selectedAudience !== "all" && (
-            <div className="p-4 rounded-xl bg-muted/60 border border-border flex items-center justify-between gap-4">
-              <p className="text-xs text-foreground leading-relaxed">
-                Showing tailored engagement pillar for{" "}
-                <strong className="font-semibold text-plum">
-                  {pillars.find((p) => p.id === selectedAudience)?.audienceLabel}
-                </strong>
-                .
-              </p>
-              <button
-                onClick={() => setSelectedAudience("all")}
-                className="text-xs text-plum underline underline-offset-4 hover:opacity-80 transition-opacity font-semibold shrink-0"
-              >
-                Reset filter (View all 4 pillars)
-              </button>
+          {/* Interactive Filter Pills */}
+          <div className="pt-4 border-t border-border/80">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+              Filter by Service Pillar:
+            </p>
+            <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter service pillars">
+              {audienceFilters.map((filter) => {
+                const IconComp = filter.icon;
+                const isSelected = selectedAudience === filter.id;
+                return (
+                  <button
+                    key={filter.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    onClick={() => {
+                      setSelectedAudience(filter.id);
+                      if (filter.id !== "all") {
+                        window.location.hash = filter.id;
+                      } else {
+                        window.history.replaceState(null, "", window.location.pathname);
+                      }
+                    }}
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all cursor-pointer border ${
+                      isSelected
+                        ? "bg-plum text-white border-plum shadow-xs scale-[1.02]"
+                        : "bg-card text-foreground border-border hover:border-plum/40 hover:bg-muted"
+                    }`}
+                  >
+                    <IconComp className="w-4 h-4 shrink-0" />
+                    <span>{filter.label}</span>
+                  </button>
+                );
+              })}
             </div>
-          )}
+          </div>
         </div>
       </section>
 
-      {/* ── REVOLVING ORGANISATIONS MARQUEE BANNER ──────────────────────────── */}
-      <div className="py-3 border-b border-border/60 bg-card/50 w-full overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6 mb-1.5">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-plum" /> Organisations &amp; Institutions Pratik Has Worked With
+      {/* ── Partner Organisations Marquee ──────────────────────────────────── */}
+      <section aria-label="Organisations worked with" className="py-6 border-b border-border bg-ground/50">
+        <div className="max-w-6xl mx-auto px-6 mb-3">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground text-center sm:text-left">
+            Trusted by Partner Organisations &amp; Institutions Across Sectors
           </p>
         </div>
         <OrgMarquee />
-      </div>
+      </section>
 
-      {/* ── 4 Rich Engagement Offerings Cards with Photos & Real Engagements ── */}
-      <div className="divide-y divide-border">
+      {/* ── 4 Consolidated Service Pillars ─────────────────────────────────── */}
+      <section aria-label="4 Core Service Pillars" className="px-6 py-14 space-y-16 max-w-6xl mx-auto">
         {filteredPillars.map((pillar) => {
-          const Icon = pillar.icon;
+          const IconComponent = pillar.icon;
+
           return (
-            <section
+            <article
               key={pillar.id}
               id={pillar.id}
-              aria-labelledby={`${pillar.id}-heading`}
-              className="px-6 py-16 md:py-20"
+              className="reveal p-6 md:p-10 rounded-2xl border border-border bg-card shadow-xs space-y-8 scroll-mt-24 transition-all"
             >
-              <div className="max-w-6xl mx-auto space-y-12">
-                
-                {/* Header Row */}
-                <div className="flex flex-wrap items-start justify-between gap-6 border-b border-border/60 pb-6">
-                  <div className="space-y-2 max-w-3xl">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-bold tabular-nums px-2.5 py-1 rounded bg-plum/10 text-plum uppercase tracking-wider">
-                        Pillar {pillar.number}
-                      </span>
-                      <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                        {pillar.audienceLabel}
-                      </span>
-                    </div>
-                    <h2
-                      id={`${pillar.id}-heading`}
-                      className="text-3xl md:text-4xl text-foreground font-serif leading-snug"
-                      style={{ fontFamily: "'Fraunces', Georgia, serif" }}
-                    >
-                      {pillar.title}
-                    </h2>
-                    <p className="text-base text-muted-foreground leading-relaxed">
-                      {pillar.tagline}
-                    </p>
+              {/* Pillar Header Header */}
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-border/80 pb-6">
+                <div className="space-y-2 max-w-3xl">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-2xl md:text-3xl font-serif font-extrabold text-plum" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                      Pillar {pillar.number}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-plum/10 text-plum">
+                      <IconComponent className="w-3.5 h-3.5" />
+                      {pillar.audienceLabel}
+                    </span>
                   </div>
-
-                  <Link
-                    to={`/contact?service=${pillar.id}`}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-opacity shadow-md hover:opacity-90 shrink-0 self-start mt-2"
-                    style={{ backgroundColor: "var(--plum)" }}
+                  <h2
+                    className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground leading-tight"
+                    style={{ fontFamily: "'Fraunces', Georgia, serif" }}
                   >
-                    {pillar.ctaLabel}
-                  </Link>
+                    {pillar.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-muted-foreground font-medium leading-relaxed">
+                    {pillar.tagline}
+                  </p>
                 </div>
+              </div>
 
-                {/* Main Content Grid: Featured Event Photo (Left/Right) & Details (Right/Left) */}
-                <div className="grid lg:grid-cols-12 gap-10 items-start">
-                  
-                  {/* Left/Photo Column: Rich Real Event Photo with Caption */}
-                  <div className="lg:col-span-5 space-y-4">
-                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-2 border-border shadow-md bg-card">
+              {/* Main Content Layout — Image (if available) + Details */}
+              <div className="grid lg:grid-cols-12 gap-8 items-start">
+                
+                {/* Visual Image Side (for Pillars 1, 2, 3) */}
+                {pillar.featuredImage && (
+                  <div className="lg:col-span-5 space-y-3">
+                    <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-sm bg-muted">
                       <img
                         src={pillar.featuredImage}
-                        alt={pillar.imageAlt}
+                        alt={pillar.imageAlt || pillar.title}
                         className="w-full h-full object-cover"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.src = "/images/seo_sharing.jpeg";
-                        }}
                       />
                     </div>
-                    <div className="p-3.5 rounded-xl bg-card border border-border/80 text-xs text-muted-foreground leading-relaxed flex items-start gap-2.5">
-                      <Sparkles className="w-4 h-4 text-plum shrink-0 mt-0.5" />
-                      <span>{pillar.imageCaption}</span>
-                    </div>
-
-                    {/* Best suited for tags */}
-                    <div className="pt-2">
-                      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2.5">
-                        Best suited for
+                    {pillar.imageCaption && (
+                      <p className="text-xs text-muted-foreground italic leading-snug">
+                        {pillar.imageCaption}
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        {pillar.suitedFor.map((target) => (
-                          <span key={target} className="text-xs font-semibold px-3 py-1 rounded-full bg-muted text-foreground">
-                            {target}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    )}
                   </div>
+                )}
 
-                  {/* Right Column: Outcomes, Live Engagements Showcase, Deliverables */}
-                  <div className="lg:col-span-7 space-y-8">
-                    
-                    {/* Outcome Statement */}
-                    <div className="p-6 rounded-2xl bg-card border border-border shadow-2xs">
-                      <p className="text-xs font-bold uppercase tracking-widest text-plum mb-2">
-                        What your organization gains
-                      </p>
-                      <div className="text-lg md:text-xl font-serif text-foreground leading-relaxed">
-                        {pillar.outcome}
-                      </div>
+                {/* Right / Main Details Column */}
+                <div className={pillar.featuredImage ? "lg:col-span-7 space-y-6" : "lg:col-span-12 space-y-6"}>
+                  <p className="text-sm md:text-base text-foreground/90 leading-relaxed font-normal">
+                    {pillar.leadDescription}
+                  </p>
+
+                  {/* Structured Sections (for Pillars 1 & 2) */}
+                  {pillar.sections && pillar.sections.length > 0 && (
+                    <div className="space-y-4 pt-2">
+                      {pillar.sections.map((section, idx) => (
+                        <div key={idx} className="p-4 rounded-xl border border-border/80 bg-ground/40 space-y-2">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                            {section.title}
+                          </h3>
+                          <ul className="grid sm:grid-cols-2 gap-2 list-none m-0 p-0 text-xs sm:text-sm">
+                            {section.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="flex items-start gap-2 text-foreground/90">
+                                <span className="text-plum font-bold shrink-0">·</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
+                  )}
 
-                    {/* Featured Live Engagements Showcase */}
-                    <div className="space-y-4">
-                      <h3 className="text-base font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-plum" /> Highlighted Live Engagements
+                  {/* Bullet Includes List (for Pillars 3 & 4) */}
+                  {pillar.includes && pillar.includes.length > 0 && (
+                    <div className="p-4 rounded-xl border border-border/80 bg-ground/40 space-y-3">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-plum flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-plum shrink-0" />
+                        Key Offerings &amp; Deliverables
                       </h3>
-                      <div className="grid sm:grid-cols-2 gap-3.5">
-                        {pillar.engagements.map((item) => (
-                          <div key={item.title} className="p-4 rounded-xl border border-border bg-card/60 flex flex-col justify-between space-y-2">
-                            <div>
-                              <div className="flex items-center justify-between text-[11px] font-bold text-plum uppercase tracking-wider mb-1">
-                                <span>{item.org}</span>
-                                <span className="tabular-nums text-muted-foreground">{item.year}</span>
-                              </div>
-                              <h4 className="text-sm font-semibold text-foreground leading-snug">
-                                {item.title}
-                              </h4>
-                              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                                {item.description}
-                              </p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Deliverables List */}
-                    <div className="space-y-3 pt-2">
-                      <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                        What's included in this pillar
-                      </h3>
-                      <ul className="grid sm:grid-cols-2 gap-3 list-none m-0 p-0" role="list">
-                        {pillar.includes.map((deliverable) => (
-                          <li key={deliverable} className="flex items-start gap-2.5 p-3 rounded-lg bg-card border border-border/60">
-                            <CheckCircle2 className="w-4 h-4 text-plum shrink-0 mt-0.5" />
-                            <span className="text-xs sm:text-sm font-medium text-foreground leading-snug">
-                              {deliverable}
-                            </span>
+                      <ul className="grid sm:grid-cols-2 gap-2.5 list-none m-0 p-0 text-xs sm:text-sm">
+                        {pillar.includes.map((inc, i) => (
+                          <li key={i} className="flex items-start gap-2 text-foreground/90">
+                            <span className="text-plum font-bold shrink-0">✓</span>
+                            <span>{inc}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
+                  )}
 
-                    {/* Secondary Link to Full Engagements */}
-                    <div className="pt-2 flex items-center justify-between">
-                      <Link
-                        to="/work"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-plum underline underline-offset-4 hover:opacity-80"
-                      >
-                        View all related engagements in Work &amp; Engagements →
-                      </Link>
+                  {/* Suited For Tags */}
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Suited For:</span>
+                    {pillar.suitedFor.map((tag) => (
+                      <span key={tag} className="text-xs font-medium px-2.5 py-1 rounded-md bg-muted text-foreground border border-border/60">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Engagements Showcase */}
+                  {pillar.engagements.length > 0 && (
+                    <div className="space-y-3 pt-3 border-t border-border/60">
+                      <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                        Selected Live Engagements &amp; Reference Work:
+                      </p>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {pillar.engagements.map((eng) => (
+                          <div key={eng.title} className="p-3.5 rounded-lg border border-border/80 bg-card space-y-1">
+                            <div className="flex items-center justify-between text-[11px] font-bold text-plum">
+                              <span>{eng.org}</span>
+                              <span className="text-muted-foreground font-mono">{eng.year}</span>
+                            </div>
+                            <h4 className="text-xs font-semibold text-foreground">{eng.title}</h4>
+                            <p className="text-[11px] text-muted-foreground leading-snug line-clamp-2">{eng.description}</p>
+                          </div>
+                        ))}
+                      </div>
                     </div>
+                  )}
 
+                  {/* Action CTA */}
+                  <div className="pt-3">
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-xs sm:text-sm text-white transition-opacity shadow-sm hover:opacity-90"
+                      style={{ backgroundColor: "var(--plum)" }}
+                    >
+                      {pillar.ctaLabel}
+                    </Link>
                   </div>
 
                 </div>
-
               </div>
-            </section>
+            </article>
           );
         })}
-      </div>
-
-      {/* ── Comprehensive Visual Media & Field Impact Showcase Gallery ───────── */}
-      <section aria-label="Field Impact & Media Gallery" className="px-6 py-16 border-t border-border bg-card/30">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <p className="text-xs font-bold uppercase tracking-widest text-plum">
-              Lived Practice &amp; Advocacy in Action
-            </p>
-            <h2 className="text-3xl md:text-4xl font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-              From Grassroots Advocacy to Keynote Panels
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              A rich visual gallery into Pratik's frontline community work, corporate training sessions, sensory garden design, and public keynotes.
-            </p>
-          </div>
-
-          {/* 8-Grid Comprehensive Photo Gallery using ALL images in public/images/ */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-            
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/work-engagements_1.jpeg"
-                alt="Pratik Aggarwal speaking at Delhi University"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Delhi University Guest Lecture
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/umang-vatika-pratik.webp"
-                alt="Umang Vatika Sensory Garden at Safdarjung Hospital"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Safdarjung Hospital Sensory Garden
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/work-engagements_4.jpeg"
-                alt="HCL Foundation Corporate Sensitization"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                HCL Foundation Training
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/work-engagements_2.jpeg"
-                alt="Purple Fest Goa Keynote Address"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Purple Fest Goa Keynote
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/WhatsApp%20Image%202026-06-27%20at%2012.56.03%20PM.jpeg"
-                alt="Pratik Aggarwal facilitating panel workshop"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  e.currentTarget.src = "/images/seo_sharing.jpeg";
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Disability Panel Facilitation
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/WhatsApp%20Image%202026-06-27%20at%2012.55.58%20PM.jpeg"
-                alt="Pratik Aggarwal frontline community interaction"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  e.currentTarget.src = "/images/pratik-about-page.jpeg";
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Frontline Community Advocacy
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/Blooming%20in%20Pain.jpeg"
-                alt="Blooming in Pain Community Platform"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Blooming in Pain Stories
-              </span>
-            </div>
-
-            <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border shadow-2xs group bg-card">
-              <img
-                src="/images/pratik-homepage-hero.jpeg"
-                alt="Pratik Aggarwal Portrait"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
-              <span className="absolute bottom-2.5 left-2.5 text-[10px] font-semibold text-white">
-                Pratik Aggarwal (Director @ ASTHA)
-              </span>
-            </div>
-
-          </div>
-        </div>
       </section>
 
-      {/* ── FAQ (Hover-expandable Accordion) ─────────────────────────────── */}
-      <section
-        aria-labelledby="faq-heading"
-        className="px-6 py-20 border-t border-border bg-ground"
-      >
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-10 text-center md:text-left">
+      {/* ── FAQ Section ─────────────────────────────────────────────────────── */}
+      <section aria-labelledby="services-faq-heading" className="px-6 py-16 border-t border-border bg-card/20">
+        <div className="max-w-5xl mx-auto space-y-8">
+          <div>
             <p className="text-xs font-bold uppercase tracking-widest text-plum mb-1">
-              Clear Expectations
+              Frequently Asked Questions
             </p>
             <h2
-              id="faq-heading"
-              className="text-3xl md:text-4xl text-foreground mb-2"
+              id="services-faq-heading"
+              className="text-3xl md:text-4xl text-foreground font-serif"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
-              Common Questions &amp; Process
+              Working Together
             </h2>
-            <p className="text-sm md:text-base text-muted-foreground">
-              Frequently asked questions before starting a consulting, speaking, or training partnership.
-            </p>
           </div>
 
           <div className="divide-y divide-border border-y border-border">
@@ -825,30 +730,26 @@ export default function Services() {
               return (
                 <div
                   key={index}
-                  className="py-6 transition-colors group cursor-pointer"
+                  className="py-5 transition-colors group cursor-pointer"
                   onMouseEnter={() => setActiveFaqIndex(index)}
                   onMouseLeave={() => setActiveFaqIndex(null)}
                   onClick={() => setActiveFaqIndex(isOpen ? null : index)}
                 >
                   <div className="flex items-center justify-between gap-4">
                     <h3
-                      className="text-lg font-semibold text-foreground group-hover:text-plum transition-colors leading-snug"
+                      className="text-base sm:text-lg font-semibold text-foreground group-hover:text-primary transition-colors leading-snug"
                       style={{ fontFamily: "'Fraunces', Georgia, serif" }}
                     >
                       {item.q}
                     </h3>
-                    <ChevronDown
-                      className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
-                        isOpen ? "rotate-180 text-plum" : "group-hover:translate-y-0.5"
-                      }`}
-                    />
+                    <span className="text-xl font-bold text-plum shrink-0">{isOpen ? "−" : "+"}</span>
                   </div>
                   <div
-                    className={`overflow-hidden transition-all duration-300 text-sm md:text-base text-muted-foreground leading-relaxed max-w-[70ch] ${
+                    className={`overflow-hidden transition-all duration-300 text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-[70ch] ${
                       isOpen ? "max-h-96 opacity-100 mt-3" : "max-h-0 opacity-0 mt-0"
                     }`}
                   >
-                    <div>{item.a}</div>
+                    <p>{item.a}</p>
                   </div>
                 </div>
               );
@@ -857,36 +758,24 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ── High-Impact Bottom CTA ────────────────────────────────────────── */}
-      <section
-        aria-labelledby="cta-heading"
-        className="px-6 py-20 border-t border-border bg-card/50"
-      >
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8 bg-card p-8 sm:p-10 rounded-2xl border border-border shadow-md">
-          <div className="space-y-3 max-w-xl">
-            <span className="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-plum/10 text-plum">
-              Start a Conversation
-            </span>
-            <h2
-              id="cta-heading"
-              className="text-3xl md:text-4xl text-foreground font-serif leading-tight"
-              style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+      {/* ── Footer CTA ─────────────────────────────────────────────────────── */}
+      <section className="px-6 py-16 bg-ground border-t border-border text-center">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <h2 className="text-2xl sm:text-3xl font-serif text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+            Ready to build meaningful disability inclusion?
+          </h2>
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xl mx-auto">
+            Whether you need interactive corporate training, frontline NGO capacity building, keynote speaking, or research &amp; policy writing.
+          </p>
+          <div className="pt-2">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-sm text-white transition-opacity shadow-md hover:opacity-90"
+              style={{ backgroundColor: "var(--plum)" }}
             >
-              Ready to build disability inclusion in your organization?
-            </h2>
-            <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-              Every partnership starts with an open dialogue. Share your project goals — let's discuss how we can build meaningful impact together.
-            </p>
+              Start a Partnership →
+            </Link>
           </div>
-
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-white font-semibold text-base hover:opacity-90 transition-opacity whitespace-nowrap shrink-0 shadow-md self-start md:self-center"
-            style={{ backgroundColor: "var(--plum)" }}
-          >
-            Partner with Pratik
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
       </section>
     </div>

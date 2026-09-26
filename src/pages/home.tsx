@@ -28,7 +28,7 @@ const orgLogos = [
   { name: "Outlook India", initials: "OI", bg: "#E6EBF5", color: "#003580" },
 ];
 
-export type AudienceId = "corporate" | "ngo" | "advisory" | "talks";
+export type AudienceId = "training" | "consulting" | "talks" | "research";
 
 interface AudiencePersona {
   id: AudienceId;
@@ -45,76 +45,76 @@ interface AudiencePersona {
 
 const audiencePersonas: AudiencePersona[] = [
   {
-    id: "corporate",
-    label: "Corporate & Foundation",
-    shortLabel: "Corporate",
-    badge: "Workplace Inclusion & Sensitization",
-    icon: Building2,
-    tagline: "Shifting Corporate Inclusion from Policy to Culture",
-    leadText:
-      "Helping HR leaders, corporate teams, and CSR foundations build genuine disability inclusion — moving beyond slide-deck compliance to deep workplace empathy, non-visual accessibility, and inclusive communication.",
-    keyHighlights: [
-      "Full & half-day corporate sensitization workshops",
-      "Understanding non-visual & invisible disabilities in teams",
-      "CSR strategy & inclusive programme design",
-      "Executive panel talks and leadership sessions",
-    ],
-    ctaLabel: "Book Corporate Sensitization →",
-    ctaHref: "/services#corporate",
-  },
-  {
-    id: "ngo",
-    label: "NGOs & Community",
-    shortLabel: "NGOs",
-    badge: "Frontline Capacity Building",
+    id: "training",
+    label: "Training & Capacity Building",
+    shortLabel: "Training",
+    badge: "Workplace & Development Sector Training",
     icon: Users,
-    tagline: "Equipping Frontline Teams for Meaningful Inclusion",
+    tagline: "Interactive Training Delivered Across Organisational Hierarchies",
     leadText:
-      "Providing civil society organisations and frontline teams with rights-based frameworks, training of trainers (ToT), and accessible community delivery systems to ensure disability inclusion is built into every project.",
+      "Delivering interactive training for corporates, NGOs, governments, and educational institutions — from senior leadership and HR teams to programme staff, teachers, and frontline health workers.",
     keyHighlights: [
-      "Frontline staff capacity building & training modules",
-      "Connecting communities to disability welfare schemes",
-      "Inclusive education & child rights advocacy",
-      "Institutional policy reviews & field mentorship",
+      "Corporate DEI, disability awareness & inclusive communication",
+      "RPwD Act 2016, rights-based frameworks & CBR",
+      "Inclusive education, early intervention & child protection",
+      "Capacity building for ASHAs, Anganwadi Workers & community teams",
     ],
-    ctaLabel: "Explore NGO Capacity Building →",
-    ctaHref: "/services#ngo",
+    ctaLabel: "Explore Training & Capacity Building →",
+    ctaHref: "/services#training",
   },
   {
-    id: "advisory",
-    label: "Government & Advisory",
-    shortLabel: "Gov Advisory",
-    badge: "Policy & Infrastructure Advisory",
+    id: "consulting",
+    label: "Consulting & Advisory",
+    shortLabel: "Advisory",
+    badge: "Systemic Inclusion & Policy Advisory",
     icon: Landmark,
-    tagline: "Embedding Disability Reality in Infrastructure & Policy",
+    tagline: "Making Programmes, Policies, Workplaces & Systems Inclusive",
     leadText:
-      "Advising government bodies, municipal planning authorities, hospitals, and multilateral organisations on emergency crisis advocacy, sensory infrastructure, and national health data inclusion.",
+      "Advising organisations on making their existing systems and policies genuinely inclusive — including HR policies, universal design, accessibility reviews, programme evaluation, and MEL.",
     keyHighlights: [
-      "North India's 1st gov sensory garden (Umang Vatika)",
-      "Disability-inclusive disaster risk reduction (NDMA + UN)",
-      "Policy critiques (NFHS-6 disability data omission)",
-      "Crisis response advocacy & emergency access",
+      "Disability Inclusion & DEI strategy & legal/policy clarity",
+      "Organisational HR policies, safeguarding & reasonable accommodation",
+      "Sensory infrastructure co-design (e.g. Umang Vatika)",
+      "Programme reviews, accessibility audits & impact evaluation",
     ],
-    ctaLabel: "Consult on Advisory Project →",
-    ctaHref: "/services#advisory",
+    ctaLabel: "Consult on Systems & Strategy →",
+    ctaHref: "/services#consulting",
   },
   {
     id: "talks",
     label: "Speaking & Keynotes",
     shortLabel: "Keynotes",
-    badge: "Keynotes & University Lectures",
+    badge: "Keynotes, University Lectures & Summits",
     icon: GraduationCap,
     tagline: "Challenging Conventional Disability Narratives",
     leadText:
-      "Delivering compelling keynote addresses, panel interventions, and guest lectures at conferences, universities, and festivals — grounding policy and research in lived authority and disability rights.",
+      "Delivering compelling keynote addresses, university lectures, and public summit interventions — grounding policy and research in lived authority and disability rights.",
     keyHighlights: [
       "Keynote addresses on invisible disability & lived authority",
-      "University guest lectures & student interactive workshops",
-      "National conference panels (e.g. Purple Fest Goa)",
-      "Media, podcast, and public dialogue facilitation",
+      "University guest lectures & postgraduate interactive seminars",
+      "National & global conference panels (e.g. Purple Fest Goa, ARNEC Manila)",
+      "Public health, media, and podcast dialogue facilitation",
     ],
     ctaLabel: "Invite Pratik to Speak →",
     ctaHref: "/services#talks",
+  },
+  {
+    id: "research",
+    label: "Research & Writing",
+    shortLabel: "Research",
+    badge: "Research, Policy & Organisational Communication",
+    icon: Building2,
+    tagline: "Writing & Communication Supporting Impact & Fundraising",
+    leadText:
+      "Supporting non-profits and foundations with grant writing, donor proposals, policy briefs, research reports, and rendering organizational communication fully disability-inclusive.",
+    keyHighlights: [
+      "Grant and proposal writing & donor communication",
+      "Programme, annual, and impact assessment reports",
+      "Research reports, policy briefs & thought leadership articles",
+      "Making digital, social media, and publications accessible",
+    ],
+    ctaLabel: "Commission Research & Writing →",
+    ctaHref: "/services#research",
   },
 ];
 
@@ -183,7 +183,7 @@ const roleVariants = [
   { word: "Expert", styleClass: "text-plum font-serif font-bold italic underline decoration-plum/40 decoration-2 underline-offset-4" },
   { word: "Researcher", styleClass: "text-[#1F3D2A] bg-[#E2EDE7] px-3 py-0.5 rounded-lg font-mono text-2xl sm:text-3xl md:text-4xl shadow-2xs" },
   { word: "Speaker", styleClass: "text-[#5C1F7A] font-serif underline decoration-plum/60 decoration-wavy decoration-2" },
-  { word: "Director @ ASTHA", styleClass: "text-foreground font-semibold bg-plum/10 text-plum px-3 py-0.5 rounded-full text-xl sm:text-2xl md:text-3xl" },
+  { word: "Executive Director @ ASTHA", styleClass: "text-foreground font-semibold bg-plum/10 text-plum px-3 py-0.5 rounded-full text-xl sm:text-2xl md:text-3xl" },
 ];
 
 function HeroRoleWord() {
@@ -360,7 +360,7 @@ function MediaMarquee() {
 // ── Main Page Component ───────────────────────────────────────────────────────
 
 export default function Home() {
-  const [selectedAudience, setSelectedAudience] = useState<AudienceId>("corporate");
+  const [selectedAudience, setSelectedAudience] = useState<AudienceId>("training");
   const [isAutoCycling, setIsAutoCycling] = useState(true);
 
   const currentPersona = audiencePersonas.find((p) => p.id === selectedAudience) || audiencePersonas[0];
@@ -387,10 +387,10 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="Pratik Aggarwal — Disability Inclusion Expert & Storyteller"
-        description="Pratik Aggarwal is a disability inclusion expert, speaker, and researcher with 9+ years of experience. Director at ASTHA. Work with him on sensitization, capacity building, or advisory engagements."
+        title="Pratik Aggarwal — Disability Inclusion Expert & Executive Director ASTHA"
+        description="Pratik Aggarwal is Executive Director at ASTHA and founder of Blooming in Pain. Work with him on Training, Consulting, Keynotes, or Research."
         path="/"
-        keywords="disability inclusion expert India, invisible disability speaker, corporate disability sensitization, NGO capacity building disability"
+        keywords="disability inclusion expert India, invisible disability speaker, corporate disability sensitization, NGO capacity building disability, Executive Director ASTHA"
       />
       <JsonLd
         schema={[
@@ -465,15 +465,19 @@ export default function Home() {
 
             {/* Right Column: Compact Hero Portrait pulled up */}
             <div className="md:col-span-5 flex justify-center md:justify-end">
-              <div className="relative w-full max-w-[340px] aspect-[4/5] rounded-2xl overflow-hidden border-2 border-border shadow-lg bg-card">
+              <div className="relative w-full max-w-[340px] aspect-[4/5] rounded-2xl overflow-hidden border-2 border-border shadow-lg bg-card group">
                 <img
-                  src="/images/pratik-homepage-hero.jpeg"
-                  alt="Portrait photograph of Pratik Aggarwal"
-                  className="w-full h-full object-cover object-top"
+                  src="/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg"
+                  alt="Pratik Aggarwal speaking on global disability policy at ARNEC Asia Pacific Manila"
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   onError={(e) => {
-                    e.currentTarget.src = "/images/seo_sharing.jpeg";
+                    e.currentTarget.src = "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png";
                   }}
                 />
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3.5 text-white">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-plum-light">Keynote Speaker &amp; Practitioner</p>
+                  <p className="text-xs text-white/90">ARNEC Asia Pacific Conference, Manila</p>
+                </div>
               </div>
             </div>
 
@@ -584,6 +588,106 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── 3.5 AUTHENTIC FIELDWORK & ENGAGEMENT PHOTOGRAPHY SHOWCASE ── */}
+      <section aria-labelledby="authentic-gallery-heading" className="px-6 py-14 border-b border-border bg-card">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-5">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-plum mb-1">
+                Authentic Practice &amp; Fieldwork
+              </p>
+              <h2
+                id="authentic-gallery-heading"
+                className="text-3xl md:text-4xl text-foreground font-serif"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                Pratik in Action Across Sectors
+              </h2>
+            </div>
+            <Link
+              to="/work"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-plum underline underline-offset-4 hover:opacity-80"
+            >
+              View Full Interactive Visual Impact Archive →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png"
+                alt="Pratik Aggarwal speaking on global policy panel at ARNEC Manila"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Global Policy</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ARNEC Conference, Manila</p>
+              </div>
+            </div>
+
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG"
+                alt="Pratik Aggarwal receiving organizational award for ASTHA"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Leadership Award</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Jai Vakeel Award to ASTHA</p>
+              </div>
+            </div>
+
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG"
+                alt="Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Accessible Design</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Umang Vatika Sensory Garden</p>
+              </div>
+            </div>
+
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg"
+                alt="Pratik Aggarwal delivering keynote at Delhi Purple Fest"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">National Keynote</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Delhi Purple Fest 2024</p>
+              </div>
+            </div>
+
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg"
+                alt="Pratik Aggarwal conducting Training of Trainers for Tech Mahindra Foundation"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Capacity Building</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>ToT Workshop, Tech Mahindra</p>
+              </div>
+            </div>
+
+            <div className="relative group aspect-[4/3] rounded-xl overflow-hidden border border-border bg-black/5 shadow-xs">
+              <img
+                src="/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg"
+                alt="Pratik Aggarwal addressing students at Kirori Mal College Delhi University"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-plum-light">Academic Keynote</span>
+                <p className="text-xs font-medium text-white/90 font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>Kirori Mal College, DU</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 4. IN THE NEWS & DISCUSSIONS ─────────────────────────────────── */}
       <section aria-labelledby="media-heading" className="px-6 py-14 border-b border-border bg-card/20">
         <div className="max-w-6xl mx-auto space-y-10">
@@ -605,12 +709,12 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Featured Podcast Main Embed (Part 1 as requested!) */}
+          {/* Featured Podcast Main Embed: Nothing About Us, Without Us */}
           <div className="grid lg:grid-cols-12 gap-8 items-center bg-card p-6 rounded-2xl border border-border shadow-xs">
             <div className="lg:col-span-7 aspect-video rounded-xl overflow-hidden shadow-xs border border-border bg-black">
               <iframe
-                src="https://www.youtube-nocookie.com/embed/eUSRzBr0FFc"
-                title="Disability & Social Realities in India - Pratik Aggarwal (ASTHA NGO) Podcast Ep. 32 Part 1"
+                src="https://www.youtube-nocookie.com/embed/onm9zJjB_PI"
+                title="Nothing About Us, Without Us: Disability Rights in the Classroom - Postcards Series #6"
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -621,14 +725,14 @@ export default function Home() {
                 Featured Podcast Episode
               </span>
               <h3 className="text-2xl font-serif leading-snug" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-                Disability &amp; Social Realities in India (Ep. 32 Part 1)
+                Nothing About Us, Without Us: Disability Rights in the Classroom
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Pratik Aggarwal (Director at ASTHA) discusses frontline community advocacy, lived experience, disability rights, and systemic change in India.
+                Discussion on rights-based education, lived authority, classroom inclusion, and disability rights with Pratik Aggarwal (Postcards Series #6).
               </p>
               <div>
                 <a
-                  href="https://www.youtube.com/watch?v=eUSRzBr0FFc"
+                  href="https://youtu.be/onm9zJjB_PI?si=EcPvzmQ1VJkHIxrn"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-xs font-bold text-plum underline underline-offset-4 hover:opacity-80"
@@ -645,12 +749,12 @@ export default function Home() {
               More Podcast Conversations
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
-              {/* Podcast Embed 1: Postcards Series #6 */}
+              {/* Podcast 2: Disability & Social Realities in India (Ep. 32 Part 1) */}
               <div className="bg-card p-4 rounded-xl border border-border flex flex-col justify-between shadow-2xs space-y-3">
                 <div className="aspect-video rounded-lg overflow-hidden border border-border bg-black">
                   <iframe
-                    src="https://www.youtube-nocookie.com/embed/onm9zJjB_PI"
-                    title="Nothing About Us, Without Us: Disability Rights in the Classroom - Postcards Series #6"
+                    src="https://www.youtube-nocookie.com/embed/eUSRzBr0FFc"
+                    title="Disability & Social Realities in India - Pratik Aggarwal (ASTHA NGO) Podcast Ep. 32 Part 1"
                     className="w-full h-full border-0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -658,17 +762,17 @@ export default function Home() {
                 </div>
                 <div className="space-y-1">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-plum block">
-                    Postcards Series #6
+                    Podcast Ep. 32 (Part 1)
                   </span>
                   <h4 className="text-sm font-semibold text-foreground leading-snug font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-                    Nothing About Us, Without Us: Disability Rights in the Classroom
+                    Disability &amp; Social Realities in India
                   </h4>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Discussion on rights-based education, lived authority, and classroom inclusion with Pratik Aggarwal.
+                    Pratik Aggarwal (Executive Director at ASTHA) discusses frontline community advocacy, lived experience, disability rights, and systemic change in India.
                   </p>
                 </div>
                 <a
-                  href="https://youtu.be/onm9zJjB_PI?si=EcPvzmQ1VJkHIxrn"
+                  href="https://www.youtube.com/watch?v=eUSRzBr0FFc"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-xs font-bold text-plum underline underline-offset-4 hover:opacity-80 pt-0.5"
@@ -677,7 +781,7 @@ export default function Home() {
                 </a>
               </div>
 
-              {/* Podcast Embed 2: Ep. 32 Part 2 */}
+              {/* Podcast 3: Disability, Poverty & Inclusive Education (Ep. 32 Part 2) */}
               <div className="bg-card p-4 rounded-xl border border-border flex flex-col justify-between shadow-2xs space-y-3">
                 <div className="aspect-video rounded-lg overflow-hidden border border-border bg-black">
                   <iframe

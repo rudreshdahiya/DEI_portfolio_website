@@ -95,11 +95,11 @@ function PullQuote({
   const color = accent === "teal" ? "var(--sage)" : "var(--plum)";
   return (
     <blockquote
-      className="reveal my-14 pl-7 border-l-4"
+      className="reveal my-10 pl-6 border-l-4"
       style={{ borderColor: color }}
     >
       <p
-        className="text-2xl md:text-3xl text-foreground italic leading-relaxed"
+        className="text-xl md:text-2xl text-foreground italic leading-relaxed"
         style={{ fontFamily: "'Fraunces', Georgia, serif" }}
       >
         {children}
@@ -108,7 +108,7 @@ function PullQuote({
   );
 }
 
-// ── Reusable portrait placeholder ─────────────────────────────────────────────
+// ── Reusable portrait ─────────────────────────────────────────────────────────
 
 function Portrait({
   src,
@@ -124,9 +124,9 @@ function Portrait({
   size?: "full" | "contained";
 }) {
   return (
-    <figure className={`my-14 ${size === "contained" ? "max-w-[480px] mx-auto" : "-mx-4 md:-mx-12"}`}>
+    <figure className={`my-10 ${size === "contained" ? "max-w-[480px] mx-auto" : "-mx-4 md:-mx-8"}`}>
       <div
-        className="relative w-full rounded-xl overflow-hidden bg-muted"
+        className="relative w-full rounded-xl overflow-hidden bg-muted border border-border shadow-xs"
         style={{ aspectRatio }}
       >
         {src ? (
@@ -150,24 +150,25 @@ function Portrait({
           </div>
         )}
       </div>
-      <figcaption className="mt-3 text-sm text-muted-foreground text-center italic">
+      <figcaption className="mt-2.5 text-xs text-muted-foreground text-center italic">
         {caption}
       </figcaption>
     </figure>
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// ── Page Component ───────────────────────────────────────────────────────────
 
 export default function About() {
   useRevealAll();
+
   return (
     <article aria-labelledby="about-heading">
       <PageMeta
-        title="About Pratik Aggarwal"
-        description="Pratik Aggarwal has fibromyalgia and 9+ years of experience in disability inclusion. Learn how lived experience shapes his work with organisations, governments, and communities."
+        title="About Pratik Aggarwal — Practice & Story"
+        description="Pratik Aggarwal is Executive Director at ASTHA and founder of Blooming in Pain. Discover his professional practice in disability rights alongside his lived experience."
         path="/about"
-        keywords="who is Pratik Aggarwal, fibromyalgia advocate India, invisible disability expert, ASTHA director, disability storyteller"
+        keywords="who is Pratik Aggarwal, fibromyalgia advocate India, invisible disability expert, Executive Director ASTHA, disability storyteller, Blooming in Pain"
       />
       <JsonLd schema={[
         {
@@ -184,223 +185,198 @@ export default function About() {
           "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal",
           "name": "Pratik Aggarwal",
           "url": "https://pratik-aggarwal-website.vercel.app/about",
-          "jobTitle": "Disability Inclusion Expert, Speaker & Director",
-          "description": "Pratik Aggarwal is a disability inclusion expert and storyteller based in New Delhi, India. He lives with fibromyalgia — a chronic invisible disability — and has spent over nine years working at the intersection of disability, public policy, community development, and storytelling. He is Director of ASTHA, a non-profit working with children with disabilities in Delhi's urban informal settlements, and founder of Blooming in Pain, a storytelling platform for people living with invisible disabilities.",
-          "hasCredential": [
-            {
-              "@type": "EducationalOccupationalCredential",
-              "name": "Published in The Journal of Pain — on invisible chronic pain, healthcare access, and the politics of medical legitimacy"
-            },
-            {
-              "@type": "EducationalOccupationalCredential",
-              "name": "Op-Ed in The Telegraph — on disability, identity, and the language we use to talk about bodies that don't conform"
-            }
-          ],
+          "jobTitle": "Executive Director, ASTHA & Disability Inclusion Expert",
+          "description": "Pratik Aggarwal is a disability inclusion practitioner, Executive Director at ASTHA, and founder of Blooming in Pain.",
           "worksFor": {
             "@type": "Organization",
             "@id": "https://pratik-aggarwal-website.vercel.app/#astha",
             "name": "ASTHA",
             "url": "https://asthaindia.in"
-          },
-          "knowsAbout": [
-            "Fibromyalgia", "Invisible disabilities", "Chronic illness", "Disability inclusion",
-            "Disability sensitization", "Inclusive development", "Public policy",
-            "Community storytelling", "Child disability rights", "Accessibility",
-            "DEI", "Rights of Persons with Disabilities Act 2016", "Social model of disability",
-            "Intersectionality of disability, poverty, and gender"
-          ],
-          "address": { "@type": "PostalAddress", "addressLocality": "New Delhi", "addressCountry": "IN" },
-          "sameAs": [
-            "https://linkedin.com/in/pratikaggarwal",
-            "https://instagram.com/bloominginpain",
-            "https://medium.com/@BloomingInPain",
-            "https://asthaindia.in"
-          ]
-        },
-        {
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "@id": "https://pratik-aggarwal-website.vercel.app/#astha",
-          "name": "ASTHA",
-          "url": "https://asthaindia.in",
-          "description": "ASTHA is a New Delhi-based non-profit organisation working with children with disabilities in urban informal settlements. Pratik Aggarwal serves as its Director.",
-          "areaServed": { "@type": "City", "name": "New Delhi" },
-          "founder": { "@type": "Person", "name": "ASTHA founding team" },
-          "employee": { "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal" }
+          }
         }
       ]} />
 
-      {/* ── Page header ───────────────────────────────────────────────── */}
-      <header className="px-6 pt-20 pb-14 border-b border-border">
+      {/* ── Page Header ───────────────────────────────────────────────── */}
+      <header className="px-6 pt-16 pb-12 border-b border-border bg-card/30">
         <div className="max-w-[70ch] mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-5">
-            About Pratik
+          <p className="text-xs font-bold uppercase tracking-widest text-plum mb-3">
+            Practice &amp; Story
           </p>
           <h1
             id="about-heading"
-            className="text-5xl md:text-6xl text-foreground mb-5 tracking-tight"
+            className="text-4xl md:text-6xl text-foreground mb-4 tracking-tight font-serif"
             style={{ fontFamily: "'Fraunces', Georgia, serif", lineHeight: 1.07 }}
           >
-            Practice &amp; Story
+            Professional Practice &amp; Lived Experience
           </h1>
-          <p className="text-lg text-muted-foreground max-w-[52ch] leading-relaxed">
-            Working at the intersection of disability rights, accessibility, community engagement, public policy, and storytelling to build practices beyond compliance.
+          <p className="text-base md:text-lg text-muted-foreground max-w-[54ch] leading-relaxed font-normal">
+            Bringing together grassroots leadership, disability rights, public policy, and lived authority to build inclusion systems that work in practice.
           </p>
 
           <AskAI />
         </div>
       </header>
 
-      {/* ── Body ──────────────────────────────────────────────────────── */}
-      <div className="px-6 py-16">
-        <div className="max-w-[70ch] mx-auto">
+      {/* ── Main Narrative Body (2 Strong Consolidated Sections) ───────── */}
+      <div className="px-6 py-14">
+        <div className="max-w-[70ch] mx-auto space-y-12">
 
-          {/* ── 1. Lead: Professional Practice & Skills ───────────────── */}
-          <section aria-label="Professional practice and skills in disability inclusion">
-            <div className="space-y-6 text-lg text-foreground leading-relaxed">
+          {/* ── SECTION 1: Practice / Professional Story ───────────────────── */}
+          <section aria-label="Section 1: Practice and Professional Story" className="space-y-6">
+            <div className="border-b border-border/80 pb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-plum block mb-1">
+                Section 1
+              </span>
+              <h2
+                className="text-2xl md:text-3xl font-serif text-foreground"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                Practice &amp; Professional Leadership
+              </h2>
+            </div>
+
+            <div className="space-y-5 text-base md:text-lg text-foreground/90 leading-relaxed font-normal">
               <p>
-                Pratik Aggarwal works at the intersection of disability, inclusion, accessibility, communication, and social change. His work brings together <span data-key-info>lived experience, community engagement, research, advocacy, facilitation, and storytelling</span> to help organisations understand disability beyond compliance and build more meaningful, accessible, and inclusive practices.
+                Pratik Aggarwal is a <span data-key-info>disability inclusion practitioner and organisational leader</span> working across disability rights, community-based systems, early intervention, inclusive education, accessibility, and public policy. For over a decade, his work has been rooted in communities — particularly with children with disabilities and their families in Delhi’s urban informal settlements.
               </p>
+
               <p>
-                For over nine years, he has led field-based programmes, policy reviews, and institutional training. <span data-key-info>As Director of ASTHA — a Delhi-based organisation working with children with disabilities in urban informal settlements</span> — he works face-to-face with disability in its most unprotected forms: in homes without reliable sanitation, in families navigating multi-layered crises, and in systems unprepared to provide accessible care.
+                <span data-key-info>As Executive Director of ASTHA</span>, he has led the organisation through a period of significant growth, while developing programmes, teams, partnerships, and systems that enable community-based approaches to reach more children and families. His experience spans early childhood development, family and community strengthening, inclusive education, frontline health systems, disability advocacy, and programme design. He has also worked on initiatives bringing together health, rehabilitation, and disability services, and has contributed to the development of inclusive public spaces and institutional practices — including co-creating <span className="font-semibold text-foreground">Umang Vatika</span>, North India’s first government sensory garden at Safdarjung Hospital.
               </p>
+
               <p>
-                His work spans consultancy, corporate DEI and disability training, NGO capacity building, government advisory, and spatial accessibility. Notably, he co-created <span className="font-semibold">Umang Vatika</span> at Safdarjung Hospital, North India's first government sensory garden designed for neurodivergent children, and led disability rights advocacy following emergency crisis events like the Delhi <em>Viklang Basti</em> fire.
+                Alongside his field and organisational work, Pratik advises organisations and emerging leaders working in disability, health, education, child development, and social change. He brings a combination of <span data-key-info>grassroots experience, social work and public health training, quantitative skills, programme leadership, and practical experience</span> of building and scaling a social-impact organisation. His consultancy work includes disability inclusion, accessibility, programme development, organisational strengthening, training, research, and strategy. He is particularly interested in helping organisations move from good ideas and small pilots towards stronger systems, sustainable programmes, and meaningful scale.
               </p>
             </div>
 
             <PullQuote accent="teal">
-              "Inclusion isn't a checklist slide or a policy clause. It is the unromanticised, daily commitment to building spaces that honour lived complexity."
+              "Inclusion isn't a checklist slide or a policy clause. It is the unromanticised, daily commitment to building systems that honour lived complexity and community rights."
             </PullQuote>
+
+            <Portrait
+              src="/images/Pratik%20Pictures/RPWD%20Workshop%20for%20People%20with%20Disabilities/WhatsApp%20Image%202026-08-24%20at%202.03.24%20PM%20(1).jpeg"
+              alt="Pratik Aggarwal facilitating RPwD Act disability inclusion workshop"
+              caption="Pratik Aggarwal — facilitating community-based disability rights training and capacity-building workshops."
+              aspectRatio="16/9"
+            />
           </section>
 
-          <Portrait
-            src="/images/work-engagements_1.jpeg"
-            alt="Pratik Aggarwal conducting disability inclusion workshop"
-            caption="Pratik Aggarwal — facilitating community-based disability training and capacity-building workshops."
-            aspectRatio="16/9"
-          />
-
-          {/* ── 2. Lived Authority & Fibromyalgia Narrative ─────────────── */}
-          <section aria-label="Lived authority and personal origin story">
-            <div className="space-y-6 text-lg text-foreground leading-relaxed">
-              <h2 className="text-2xl font-serif text-foreground mt-8 mb-4" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-                Lived Authority &amp; Invisible Disability
+          {/* ── SECTION 2: Lived Experience & Blooming in Pain ─────────────── */}
+          <section aria-label="Section 2: Lived Experience and Blooming in Pain" className="space-y-6 pt-4 border-t border-border/80">
+            <div className="border-b border-border/80 pb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-plum block mb-1">
+                Section 2
+              </span>
+              <h2
+                className="text-2xl md:text-3xl font-serif text-foreground"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                Lived Experience &amp; Blooming in Pain
               </h2>
+            </div>
+
+            <div className="space-y-5 text-base md:text-lg text-foreground/90 leading-relaxed font-normal">
               <p>
-                Running alongside his professional practice is his own lived reality: <span data-key-info>Pratik has fibromyalgia, a chronic condition characterised by widespread pain, fatigue, and cognitive difficulty that leaves no visible trace</span> on medical scans or routine charts.
+                Alongside his professional work, Pratik brings the <span data-key-info>lived experience of fibromyalgia</span> — a chronic condition involving widespread pain, fatigue, and cognitive difficulties. Years of diagnostic uncertainty and having to repeatedly explain and prove his experience of pain shaped his understanding of how quickly invisible disability can be met with doubt when it cannot be seen or easily measured.
               </p>
+
               <p>
-                What he learned through years of diagnostic uncertainty and medical disbelief was the grinding exhaustion of proof — the constant requirement to justify your body's reality to doctors, employers, and social institutions. Pain, he realised, is socially acceptable primarily when it is legible. When it isn't, society defaults to doubt.
+                Rather than keeping this experience separate from his professional practice, he has used it to <span data-key-info>deepen his understanding of accessibility, disability, and the everyday realities of living in an inaccessible world</span>.
               </p>
+
               <p>
-                Rather than treating his condition as a separate private struggle, <span data-key-info>Pratik turned that lived reality into the cornerstone of his work</span>. It provides an unromanticised understanding of what it costs to be disabled in an inaccessible world, and a deep impatience with inclusion efforts that stay comfortable.
+                In 2021, he founded <em className="font-serif italic font-semibold text-plum">Blooming in Pain</em>, a storytelling platform for people living with invisible chronic illnesses and disabilities, including fibromyalgia, endometriosis, lupus, chronic fatigue, and psychosocial disabilities. The platform grew from a gap he experienced himself: the lack of honest stories about living with persistent illness without reducing people to either tragedy or stories of overcoming.
+              </p>
+
+              <p>
+                Blooming in Pain creates space for people to share the complexity of illness, identity, relationships, work, and everyday life, and to have experiences that are often invisible recognised and believed.
               </p>
             </div>
 
             <PullQuote accent="plum">
-              "Nine years ago, I decided that what I live with every day could become the most useful thing I offer."
+              "Establishing lived experience and professional authority as one connected story — creating space where people are believed without having to justify their pain."
             </PullQuote>
+
+            <Portrait
+              src="/images/Pratik%20Pictures/BloomingInPain/IMG_9605.jpeg"
+              alt="Pratik Aggarwal at Blooming in Pain National Art Exhibition"
+              caption="Pratik Aggarwal — Executive Director at ASTHA, researcher, and founder of Blooming in Pain."
+              aspectRatio="16/9"
+              size="contained"
+            />
           </section>
 
-          <Portrait
-            src="/images/pratik-about-page.jpeg"
-            alt="Portrait photograph of Pratik Aggarwal"
-            caption="Pratik Aggarwal — disability inclusion expert, researcher, and founder of Blooming in Pain."
-            aspectRatio="3/2"
-            size="contained"
-          />
-
-          {/* ── 3. Storytelling & Blooming in Pain ──────────────────────── */}
-          <section aria-label="Storytelling and Blooming in Pain platform">
-            <div className="space-y-6 text-lg text-foreground leading-relaxed">
-              <h2 className="text-2xl font-serif text-foreground mt-8 mb-4" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-                Blooming in Pain
-              </h2>
-              <p>
-                In 2021, <span data-key-info>Pratik founded <em>Blooming in Pain</em>, a storytelling platform dedicated to people living with invisible chronic illnesses and disabilities</span> — fibromyalgia, endometriosis, lupus, chronic fatigue, and psychosocial conditions.
-              </p>
-              <p>
-                The platform was born out of a simple gap: the absence of honest, un-sanitised stories about living with persistent illness without falling into dramatic overcoming tropes or tragedy arcs. Today, Blooming in Pain serves as a vital community space where lived accounts are documented, shared, and believed.
-              </p>
-            </div>
-          </section>
-
-          {/* ── 4. Credibility (understated) ──────────────────────────── */}
-          <section aria-label="Roles, publications, and affiliations">
-            <div className="reveal border-t border-b border-border py-9 my-12">
-              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-6">
-                Roles &amp; publications
-              </p>
-              <ul className="space-y-4 list-none m-0 p-0">
-                <li className="text-base text-foreground leading-snug">
-                  Director,{" "}
-                  <a
-                    href="https://asthaindia.in"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-semibold text-primary underline underline-offset-4 hover:text-primary/80 transition-colors"
-                  >
-                    ASTHA
-                    <span className="sr-only">(opens in new tab)</span>
-                  </a>{" "}
-                  <span className="text-muted-foreground">
-                    — non-profit working with children with disabilities in
-                    Delhi's urban informal settlements
-                  </span>
-                </li>
-                <li className="text-base text-foreground leading-snug">
-                  Co-creator of <span className="font-semibold">Umang Vatika</span>{" "}
-                  <span className="text-muted-foreground">
-                    — North India’s first government sensory garden for children with disabilities at Safdarjung Hospital, featured in{" "}
-                    <a href="https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Better India</a>,{" "}
-                    <a href="https://indianexpress.com/article/cities/delhi/from-visual-art-installations-to-mud-pits-sensory-garden-for-neurodivergent-children-opens-at-delhis-safdarjung-hospital-10461086/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Indian Express</a>, and{" "}
-                    <a href="https://ddnews.gov.in/inauguration-of-umang-vatika-at-vmmc-and-safdarjung-hospital-the-first-government-sensory-garden-in-north-india/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">DD News</a>.
-                  </span>
-                </li>
-                <li className="text-base text-foreground leading-snug">
-                  Author in{" "}
-                  <cite className="not-italic font-semibold">
-                    <a href="https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Samuhik Pahal</a>
-                  </cite>{" "}
-                  <span className="text-muted-foreground">
-                    — "Thirty years of working with communities: Reflections and Opinions" on community-led rights advocacy.
-                  </span>
-                </li>
-                <li className="text-base text-foreground leading-snug">
-                  Featured & Quoted Expert in National Media{" "}
-                  <span className="text-muted-foreground">
-                    — including ground reporting in{" "}
-                    <a href="https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">The Print</a> (Viklang Basti fire advocacy),{" "}
-                    <a href="https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Outlook India</a> (NFHS-6 policy analysis),{" "}
-                    <a href="https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Times of India</a>, and{" "}
-                    <a href="https://citizenmatters.in/most-urban-schools-violate-law-exclude-children-with-disabilities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-primary font-medium">Citizen Matters</a>.
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </section>
-
-          {/* ── 5. Soft CTA ───────────────────────────────────────────── */}
-          <section aria-label="Read more or work together">
-            <p className="reveal text-lg text-muted-foreground mb-9 max-w-[58ch] leading-relaxed">
-              If any of this resonates — whether you live with an invisible
-              disability, work in inclusion, or simply want to understand the
-              experience better — there's a place for you here.
+          {/* ── Roles & Publications Section ────────────────────────────────── */}
+          <section aria-label="Roles and publications" className="reveal border-t border-b border-border py-8 my-8 bg-card/30 p-6 rounded-2xl">
+            <p className="text-xs font-bold uppercase tracking-widest text-plum mb-5">
+              Roles &amp; Publications
             </p>
-            <div className="flex flex-wrap items-center gap-5">
-              <Link
-                to="/blooming-in-pain"
-                className="inline-flex items-center px-7 py-3.5 rounded-md font-semibold text-base text-white hover:opacity-90 transition-opacity"
-                style={{ backgroundColor: "var(--plum)" }}
-              >
-                Read more stories
-              </Link>
+            <ul className="space-y-4 list-none m-0 p-0 text-sm md:text-base">
+              <li className="text-foreground leading-snug">
+                <strong className="font-bold text-foreground">Executive Director, ASTHA</strong>{" "}
+                <a
+                  href="https://asthaindia.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-plum underline underline-offset-4 hover:opacity-80 transition-opacity"
+                >
+                  (ASTHA website)
+                  <span className="sr-only">(opens in new tab)</span>
+                </a>{" "}
+                <span className="text-muted-foreground block text-xs md:text-sm mt-0.5">
+                  — non-profit working with children with disabilities in Delhi's urban informal settlements
+                </span>
+              </li>
+
+              <li className="text-foreground leading-snug">
+                <strong className="font-bold text-foreground">Co-creator of Umang Vatika</strong>{" "}
+                <span className="text-muted-foreground block text-xs md:text-sm mt-0.5">
+                  — North India’s first government sensory garden for children with disabilities at Safdarjung Hospital, featured in{" "}
+                  <a href="https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">The Better India</a>,{" "}
+                  <a href="https://indianexpress.com/article/cities/delhi/from-visual-art-installations-to-mud-pits-sensory-garden-for-neurodivergent-children-opens-at-delhis-safdarjung-hospital-10461086/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">The Indian Express</a>, and{" "}
+                  <a href="https://ddnews.gov.in/inauguration-of-umang-vatika-at-vmmc-and-safdarjung-hospital-the-first-government-sensory-garden-in-north-india/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">DD News</a>.
+                </span>
+              </li>
+
+              <li className="text-foreground leading-snug">
+                <strong className="font-bold text-foreground">Contributing Editor, Samuhik Pahal</strong>{" "}
+                <span className="text-muted-foreground block text-xs md:text-sm mt-0.5">
+                  — Author of <cite className="not-italic font-semibold text-foreground">"Thirty years of working with communities: Reflections and Opinions"</cite> on community-led rights advocacy in{" "}
+                  <a href="https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">Samuhik Pahal</a>.
+                </span>
+              </li>
+
+              <li className="text-foreground leading-snug">
+                <strong className="font-bold text-foreground">Featured &amp; Quoted Expert in National Media</strong>{" "}
+                <span className="text-muted-foreground block text-xs md:text-sm mt-0.5">
+                  — including ground reporting in{" "}
+                  <a href="https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">The Print</a> (Viklang Basti fire advocacy),{" "}
+                  <a href="https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">Outlook India</a> (NFHS-6 policy analysis),{" "}
+                  <a href="https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">Times of India</a>, and{" "}
+                  <a href="https://citizenmatters.in/most-urban-schools-violate-law-exclude-children-with-disabilities/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 text-plum font-medium">Citizen Matters</a>.
+                </span>
+              </li>
+            </ul>
+          </section>
+
+          {/* ── Soft Action CTAs ───────────────────────────────────────────── */}
+          <section aria-label="Read more or work together" className="pt-2">
+            <p className="reveal text-base md:text-lg text-muted-foreground mb-6 max-w-[58ch] leading-relaxed">
+              If any of this resonates — whether you live with an invisible disability, work in inclusion, or want to build accessible practices in your organisation — let's connect.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
               <Link
                 to="/services"
-                className="inline-flex items-center px-7 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center px-6 py-3 rounded-xl font-semibold text-sm text-white hover:opacity-90 transition-opacity shadow-sm"
+                style={{ backgroundColor: "var(--plum)" }}
               >
-                Work with me
+                Explore Service Pillars →
+              </Link>
+              <Link
+                to="/blooming-in-pain"
+                className="inline-flex items-center px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted transition-colors"
+              >
+                Read Blooming in Pain Stories
               </Link>
             </div>
           </section>

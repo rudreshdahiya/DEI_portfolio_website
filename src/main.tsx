@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { Analytics } from "@vercel/analytics/react";
 import { HelmetProvider } from "react-helmet-async";
 import "./app.css";
+import { ErrorBoundary } from "./components/error-boundary";
 import { Layout } from "./layout";
 import Home from "./pages/home";
 import About from "./pages/about";
@@ -16,22 +17,25 @@ import Accessibility from "./pages/accessibility";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HelmetProvider>
-    <Analytics />
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/work" element={<Work />} />
-          <Route path="/blooming-in-pain" element={<BloomingInPain />} />
-          <Route path="/blooming-in-pain/submit" element={<BloomingInPainSubmit />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/accessibility" element={<Accessibility />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    </HelmetProvider>
+    <ErrorBoundary>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Analytics />
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/work" element={<Work />} />
+              <Route path="/blooming-in-pain" element={<BloomingInPain />} />
+              <Route path="/blooming-in-pain/submit" element={<BloomingInPainSubmit />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/accessibility" element={<Accessibility />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
+    </ErrorBoundary>
   </StrictMode>,
 );

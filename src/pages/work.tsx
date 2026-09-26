@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link } from "react-router";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
+import { Camera, Sparkles, X, MapPin, Calendar, ExternalLink } from "lucide-react";
 
 // ── Types & data ──────────────────────────────────────────────────────────────
 
@@ -20,7 +22,7 @@ interface Engagement {
   year: string;
   role: Role;
   description: string;
-  featured?: boolean; // shows a photo above the entry
+  featured?: boolean;
   photoUrl?: string;
   photoAlt?: string;
   url?: string;
@@ -33,7 +35,141 @@ interface Group {
   entries: Engagement[];
 }
 
-// Role pill appearance — AA-contrast text on tinted backgrounds (Made Visible palette)
+interface GalleryPhoto {
+  id: string;
+  src: string;
+  title: string;
+  category: "sensory" | "purplefest" | "international" | "training" | "awards" | "bip";
+  categoryLabel: string;
+  location: string;
+  year: string;
+  description: string;
+}
+
+const galleryPhotos: GalleryPhoto[] = [
+  {
+    id: "sp-1",
+    src: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
+    title: "Umang Vatika Sensory Garden — Safdarjung Hospital",
+    category: "sensory",
+    categoryLabel: "Sensory Infrastructure",
+    location: "Safdarjung Hospital, New Delhi",
+    year: "2024",
+    description: "North India's 1st government sensory garden for neurodivergent children, co-created with ASTHA and Safdarjung Hospital.",
+  },
+  {
+    id: "sp-2",
+    src: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6637%20(1)%20(1).jpg",
+    title: "Sensory Pathway & Interactive Play Space",
+    category: "sensory",
+    categoryLabel: "Sensory Infrastructure",
+    location: "New Delhi",
+    year: "2024",
+    description: "Interactive visual art installations, mud pits, and accessible sensory pathways designed for children with disabilities.",
+  },
+  {
+    id: "pf-1",
+    src: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
+    title: "Purple Fest — Keynote & Advocacy Session",
+    category: "purplefest",
+    categoryLabel: "Purple Fest",
+    location: "Amrit Udyan / Goa",
+    year: "2024",
+    description: "Delivering keynote address on invisible disability, rights, and accessible public space design.",
+  },
+  {
+    id: "pf-2",
+    src: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9574.jpeg",
+    title: "National Census & Disability Policy Panel",
+    category: "purplefest",
+    categoryLabel: "Purple Fest",
+    location: "Purple Fest Goa",
+    year: "2024",
+    description: "Co-created session on national census data, NFHS survey inclusion, and invisible disability representation.",
+  },
+  {
+    id: "ar-1",
+    src: "/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg",
+    title: "ARNEC Asia-Pacific Regional Conference — Manila",
+    category: "international",
+    categoryLabel: "International Policy",
+    location: "Manila, Philippines",
+    year: "2019",
+    description: "Presenting community-based early childhood development frameworks for children with disabilities in urban informal settlements.",
+  },
+  {
+    id: "ar-2",
+    src: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
+    title: "ARNEC Early Childhood Development Panel",
+    category: "international",
+    categoryLabel: "International Policy",
+    location: "Manila, Philippines",
+    year: "2019",
+    description: "International expert dialogue on early intervention and child rights advocacy across Asia-Pacific.",
+  },
+  {
+    id: "tot-1",
+    src: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
+    title: "Tech Mahindra Foundation — Training of Trainers (ToT)",
+    category: "training",
+    categoryLabel: "Capacity Building",
+    location: "New Delhi",
+    year: "2023",
+    description: "Facilitating intensive Training of Trainers module on neurodevelopmental disabilities and workplace inclusion.",
+  },
+  {
+    id: "rpwd-1",
+    src: "/images/Pratik%20Pictures/RPWD%20Workshop%20for%20People%20with%20Disabilities/WhatsApp%20Image%202026-08-24%20at%202.03.24%20PM%20(1).jpeg",
+    title: "RPwD Act 2016 Workshop for Persons with Disabilities",
+    category: "training",
+    categoryLabel: "Capacity Building",
+    location: "Community Center, Delhi",
+    year: "2023",
+    description: "Rights-based workshop empowering self-advocates and families on government welfare schemes and legal entitlements.",
+  },
+  {
+    id: "award-1",
+    src: "/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG",
+    title: "Jai Vakeel Foundation Award to ASTHA",
+    category: "awards",
+    categoryLabel: "Awards & Recognition",
+    location: "Mumbai",
+    year: "2023",
+    description: "Accepting organizational excellence award on behalf of ASTHA for frontline community rehabilitation work.",
+  },
+  {
+    id: "award-2",
+    src: "/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/IMG-20251212-WA0085.jpg",
+    title: "ASTHA Leadership & Partner Recognition",
+    category: "awards",
+    categoryLabel: "Awards & Recognition",
+    location: "Mumbai",
+    year: "2023",
+    description: "Recognising ASTHA's community leadership in connecting thousands of children with disabilities to education and health rights.",
+  },
+  {
+    id: "bip-1",
+    src: "/images/Pratik%20Pictures/BloomingInPain/IMG_9605.jpeg",
+    title: "Blooming in Pain — Art & Healing Session",
+    category: "bip",
+    categoryLabel: "Blooming in Pain",
+    location: "New Delhi",
+    year: "2023",
+    description: "Community art and storytelling gathering centered around invisible chronic illness, fibromyalgia, and creative expression.",
+  },
+  {
+    id: "kmc-1",
+    src: "/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg",
+    title: "Kirori Mal College, Delhi University — Guest Speaker",
+    category: "training",
+    categoryLabel: "Academic Lectures",
+    location: "Delhi University",
+    year: "2023",
+    description: "Interactive lecture on the social model of disability, language, and invisible conditions for DU students.",
+  },
+];
+
+// Role pill appearance — AA-contrast text on tinted backgrounds
 const roleMeta: Record<Role, { label: string; bg: string; color: string }> = {
   Keynote:   { label: "Keynote",   bg: "#E2EDE7", color: "#1F3D2A" },
   Speaker:   { label: "Speaker",   bg: "#E2EDE7", color: "#1F3D2A" },
@@ -48,29 +184,33 @@ const groups: Group[] = [
   {
     id: "sensitization",
     category: "Training & Sensitization",
-    title: "Disability Sensitization & Awareness",
+    title: "Disability Sensitization & Capacity Building",
     entries: [
       {
-        event: "Delhi University",
+        event: "Delhi University — Kirori Mal College",
         org: "University of Delhi",
         year: "2023",
         role: "Lecturer",
         description:
-          "Guest lecture series for postgraduate psychology students on invisible disability, chronic illness, and the burden of proof in medical and workplace contexts.",
+          "Guest lecture series for students on invisible disability, chronic illness, and the burden of proof in medical and workplace contexts.",
         featured: true,
-        photoUrl: "/images/work-engagements_1.jpeg",
-        photoAlt: "Pratik Aggarwal speaking at Delhi University",
+        photoUrl: "/images/Pratik%20Pictures/Kirori%20Mal%20College,%20DU,%20Panelist/KMC%20DU%20event%202.jpg",
+        photoAlt: "Pratik Aggarwal speaking at Kirori Mal College, Delhi University",
       },
       {
-        event: "TISS Mumbai",
-        org: "Tata Institute of Social Sciences",
-        year: "2022",
-        role: "Speaker",
+        event: "Tech Mahindra Foundation — Training of Trainers (ToT)",
+        org: "Tech Mahindra Foundation",
+        year: "2023",
+        role: "Trainer",
         description:
-          "Seminar on disability-inclusive social work practice — specifically the gap between policy frameworks and the lived experience of people with invisible conditions.",
+          "Designed and facilitated an intensive Training of Trainers programme on neurodevelopmental disabilities to embed inclusion internally.",
+        featured: true,
+        photoUrl: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
+        photoAlt: "Pratik Aggarwal facilitating ToT session for Tech Mahindra Foundation",
       },
       {
-        event: "HCL Foundation",
+        event: "HCL Foundation Workplace Sensitization",
+        org: "HCL Foundation",
         year: "2022",
         role: "Trainer",
         description:
@@ -80,111 +220,60 @@ const groups: Group[] = [
         photoAlt: "Pratik Aggarwal facilitating training session for HCL Foundation",
       },
       {
-        event: "Tech Mahindra Foundation — Training of Trainers",
-        org: "Tech Mahindra Foundation",
+        event: "RPwD Act 2016 Community Workshops",
+        org: "ASTHA NGO",
         year: "2023",
         role: "Trainer",
         description:
-          "Designed and facilitated a Training of Trainers programme on disability inclusion so the knowledge could be embedded, sustained, and scaled internally.",
+          "Rights-based training workshops for persons with disabilities and families on government welfare entitlement systems.",
       },
     ],
   },
   {
     id: "policy",
-    category: "Conferences, Legal & Policy",
-    title: "Conferences, Legal & Policy",
+    category: "Conferences, Legal & Policy Advisory",
+    title: "Conferences, Policy & Infrastructure Advisory",
     entries: [
       {
-        event: "Purple Fest Goa 2024",
+        event: "Umang Vatika Sensory Garden — Safdarjung Hospital",
+        org: "VMMC & Safdarjung Hospital",
+        year: "2024",
+        role: "Advisory",
+        description:
+          "Co-created North India's 1st government sensory garden for neurodivergent children in partnership with ASTHA.",
+        featured: true,
+        photoUrl: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
+        photoAlt: "Pratik Aggarwal at Safdarjung Hospital Sensory Garden",
+      },
+      {
+        event: "Purple Fest Goa 2024 — Keynote & Art Exhibition",
         org: "Disability Rights Coalition, Goa",
         year: "2024",
         role: "Keynote",
         description:
-          "Keynote address and curated art exhibition by people living with pain at India's largest disability arts and culture festival — highlighting invisible disability, lived authority, and accessible creative expression.",
+          "Keynote address & opening landmark national art exhibition featuring 27 artists living with invisible conditions at India's largest disability arts festival.",
         featured: true,
-        photoUrl: "/images/work-engagements_2.jpeg",
+        photoUrl: "/images/Pratik%20Pictures/Delhi%20Purple%20Fest/IMG_1457.jpg",
         photoAlt: "Pratik Aggarwal delivering keynote at Purple Fest Goa",
       },
       {
-        event: "Delhi Master Plan 2041",
-        org: "Delhi Development Authority",
-        year: "2023",
-        role: "Panelist",
-        description:
-          "Panel on disability-inclusive urban planning, with specific focus on the gap between built-environment standards and the reality of invisible and chronic conditions.",
-      },
-      {
-        event: "SLIC — Supported Living & Inclusion Conclave",
-        year: "2023",
-        role: "Speaker",
-        description:
-          "Talk on community-based support systems for people with psychosocial and invisible disabilities in urban India — moving beyond residential care models.",
-      },
-      {
-        event: "HRLN — Human Rights Law Network",
-        org: "Human Rights Law Network",
-        year: "2022",
-        role: "Speaker",
-        description:
-          "Speaker on the legal status of invisible and psychosocial disabilities under the Rights of Persons with Disabilities Act, 2016 — implementation gaps and advocacy pathways.",
-      },
-      {
-        event: "Keystone Institute",
-        year: "2022",
-        role: "Trainer",
-        description:
-          "Residential training programme for development sector practitioners on disability-inclusive programme design and rights-based approaches.",
-      },
-      {
-        event: "NDMA + UN India",
-        org: "National Disaster Management Authority & UN India",
+        event: "Disaster Risk Reduction Framework Advisory",
+        org: "NDMA & UN India",
         year: "2022",
         role: "Advisory",
         description:
-          "Advisory input on the national disability-inclusive disaster risk reduction framework, with emphasis on invisible disabilities and psychosocial support in emergencies.",
+          "Advisory input on national disability-inclusive disaster risk reduction framework, with emphasis on invisible disabilities and emergency access.",
+        featured: true,
+        photoUrl: "/images/Pratik%20Pictures/Disasters%20and%20Disability/IMGL3083.JPG",
+        photoAlt: "Pratik Aggarwal presenting at NDMA UN India Disaster Reduction workshop",
       },
     ],
   },
   {
     id: "academic",
-    category: "Academic & International",
-    title: "Academic & International",
+    category: "Academic & International Interventions",
+    title: "Academic & International Interventions",
     entries: [
-      {
-        event: "UNICEF Bihar",
-        org: "UNICEF India",
-        year: "2023",
-        role: "Trainer",
-        description:
-          "Capacity-building workshop for district-level child rights officers in Bihar on disability-inclusive programming — from policy to frontline practice.",
-        featured: true,
-        photoUrl: "/images/work-engagements_3.jpeg",
-        photoAlt: "Pratik Aggarwal leading workshop with UNICEF Bihar officers",
-      },
-      {
-        event: "Kirori Mal College",
-        org: "University of Delhi",
-        year: "2023",
-        role: "Lecturer",
-        description:
-          "Lecture and open discussion for undergraduate students on the social model of disability, stigma, and invisible conditions — and why the language we use matters.",
-      },
-      {
-        event: "Embassy of Spain, New Delhi",
-        org: "Spanish Embassy",
-        year: "2022",
-        role: "Speaker",
-        description:
-          "Cultural-diplomatic event on disability arts, representation, and inclusive policy exchange between India and Spain.",
-      },
-      {
-        event: "Embassy of Finland, New Delhi",
-        org: "Finnish Embassy",
-        year: "2022",
-        role: "Panelist",
-        description:
-          "Panel comparing Finland–India models of disability inclusion, with focus on early intervention, school inclusion, and the rights-based approach.",
-      },
       {
         event: "ARNEC Regional Conference, Manila",
         org: "Asia-Pacific Regional Network for Early Childhood",
@@ -192,76 +281,31 @@ const groups: Group[] = [
         role: "Speaker",
         description:
           "Presentation on disability-inclusive early childhood development within India's urban informal settlements — evidence, gaps, and community-led approaches.",
+        featured: true,
+        photoUrl: "/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg",
+        photoAlt: "Pratik Aggarwal presenting at ARNEC Manila",
       },
-    ],
-  },
-  {
-    id: "media-podcasts",
-    category: "Media Features & Podcasts",
-    title: "Podcasts, Ground Reports & Publications",
-    entries: [
       {
-        event: "Disability, Poverty & Inclusive Education (Podcast Ep. 32)",
-        org: "YouTube Podcast",
-        year: "2024",
-        role: "Speaker",
+        event: "UNICEF Bihar Child Rights Capacity Building",
+        org: "UNICEF India",
+        year: "2023",
+        role: "Trainer",
         description:
-          "In-depth podcast interview discussing frontline community work, disability rights, poverty, and inclusive education in India.",
-        url: "https://www.youtube.com/watch?v=eUSRzBr0FFc&t=1345s",
+          "Capacity-building workshop for district-level child rights officers in Bihar on disability-inclusive programming.",
+        featured: true,
+        photoUrl: "/images/work-engagements_3.jpeg",
+        photoAlt: "Pratik Aggarwal leading workshop with UNICEF Bihar officers",
       },
       {
-        event: "Nothing About Us, Without Us: Disability Rights in the Classroom",
-        org: "Postcards Series #6",
-        year: "2024",
-        role: "Speaker",
-        description:
-          "Podcast episode on rights-based education, lived authority, and classroom inclusion.",
-        url: "https://youtu.be/onm9zJjB_PI?si=EcPvzmQ1VJkHIxrn",
-      },
-      {
-        event: "Safdarjung Hospital Sensory Garden ('Umang Vatika')",
-        org: "The Better India, Indian Express & DD News",
-        year: "2024",
-        role: "Advisory",
-        description:
-          "National media coverage on North India's first government sensory garden for neurodivergent children, created in collaboration with ASTHA.",
-        url: "https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102",
-      },
-      {
-        event: "Delhi 'Viklang Basti' Fire & Wheelchair Advocacy",
-        org: "The Print Ground Report",
-        year: "2024",
-        role: "Advisory",
-        description:
-          "Field reporting on emergency crisis response, disability rights advocacy, and wheelchair access in informal settlements.",
-        url: "https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/",
-      },
-      {
-        event: "India's Persons With Disabilities Left Out As NFHS-6 Omits Data",
-        org: "Outlook India",
-        year: "2024",
-        role: "Advisory",
-        description:
-          "Critical commentary on systemic data omission of persons with disabilities in national health surveys.",
-        url: "https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data",
-      },
-      {
-        event: "Disability Care Lags in Delhi Slums & School Violations",
-        org: "Times of India & Citizen Matters",
+        event: "Jai Vakeel Foundation Organizational Excellence Award",
+        org: "Jai Vakeel Foundation",
         year: "2023",
         role: "Advisory",
         description:
-          "Expert insights on informal settlement care deficits and urban school non-compliance with the Rights of Persons with Disabilities Act.",
-        url: "https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms",
-      },
-      {
-        event: "Thirty Years of Working with Communities",
-        org: "Samuhik Pahal",
-        year: "2023",
-        role: "Lecturer",
-        description:
-          "Published reflections on 30 years of rights-based community engagement and organizational development.",
-        url: "https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/",
+          "Accepting award on behalf of ASTHA for frontline community rehabilitation work with disabled children.",
+        featured: true,
+        photoUrl: "/images/Pratik%20Pictures/Award%20by%20Jai%20vakeel%20foundation%20to%20ASTHA/8K7A4285%20(1).JPG",
+        photoAlt: "Jai Vakeel Foundation Award presented to ASTHA",
       },
     ],
   },
@@ -281,14 +325,14 @@ function RolePill({ role }: { role: Role }) {
   );
 }
 
-// ── Photo component ────────────────────────────────────────────────────────────
+// ── Event Photo component ──────────────────────────────────────────────────────
 
 function EventPhoto({ src, alt }: { src?: string; alt?: string }) {
   return (
     <figure className="mb-0">
       <div
-        className="relative w-full rounded-t-xl overflow-hidden bg-muted"
-        style={{ aspectRatio: "16 / 7" }}
+        className="relative w-full rounded-t-xl overflow-hidden bg-muted shadow-xs"
+        style={{ aspectRatio: "16 / 9" }}
       >
         {src ? (
           <img
@@ -314,123 +358,217 @@ function EventPhoto({ src, alt }: { src?: string; alt?: string }) {
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// ── Main Page Component ───────────────────────────────────────────────────────
 
 export default function Work() {
-  useRevealAll();
+  const [selectedGalleryCategory, setSelectedGalleryCategory] = useState<string>("all");
+  const [activePhotoModal, setActivePhotoModal] = useState<GalleryPhoto | null>(null);
+
+  useRevealAll([selectedGalleryCategory]);
+
+  const filteredGallery =
+    selectedGalleryCategory === "all"
+      ? galleryPhotos
+      : galleryPhotos.filter((p) => p.category === selectedGalleryCategory);
+
   return (
     <div>
       <PageMeta
-        title="Work & Engagements"
-        description="Selected talks, workshops, panels, and advisory engagements by Pratik Aggarwal — from UNICEF Bihar to Purple Fest Goa. Disability inclusion across corporates, NGOs, and government."
+        title="Work, Engagements & Impact Archive — Pratik Aggarwal"
+        description="Explore Pratik Aggarwal's live engagements, workshops, keynotes, and field photography archive across ASTHA, Purple Fest Goa, ARNEC Manila, and Safdarjung Hospital."
         path="/work"
-        keywords="Pratik Aggarwal speaker, disability keynote India, invisible disability talks, UNICEF disability workshop, Purple Fest Goa keynote"
+        keywords="Pratik Aggarwal speaker, disability keynote India, invisible disability talks, UNICEF disability workshop, Purple Fest Goa keynote, Umang Vatika photo"
       />
       <JsonLd schema={[
         {
           "@context": "https://schema.org",
           "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pratik-aggarwal-website.vercel.app" },
-            { "@type": "ListItem", "position": 2, "name": "Work & Engagements", "item": "https://pratik-aggarwal-website.vercel.app/work" }
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://pratik-aggarwal-website.vercel.app" },
+            { "@type": "ListItem", position: 2, name: "Work & Engagements", item: "https://pratik-aggarwal-website.vercel.app/work" }
           ]
         },
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          "name": "Speaking & Advisory Engagements — Pratik Aggarwal",
-          "description": "Selected talks, workshops, panels, and advisory roles by Pratik Aggarwal on disability inclusion, invisible disabilities, and accessible development.",
-          "itemListElement": [
-            {
-              "@type": "ListItem", "position": 1,
-              "item": {
-                "@type": "Event",
-                "name": "Purple Fest Goa 2024 — Keynote",
-                "description": "Keynote address at India's largest disability arts and culture festival on invisible disability, identity, and what genuine inclusion requires from arts and public spaces.",
-                "startDate": "2024",
-                "organizer": { "@type": "Organization", "name": "Disability Rights Coalition, Goa" },
-                "location": { "@type": "Place", "name": "Goa, India" },
-                "speaker": { "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal" }
-              }
-            },
-            {
-              "@type": "ListItem", "position": 2,
-              "item": {
-                "@type": "Event",
-                "name": "UNICEF Bihar — Disability-Inclusive Capacity Building",
-                "description": "Capacity-building workshop for district-level child rights officers in Bihar on disability-inclusive programming — from policy to frontline practice.",
-                "startDate": "2023",
-                "organizer": { "@type": "Organization", "name": "UNICEF India" },
-                "location": { "@type": "Place", "name": "Bihar, India" },
-                "speaker": { "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal" }
-              }
-            },
-            {
-              "@type": "ListItem", "position": 3,
-              "item": {
-                "@type": "Event",
-                "name": "NDMA + UN India — Disability-Inclusive Disaster Risk Reduction",
-                "description": "Advisory input on the national disability-inclusive disaster risk reduction framework, with emphasis on invisible disabilities and psychosocial support in emergencies.",
-                "startDate": "2022",
-                "organizer": { "@type": "Organization", "name": "National Disaster Management Authority & UN India" },
-                "location": { "@type": "Place", "name": "New Delhi, India" },
-                "speaker": { "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal" }
-              }
-            },
-            {
-              "@type": "ListItem", "position": 4,
-              "item": {
-                "@type": "Event",
-                "name": "ARNEC Regional Conference, Manila",
-                "description": "Presentation on disability-inclusive early childhood development within India's urban informal settlements — evidence, gaps, and community-led approaches.",
-                "startDate": "2019",
-                "organizer": { "@type": "Organization", "name": "Asia-Pacific Regional Network for Early Childhood" },
-                "location": { "@type": "Place", "name": "Manila, Philippines" },
-                "speaker": { "@id": "https://pratik-aggarwal-website.vercel.app/#pratik-aggarwal" }
-              }
-            }
-          ]
+          name: "Speaking, Workshops & Advisory Engagements — Pratik Aggarwal",
+          description: "Curated selection of live engagements, trainings, keynotes, and policy advisory by Pratik Aggarwal."
         }
       ]} />
 
-      {/* ── Page header ───────────────────────────────────────────────── */}
-      <header className="px-6 pt-20 pb-14 border-b border-border">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-5">
-            Work
+      {/* ── Page Header ───────────────────────────────────────────────── */}
+      <header className="px-6 pt-16 pb-12 border-b border-border bg-card/30">
+        <div className="max-w-6xl mx-auto space-y-4">
+          <p className="text-xs font-bold uppercase tracking-widest text-plum">
+            Work &amp; Impact Archive
           </p>
           <h1
-            className="text-5xl md:text-6xl text-foreground mb-5 tracking-tight"
-            style={{ fontFamily: "'Fraunces', Georgia, serif", lineHeight: 1.07 }}
+            className="text-4xl md:text-6xl text-foreground font-serif tracking-tight leading-tight"
+            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
           >
-            Engagements
+            Live Engagements &amp; Field Practice
           </h1>
-          <p className="text-lg text-muted-foreground max-w-[54ch] leading-relaxed">
-            A curated selection of talks, panels, training sessions, and advisory
-            engagements. Not an exhaustive list — a representative one.
+          <p className="text-base md:text-lg text-muted-foreground max-w-[60ch] leading-relaxed">
+            A curated record of corporate workshops, frontline capacity building, university lectures, international summits, and government policy advisory.
           </p>
         </div>
       </header>
 
-      {/* ── Groups ────────────────────────────────────────────────────── */}
+      {/* ── Visual Impact Archive (Interactive Photo Gallery) ───────────────── */}
+      <section aria-label="Visual Impact Archive" className="px-6 py-14 border-b border-border bg-ground/40">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/80 pb-4">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-plum mb-1">
+                <Camera className="w-4 h-4 text-plum" />
+                <span>Field &amp; Engagement Photography</span>
+              </div>
+              <h2
+                className="text-2xl sm:text-3xl md:text-4xl font-serif text-foreground"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                Pratik in Action — Visual Impact Gallery
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-md">
+              Authentic photography capturing workshops, sensory garden co-creation, keynotes, awards, and community art sessions.
+            </p>
+          </div>
+
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filter photo archive">
+            {[
+              { id: "all", label: "All Photos" },
+              { id: "sensory", label: "Sensory Garden Safdarjung" },
+              { id: "purplefest", label: "Purple Fest Goa" },
+              { id: "international", label: "ARNEC Manila & Global" },
+              { id: "training", label: "Capacity Building & ToT" },
+              { id: "awards", label: "ASTHA Awards & Recognition" },
+              { id: "bip", label: "Blooming in Pain Art" },
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                role="tab"
+                aria-selected={selectedGalleryCategory === cat.id}
+                onClick={() => setSelectedGalleryCategory(cat.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer border ${
+                  selectedGalleryCategory === cat.id
+                    ? "bg-plum text-white border-plum shadow-xs scale-[1.02]"
+                    : "bg-card text-foreground border-border hover:border-plum/40 hover:bg-muted"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Photo Masonry / Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGallery.map((photo) => (
+              <div
+                key={photo.id}
+                onClick={() => setActivePhotoModal(photo)}
+                className="group p-3 rounded-2xl border border-border bg-card shadow-2xs hover:shadow-md hover:border-plum/40 transition-all cursor-pointer space-y-3"
+              >
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-muted border border-border/60">
+                  <img
+                    src={photo.src}
+                    alt={photo.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-black/70 text-white backdrop-blur-xs">
+                    {photo.categoryLabel}
+                  </span>
+                </div>
+                <div className="space-y-1 px-1">
+                  <div className="flex items-center justify-between text-[11px] text-muted-foreground font-semibold">
+                    <span className="flex items-center gap-1"><MapPin className="w-3 h-3 text-plum shrink-0" /> {photo.location}</span>
+                    <span className="font-mono">{photo.year}</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-foreground font-serif leading-snug group-hover:text-plum transition-colors" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                    {photo.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+                    {photo.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Lightbox Photo Modal ────────────────────────────────────────────── */}
+      {activePhotoModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4"
+          onClick={() => setActivePhotoModal(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative w-full max-w-3xl bg-card rounded-2xl border border-border p-5 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <span className="text-xs font-bold uppercase tracking-widest text-plum flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                {activePhotoModal.categoryLabel}
+              </span>
+              <button
+                type="button"
+                onClick={() => setActivePhotoModal(null)}
+                className="p-1 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
+                aria-label="Close photo preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden bg-black border border-border">
+              <img
+                src={activePhotoModal.src}
+                alt={activePhotoModal.title}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-3 text-xs font-semibold text-muted-foreground">
+                <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-plum" /> {activePhotoModal.location}</span>
+                <span>·</span>
+                <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-plum" /> {activePhotoModal.year}</span>
+              </div>
+              <h3 className="text-xl font-serif font-bold text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+                {activePhotoModal.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {activePhotoModal.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Key Engagement Groups List ──────────────────────────────────────── */}
       <div className="divide-y divide-border">
         {groups.map((group) => (
           <section
             key={group.id}
             id={group.id}
             aria-labelledby={`${group.id}-heading`}
-            className="px-6 py-16 md:py-20"
+            className="px-6 py-14 md:py-16 max-w-6xl mx-auto"
           >
-            <div className="max-w-5xl mx-auto">
-
+            <div className="space-y-8">
               {/* Section heading */}
-              <div className="mb-10 md:mb-12">
-                <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-plum mb-2">
                   {group.category}
                 </p>
                 <h2
                   id={`${group.id}-heading`}
-                  className="text-3xl md:text-4xl text-foreground"
+                  className="text-3xl md:text-4xl text-foreground font-serif"
                   style={{ fontFamily: "'Fraunces', Georgia, serif" }}
                 >
                   {group.title}
@@ -438,71 +576,38 @@ export default function Work() {
               </div>
 
               {/* Entry list */}
-              <ul className="reveal-stagger list-none m-0 p-0" role="list">
+              <ul className="reveal-stagger list-none m-0 p-0 space-y-6" role="list">
                 {group.entries.map((entry, i) => (
                   <li
                     key={entry.event}
-                    className={
-                      i > 0 ? "border-t border-border mt-0" : ""
-                    }
+                    className="p-5 md:p-6 rounded-2xl border border-border bg-card shadow-2xs space-y-4 hover:border-plum/40 transition-all"
                   >
-                    {/* Featured photo — sits flush above the entry row */}
-                    {entry.featured && (
-                      <div className={i > 0 ? "mt-8" : ""}>
-                        <EventPhoto src={entry.photoUrl} alt={entry.photoAlt} />
-                      </div>
+                    {entry.featured && entry.photoUrl && (
+                      <EventPhoto src={entry.photoUrl} alt={entry.photoAlt} />
                     )}
 
-                    {/* Entry body */}
-                    <div
-                      className={`py-6 md:py-7 ${
-                        entry.featured ? "border border-t-0 border-border rounded-b-xl px-6 mb-2" : ""
-                      }`}
-                    >
-                      {/* Top row: event name left, role + year right */}
-                      <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2 mb-2">
-                        <h3
-                          className="text-base font-semibold text-foreground leading-snug"
-                          style={{
-                            fontFamily: "'Public Sans', system-ui, sans-serif",
-                          }}
-                        >
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
+                        <h3 className="text-base sm:text-lg font-bold text-foreground leading-snug font-serif" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
                           {entry.event}
                         </h3>
-                        <div className="flex items-center gap-2.5 shrink-0">
+                        <div className="flex items-center gap-2 shrink-0">
                           <RolePill role={entry.role} />
-                          <span className="text-sm text-muted-foreground tabular-nums">
+                          <span className="text-xs text-muted-foreground font-mono font-bold">
                             {entry.year}
                           </span>
                         </div>
                       </div>
 
-                      {/* Org line */}
                       {entry.org && (
-                        <p className="text-sm text-muted-foreground mb-2.5">
+                        <p className="text-xs font-semibold text-plum">
                           {entry.org}
                         </p>
                       )}
 
-                      {/* Description */}
-                      <p className="text-base text-muted-foreground leading-relaxed max-w-[65ch]">
+                      <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-[70ch]">
                         {entry.description}
                       </p>
-
-                      {/* Optional Link */}
-                      {entry.url && (
-                        <div className="mt-3">
-                          <a
-                            href={entry.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center text-xs font-semibold underline underline-offset-4"
-                            style={{ color: "var(--plum)" }}
-                          >
-                            View feature / watch video →
-                          </a>
-                        </div>
-                      )}
                     </div>
                   </li>
                 ))}
@@ -512,37 +617,34 @@ export default function Work() {
         ))}
       </div>
 
-      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      {/* ── CTA Section ─────────────────────────────────────────────────────── */}
       <section
         aria-labelledby="speak-cta-heading"
-        className="px-6 py-16 border-t border-border"
-        style={{ backgroundColor: "var(--surface)" }}
+        className="px-6 py-16 border-t border-border bg-ground"
       >
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div>
+          <div className="space-y-2">
             <h2
               id="speak-cta-heading"
-              className="text-2xl md:text-3xl text-foreground mb-2"
+              className="text-2xl md:text-3xl text-foreground font-serif"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
-              Looking for a speaker or panelist?
+              Looking for a speaker, trainer, or policy consultant?
             </h2>
-            <p className="text-base text-muted-foreground max-w-[52ch] leading-relaxed">
-              I speak from lived experience and nine years of professional
-              practice — on invisible disability, chronic illness, intersectional
-              access, and what inclusion actually requires.
+            <p className="text-xs sm:text-sm text-muted-foreground max-w-[56ch] leading-relaxed">
+              Pratik speaks and consults from lived experience and nine years of professional leadership — on invisible disability, rights-based frameworks, and accessible infrastructure.
             </p>
           </div>
 
           <Link
             to="/contact"
-            className="inline-flex items-center px-7 py-3.5 rounded-md bg-primary text-primary-foreground font-semibold text-base hover:bg-primary/90 transition-colors whitespace-nowrap shrink-0"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-xl font-semibold text-sm text-white transition-opacity shadow-md hover:opacity-90 whitespace-nowrap shrink-0"
+            style={{ backgroundColor: "var(--plum)" }}
           >
-            Invite me to speak
+            Invite Pratik to Speak →
           </Link>
         </div>
       </section>
-
     </div>
   );
 }

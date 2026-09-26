@@ -101,6 +101,22 @@ const activeModesList: Mode[] = [
 
 // ── Component ───────────────────────────────────────────────────────────────
 
+function safeGetStorage(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSetStorage(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Gracefully handle storage errors
+  }
+}
+
 export function AccessibilityWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showSpotlight, setShowSpotlight] = useState(false);
@@ -124,7 +140,7 @@ export function AccessibilityWidget() {
 
     const saved = new Set<string>();
     for (const mode of activeModesList) {
-      if (localStorage.getItem(`a11y_${mode.id}`) === "true") {
+      if (safeGetStorage(`a11y_${mode.id}`) === "true") {
         saved.add(mode.id);
         document.documentElement.setAttribute(mode.attr, mode.value);
       } else {
@@ -134,7 +150,7 @@ export function AccessibilityWidget() {
     if (saved.size > 0) setActiveIds(saved);
 
     // Show spotlight highlight on first visit if not yet dismissed
-    if (localStorage.getItem("a11y_spotlight_seen") !== "true") {
+    if (safeGetStorage("a11y_spotlight_seen") !== "true") {
       setShowSpotlight(true);
     }
   }, []);
@@ -152,7 +168,7 @@ export function AccessibilityWidget() {
   const dismissSpotlight = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     setShowSpotlight(false);
-    localStorage.setItem("a11y_spotlight_seen", "true");
+    safeSetStorage("a11y_spotlight_seen", "true");
   };
 
   const handleOpenToggle = () => {
@@ -169,11 +185,11 @@ export function AccessibilityWidget() {
       if (next.has(mode.id)) {
         next.delete(mode.id);
         document.documentElement.removeAttribute(mode.attr);
-        localStorage.setItem(`a11y_${mode.id}`, "false");
+        safeSetStorage(`a11y_${mode.id}`, "false");
       } else {
         next.add(mode.id);
         document.documentElement.setAttribute(mode.attr, mode.value);
-        localStorage.setItem(`a11y_${mode.id}`, "true");
+        safeSetStorage(`a11y_${mode.id}`, "true");
       }
       return next;
     });
@@ -186,10 +202,10 @@ export function AccessibilityWidget() {
       if (presetIds.includes(mode.id)) {
         next.add(mode.id);
         document.documentElement.setAttribute(mode.attr, mode.value);
-        localStorage.setItem(`a11y_${mode.id}`, "true");
+        safeSetStorage(`a11y_${mode.id}`, "true");
       } else {
         document.documentElement.removeAttribute(mode.attr);
-        localStorage.setItem(`a11y_${mode.id}`, "false");
+        safeSetStorage(`a11y_${mode.id}`, "false");
       }
     }
     setActiveIds(next);
@@ -199,7 +215,7 @@ export function AccessibilityWidget() {
   const resetAll = () => {
     for (const mode of activeModesList) {
       document.documentElement.removeAttribute(mode.attr);
-      localStorage.setItem(`a11y_${mode.id}`, "false");
+      safeSetStorage(`a11y_${mode.id}`, "false");
     }
     setActiveIds(new Set());
   };
