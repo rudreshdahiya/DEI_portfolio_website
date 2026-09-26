@@ -228,7 +228,7 @@ export function AccessibilityWidget() {
       <button
         type="button"
         onClick={handleOpenToggle}
-        className={`inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-full border-2 transition-all cursor-pointer shadow-xs group ${
+        className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs font-semibold rounded-full border-2 transition-all cursor-pointer shadow-xs group ${
           showSpotlight && !isOpen ? "ring-4 ring-plum/50 animate-pulse shadow-md" : ""
         }`}
         style={{
@@ -242,10 +242,10 @@ export function AccessibilityWidget() {
         <AccessibilityBadgeIcon
           className={`w-4 h-4 ${activeCount > 0 ? "text-white" : "text-plum"}`}
         />
-        <span className="font-semibold tracking-tight whitespace-nowrap">Accessibility</span>
+        <span className="hidden sm:inline font-semibold tracking-tight whitespace-nowrap">Accessibility</span>
         {activeCount > 0 && (
           <span
-            className="inline-flex items-center justify-center min-w-[20px] h-[20px] px-1 rounded-full text-[11px] font-extrabold leading-none bg-white text-plum shadow-2xs shrink-0 select-none ml-0.5"
+            className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-extrabold leading-none bg-white text-plum shadow-2xs shrink-0 select-none ml-0.5"
           >
             {activeCount}
           </span>

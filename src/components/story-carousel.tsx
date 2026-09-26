@@ -26,15 +26,7 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
       aria-roledescription="carousel"
       aria-label="Blooming in Pain stories infinite scroll"
     >
-      {/* Side Fade Masks for smooth visually polished edges */}
-      <div
-        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-r from-background to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 sm:w-20 bg-gradient-to-l from-background to-transparent"
-        aria-hidden="true"
-      />
+
 
       {/* Continuous Slow Infinite Scroll Track */}
       <div className="overflow-hidden rounded-xl">

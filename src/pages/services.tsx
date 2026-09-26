@@ -77,14 +77,6 @@ function OrgChip({ name, logoUrl, initials, bg, color }: OrgLogoItem) {
 function OrgMarquee() {
   return (
     <div className="w-full overflow-hidden relative" role="region" aria-label="Organisations Pratik has worked with">
-      <div
-        className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10"
-        style={{ background: "linear-gradient(to right, var(--background), transparent)" }}
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10"
-        style={{ background: "linear-gradient(to left, var(--background), transparent)" }}
-      />
       <div className="marquee-track gap-3 py-1">
         {[...orgLogos, ...orgLogos, ...orgLogos].map((org, i) => (
           <OrgChip key={`${org.name}-${i}`} {...org} />

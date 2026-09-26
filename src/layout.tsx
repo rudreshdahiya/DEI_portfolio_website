@@ -43,17 +43,17 @@ export function Layout() {
         <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
           <nav
             aria-label="Main navigation"
-            className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between"
+            className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between"
           >
             <Link
               to="/"
-              className="flex items-center gap-2.5 text-lg font-semibold text-foreground hover:text-primary transition-colors group shrink-0"
+              className="flex items-center gap-2 text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors group shrink-0"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
-              <div className="w-8 h-8 rounded-full bg-plum text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs tracking-wider">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-plum text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs tracking-wider">
                 PA
               </div>
-              <span className="font-semibold tracking-tight">Pratik Aggarwal</span>
+              <span className="font-semibold tracking-tight text-sm sm:text-base whitespace-nowrap">Pratik Aggarwal</span>
             </Link>
 
             {/* Desktop navigation & accessibility control */}
@@ -79,7 +79,7 @@ export function Layout() {
             </div>
 
             {/* Mobile accessibility widget & hamburger */}
-            <div className="flex md:hidden items-center gap-3">
+            <div className="flex md:hidden items-center gap-2">
               <AccessibilityWidget />
               <button
                 ref={hamburgerRef}

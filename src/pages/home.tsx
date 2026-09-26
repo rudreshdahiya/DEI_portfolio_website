@@ -312,14 +312,6 @@ function OrgChip({ name, initials, bg, color }: { name: string; initials: string
 function OrgMarquee() {
   return (
     <div className="w-full overflow-hidden relative" role="region" aria-label="Organisations Pratik has worked with">
-      <div
-        className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10"
-        style={{ background: "linear-gradient(to right, var(--background), transparent)" }}
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10"
-        style={{ background: "linear-gradient(to left, var(--background), transparent)" }}
-      />
       <div className="marquee-track gap-3 py-1">
         {[...orgLogos, ...orgLogos, ...orgLogos].map((org, i) => (
           <OrgChip key={`${org.name}-${i}`} {...org} />
@@ -334,15 +326,6 @@ function MediaMarquee() {
 
   return (
     <div className="relative w-full overflow-hidden py-2" role="region" aria-label="National media features infinite scroll">
-      <div
-        className="pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-16 sm:w-28 bg-gradient-to-r from-background to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-16 sm:w-28 bg-gradient-to-l from-background to-transparent"
-        aria-hidden="true"
-      />
-
       <div className="marquee-track gap-4 py-2">
         {marqueeItems.map((item, i) => (
           <a
@@ -432,9 +415,9 @@ export default function Home() {
       />
 
       {/* ── 1. HERO SECTION ──────────────────────────────────────────────── */}
-      <section aria-labelledby="hero-heading" className="px-6 pt-10 pb-12 border-b border-border bg-card/30">
+      <section aria-labelledby="hero-heading" className="px-4 sm:px-6 pt-6 pb-8 md:pt-10 md:pb-12 border-b border-border bg-card/30">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid md:grid-cols-12 gap-6 lg:gap-12 items-center">
             
             {/* Left Column: Role Headline, Description, 3 Stat Boxes, & Swapped CTAs */}
             <div className="md:col-span-7 space-y-5">
@@ -459,11 +442,11 @@ export default function Home() {
                 ))}
               </div>
 
-              {/* Swapped Action CTAs (Explore My Work = Primary, Start a Partnership = Secondary) */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Swapped Action CTAs */}
+              <div className="flex flex-row flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
                 <Link
                   to="/work"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm transition-opacity shadow-md text-white hover:opacity-90"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm transition-opacity shadow-md text-white hover:opacity-90"
                   style={{ backgroundColor: "var(--plum)" }}
                   onClick={() => track("cta_clicked", { label: "Explore My Work", location: "hero" })}
                 >
@@ -471,7 +454,7 @@ export default function Home() {
                 </Link>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-sm hover:bg-muted transition-colors"
+                  className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-xs sm:text-sm hover:bg-muted transition-colors"
                   onClick={() => track("cta_clicked", { label: "Start a Partnership", location: "hero" })}
                 >
                   Start a Partnership →
@@ -481,22 +464,15 @@ export default function Home() {
 
             {/* Right Column: Compact Hero Portrait pulled up */}
             <div className="md:col-span-5 flex justify-center md:justify-end">
-              <div className="relative w-full max-w-[340px] aspect-[4/5] rounded-2xl overflow-hidden border-2 border-border shadow-lg bg-card group">
-                <img
-                  src="/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg"
-                  alt="Pratik Aggarwal speaking on global disability policy at ARNEC Asia Pacific Manila"
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    e.currentTarget.src = "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png";
-                  }}
-                />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-3.5 text-white">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-white/80">Keynote Speaker &amp; Practitioner</p>
-                  <p className="text-xs text-white/90">ARNEC Asia Pacific Conference, Manila</p>
-                </div>
-              </div>
+              <ClickableImage
+                src="/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg"
+                alt="Pratik Aggarwal speaking on global disability policy at ARNEC Asia Pacific Manila"
+                title="Keynote Speaker & Practitioner"
+                caption="ARNEC Asia Pacific Conference, Manila"
+                containerClassName="relative w-full max-w-[280px] sm:max-w-[340px] aspect-[4/5] rounded-2xl border-2 border-border shadow-lg bg-card group"
+                className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
             </div>
-
           </div>
         </div>
       </section>
@@ -504,26 +480,26 @@ export default function Home() {
       {/* ── 3. AUTO-CYCLING AUDIENCE ANGLE SELECTOR ("What represents you best today?") ── */}
       <section
         aria-labelledby="persona-selector-heading"
-        className="px-6 py-14 border-b border-border bg-ground"
+        className="px-4 sm:px-6 py-8 md:py-14 border-b border-border bg-ground"
       >
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="text-center max-w-2xl mx-auto mb-4 sm:mb-8">
             <h2
               id="persona-selector-heading"
-              className="text-3xl md:text-4xl text-foreground font-serif mb-2"
+              className="text-2xl sm:text-3xl md:text-4xl text-foreground font-serif mb-1 sm:mb-2"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
               What represents you best today?
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               Select your context below to view tailored solutions, engagements, and impact focus.
             </p>
           </div>
 
           {/* Auto-Cycling Persona Filter Tabs */}
           <div
-            className="flex flex-wrap items-center justify-center gap-2.5 mb-8"
+            className="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 sm:gap-2.5 mb-4 sm:mb-8"
             role="tablist"
             aria-label="Select your organization or interest"
           >
@@ -537,9 +513,9 @@ export default function Home() {
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => handleAudienceSelect(persona.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs md:text-sm font-semibold transition-all cursor-pointer border ${
+                  className={`inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
                     isSelected
-                      ? "bg-plum text-white border-plum shadow-md scale-[1.03]"
+                      ? "bg-plum text-white border-plum shadow-md scale-[1.02]"
                       : "bg-card text-foreground border-border hover:border-plum/40 hover:bg-muted"
                   }`}
                   style={{
@@ -547,7 +523,7 @@ export default function Home() {
                     color: isSelected ? "#FFFFFF" : undefined,
                   }}
                 >
-                  <IconComponent className="w-4 h-4 shrink-0" />
+                  <IconComponent className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                   <span className="sm:hidden">{persona.shortLabel}</span>
                   <span className="hidden sm:inline">{persona.label}</span>
                 </button>
@@ -557,7 +533,7 @@ export default function Home() {
 
           {/* Tailored Card Output */}
           <div
-            className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 relative overflow-hidden"
+            className="p-4 sm:p-8 rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 relative overflow-hidden"
             aria-live="polite"
           >
             <div className="grid lg:grid-cols-12 gap-8 items-center">
