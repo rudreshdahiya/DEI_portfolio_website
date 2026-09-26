@@ -370,7 +370,7 @@ const pillars: ServicePillar[] = [
         caption: "Samuhik Pahal Journal Author",
       },
       {
-        url: "/images/Pratik%20Pictures/Panelist%20-%20Child%20Protection%20and%20Disability/IMG_9844.jpg",
+        url: "/images/Pratik%20Pictures/IMG_9844.jpg",
         alt: "Panelist presentation on child protection and disability research",
         caption: "Child Protection Policy Research",
       },
@@ -544,14 +544,6 @@ export default function Services() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="max-w-3xl space-y-2">
               <div className="flex items-center gap-3">
-                <img
-                  src="/images/pratik logo.png"
-                  alt="Pratik Aggarwal logo mark"
-                  className="w-9 h-9 object-contain shrink-0"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
                 <p className="text-xs font-bold uppercase tracking-widest text-plum">
                   Service Pillars &amp; Work
                 </p>
