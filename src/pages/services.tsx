@@ -10,6 +10,7 @@ import {
   Building2,
   HeartHandshake,
   BookOpen,
+  Camera,
 } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
