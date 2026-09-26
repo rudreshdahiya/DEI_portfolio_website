@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { Check, RotateCcw, X, Sparkles } from "lucide-react";
 
 // ── Crisp High-Visibility Accessibility Icon Component ──────────────────────
@@ -122,6 +123,29 @@ export function AccessibilityWidget() {
   const [showSpotlight, setShowSpotlight] = useState(false);
   const [activeIds, setActiveIds] = useState<Set<string>>(new Set());
   const panelRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [popoverPos, setPopoverPos] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+
+  // Update popover position for desktop relative to button
+  useEffect(() => {
+    if (!isOpen) return;
+    const updatePosition = () => {
+      if (buttonRef.current) {
+        const rect = buttonRef.current.getBoundingClientRect();
+        setPopoverPos({
+          top: rect.bottom + 8,
+          right: Math.max(16, window.innerWidth - rect.right),
+        });
+      }
+    };
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [isOpen]);
 
   // Load saved preferences and clean up deprecated attributes
   useEffect(() => {
@@ -226,6 +250,7 @@ export function AccessibilityWidget() {
     <div className="relative inline-block text-left">
       {/* ── Trigger Button: Accessibility ─────────────────── */}
       <button
+        ref={buttonRef}
         type="button"
         onClick={handleOpenToggle}
         className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 text-xs font-semibold rounded-full border-2 transition-all cursor-pointer shadow-xs group ${
@@ -271,24 +296,28 @@ export function AccessibilityWidget() {
       )}
 
       {/* ── Panel Popover (Desktop) / Bottom Sheet Drawer (Mobile) ───────── */}
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-xs transition-opacity"
-            onClick={() => setIsOpen(false)}
-            aria-hidden="true"
-          />
+      {isOpen &&
+        createPortal(
+          <>
+            <div
+              className="fixed inset-0 z-[9998] bg-black/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+              onClick={() => setIsOpen(false)}
+              aria-hidden="true"
+            />
 
-          <div
-            ref={panelRef}
-            className="fixed inset-x-0 bottom-0 md:bottom-auto md:top-full md:right-0 md:left-auto md:mt-2 z-50 w-full md:w-96 rounded-t-3xl md:rounded-2xl border-t-2 md:border-2 border-plum/40 bg-card shadow-2xl overflow-hidden max-h-[85vh] md:max-h-[80vh] overflow-y-auto animate-in slide-in-from-bottom duration-300 md:animate-none"
-            style={{
-              backgroundColor: "var(--surface)",
-              color: "var(--ink)",
-            }}
-            role="dialog"
-            aria-label="Accessibility & Display Modes"
-          >
+            <div
+              ref={panelRef}
+              className="fixed z-[9999] bg-card border-plum/40 shadow-2xl overflow-hidden overflow-y-auto transition-all inset-x-0 bottom-0 rounded-t-3xl border-t-2 max-h-[85vh] animate-in slide-in-from-bottom duration-300 md:inset-x-auto md:bottom-auto md:w-96 md:rounded-2xl md:border-2 md:max-h-[80vh] md:animate-in md:fade-in md:zoom-in-95"
+              style={{
+                backgroundColor: "var(--surface)",
+                color: "var(--ink)",
+                ...(typeof window !== "undefined" && window.innerWidth >= 768 && popoverPos.top > 0
+                  ? { top: `${popoverPos.top}px`, right: `${popoverPos.right}px` }
+                  : {}),
+              }}
+              role="dialog"
+              aria-label="Accessibility & Display Modes"
+            >
             {/* Mobile Drag/Handle indicator */}
             <div className="w-12 h-1 rounded-full bg-border/80 mx-auto my-2 md:hidden" aria-hidden="true" />
 
@@ -448,7 +477,8 @@ export function AccessibilityWidget() {
               </a>
             </div>
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );
