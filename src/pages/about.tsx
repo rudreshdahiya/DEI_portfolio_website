@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { Sparkles, Bot, HelpCircle, CheckCircle2, X } from "lucide-react";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
@@ -9,22 +10,108 @@ import { useRevealAll } from "@/hooks/use-reveal-all";
 const LLMS_URL = "https://pratik-aggarwal-website.vercel.app/llms.txt";
 const DEFAULT_Q = "Tell me about Pratik Aggarwal and his work";
 
+interface FAQOption {
+  id: string;
+  label: string;
+  question: string;
+  answer: string;
+}
+
+const PRESET_FAQS: FAQOption[] = [
+  {
+    id: "services",
+    label: "Core Services",
+    question: "What core services & consulting does Pratik offer?",
+    answer: "Pratik offers 4 main pillars: (1) Interactive Training & Capacity Building for leadership and staff; (2) Institutional Advisory for disability-inclusive policies & accessibility; (3) Keynote Speaking & University Lectures on invisible disability; and (4) Research, Grant Writing & Accessible Communication.",
+  },
+  {
+    id: "invisible-disability",
+    label: "Invisible Disability",
+    question: "What is invisible disability advocacy?",
+    answer: "Invisible disability advocacy addresses conditions not immediately apparent visually (e.g. chronic illness, pain conditions, neurodivergence). Pratik leverages lived authority to transform institutional policies, workplace accommodations, and social perceptions beyond physical mobility frameworks.",
+  },
+  {
+    id: "trainings",
+    label: "Capacity Building",
+    question: "How does Pratik conduct capacity building workshops?",
+    answer: "Pratik delivers interactive, practical training across organizational levels — from C-suite leadership and HR teams to frontline community workers. Topics include disability etiquette, RPwD Act compliance, inclusive communication, and early intervention.",
+  },
+  {
+    id: "speaking",
+    label: "Keynotes & Talks",
+    question: "What keynote topics does Pratik present on?",
+    answer: "Pratik delivers keynotes on 'Invisible Disability & Lived Authority', 'Intersectional DEI in Practice', 'Designing Sensory & Accessible Public Spaces', and 'De-stigmatizing Chronic Conditions'. He has spoken at global conferences like ARNEC Manila and top institutions like IIT Delhi.",
+  },
+  {
+    id: "research",
+    label: "Research & Writing",
+    question: "What research, policy, and grant writing work does Pratik do?",
+    answer: "Pratik supports NGOs and foundations with grant proposals, donor reporting, state policy roundtables (e.g. Chhattisgarh Disability Policy), disaster risk reduction frameworks (NDMA & UN India), and accessible digital publications.",
+  },
+];
+
 function AskAI() {
   const [question, setQuestion] = useState("");
+  const [activeFaq, setActiveFaq] = useState<FAQOption | null>(null);
 
-  const buildUrl = (base: string) => {
-    const q = question.trim() || DEFAULT_Q;
+  const buildUrl = (base: string, customQ?: string) => {
+    const q = (customQ || question).trim() || DEFAULT_Q;
     const prompt = `${q}. Use this document for context: ${LLMS_URL}`;
     return `${base}?q=${encodeURIComponent(prompt)}`;
   };
 
+  const handleSelectFaq = (faq: FAQOption) => {
+    if (activeFaq?.id === faq.id) {
+      setActiveFaq(null);
+      setQuestion("");
+    } else {
+      setActiveFaq(faq);
+      setQuestion(faq.question);
+    }
+  };
+
   return (
-    <div className="mt-7" style={{ maxWidth: "52ch" }}>
-      <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--muted-text)" }}>
-        Ask an AI about Pratik
-      </p>
+    <div className="mt-8 space-y-4 max-w-[62ch]">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-plum flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-plum" />
+          Ask AI About Pratik
+        </p>
+        <span className="text-[11px] font-medium text-muted-foreground hidden sm:inline-block">
+          Select a question or type your own
+        </span>
+      </div>
+
+      {/* Preset Question Pills */}
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+          Frequently Asked Questions (Click to Ask):
+        </p>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Preset AI Questions">
+          {PRESET_FAQS.map((faq) => {
+            const isSelected = activeFaq?.id === faq.id;
+            return (
+              <button
+                key={faq.id}
+                type="button"
+                onClick={() => handleSelectFaq(faq)}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all border cursor-pointer ${
+                  isSelected
+                    ? "bg-plum text-white border-plum shadow-xs scale-[1.02]"
+                    : "bg-card text-foreground border-border hover:border-plum/40 hover:bg-plum/5"
+                }`}
+              >
+                <HelpCircle className={`w-3 h-3 ${isSelected ? "text-white" : "text-plum"}`} />
+                <span>{faq.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Search Input Box */}
       <div
-        className="flex items-center rounded-xl border border-border bg-card overflow-hidden"
+        className="flex items-center rounded-xl border border-border bg-card overflow-hidden transition-all focus-within:border-plum focus-within:ring-2 focus-within:ring-plum/20"
         style={{ boxShadow: "0 1px 3px rgba(30,26,36,0.06)" }}
       >
         <label htmlFor="ask-ai-question" className="sr-only">
@@ -34,34 +121,81 @@ function AskAI() {
           id="ask-ai-question"
           type="text"
           value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          placeholder="What does Pratik work on?"
-          className="flex-1 bg-transparent px-4 py-3 text-sm outline-none"
-          style={{
-            color: "var(--ink)",
-            fontFamily: "'Public Sans', system-ui, sans-serif",
+          onChange={(e) => {
+            setQuestion(e.target.value);
+            if (activeFaq && e.target.value !== activeFaq.question) {
+              setActiveFaq(null);
+            }
           }}
+          placeholder="e.g. What is Pratik's approach to disability inclusion?"
+          className="flex-1 bg-transparent px-4 py-3 text-xs sm:text-sm outline-none text-foreground placeholder:text-muted-foreground"
           onKeyDown={(e) => {
             if (e.key === "Enter" && question.trim()) {
               window.open(buildUrl("https://claude.ai/new"), "_blank", "noopener,noreferrer");
             }
           }}
         />
+        {question && (
+          <button
+            type="button"
+            onClick={() => {
+              setQuestion("");
+              setActiveFaq(null);
+            }}
+            className="px-3 text-muted-foreground hover:text-foreground text-xs"
+            aria-label="Clear question"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
       </div>
-      <div className="flex flex-wrap gap-2.5 mt-2.5">
+
+      {/* Instant Answer Box (when a preset FAQ pill is selected) */}
+      {activeFaq && (
+        <div className="p-4 rounded-xl border border-plum/30 bg-plum/5 space-y-2.5 transition-all">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs font-bold text-plum flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-plum" />
+              Quick Answer:
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveFaq(null);
+                setQuestion("");
+              }}
+              className="text-[11px] font-semibold text-muted-foreground hover:text-foreground cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+          <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
+            {activeFaq.answer}
+          </p>
+          <div className="pt-1 flex items-center gap-2">
+            <span className="text-[11px] font-medium text-muted-foreground">Need deeper analysis?</span>
+            <a
+              href={buildUrl("https://claude.ai/new", activeFaq.question)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-plum hover:underline inline-flex items-center gap-1"
+            >
+              Ask Claude for full report →
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* Action Buttons for AI queries */}
+      <div className="flex flex-wrap items-center gap-2.5 pt-1">
         <a
           href={buildUrl("https://claude.ai/new")}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => setQuestion("")}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold transition-colors"
-          style={{
-            backgroundColor: "var(--plum)",
-            color: "#ffffff",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#4A2246")}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--plum)")}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold text-white transition-all hover:opacity-90 shadow-2xs"
+          style={{ backgroundColor: "var(--plum)" }}
         >
+          <Bot className="w-3.5 h-3.5 text-white" />
           Ask Claude →
           <span className="sr-only">(opens in new tab)</span>
         </a>
@@ -69,11 +203,7 @@ function AskAI() {
           href={buildUrl("https://chat.openai.com")}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => setQuestion("")}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-xs font-semibold transition-colors hover:border-primary/50"
-          style={{ color: "var(--ink)" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--plum)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--ink)")}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg border border-border text-xs font-semibold text-foreground transition-all hover:border-plum/40 hover:bg-muted"
         >
           Ask ChatGPT →
           <span className="sr-only">(opens in new tab)</span>
