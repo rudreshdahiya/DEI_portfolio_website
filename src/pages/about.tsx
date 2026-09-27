@@ -5,6 +5,7 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
 import { ClickableImage } from "@/components/image-lightbox";
+import { useAboutSettings } from "@/hooks/use-about-settings";
 
 // ── Ask AI widget ─────────────────────────────────────────────────────────────
 
@@ -293,6 +294,7 @@ function Portrait({
 // ── Page Component ───────────────────────────────────────────────────────────
 
 export default function About() {
+  const { settings } = useAboutSettings();
   useRevealAll();
 
   return (
@@ -340,10 +342,10 @@ export default function About() {
             className="text-4xl md:text-6xl text-foreground mb-4 tracking-tight font-serif"
             style={{ fontFamily: "'Fraunces', Georgia, serif", lineHeight: 1.07 }}
           >
-            Professional Practice &amp; Lived Experience
+            {settings.hero_title}
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-[54ch] leading-relaxed font-normal">
-            Bringing together grassroots leadership, disability rights, public policy, and lived authority to build inclusion systems that work in practice.
+            {settings.hero_subtitle}
           </p>
 
           <AskAI />

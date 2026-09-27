@@ -4,130 +4,11 @@ import { ChevronDown, Palette, Users, Sparkles, Video, MessageCircle, Heart } fr
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
-import { StoryCarousel, Story } from "@/components/story-carousel";
+import { StoryCarousel } from "@/components/story-carousel";
 import { ClickableImage } from "@/components/image-lightbox";
+import { useBipSettings } from "@/hooks/use-bip-settings";
 
-// ── Data ───────────────────────────────────────────────────────────
-const stories: Story[] = [
-  {
-    id: 1,
-    tag: "Endometriosis & Surgery",
-    title: "Living with Endometriosis: Srinikhita Pole’s Story of Chronic Pain, Surgery, and Resilience",
-    excerpt:
-      "Srinikhita Pole reflects on living with severe endometriosis, navigating major surgeries, and discovering resilience amidst chronic pelvic pain.",
-    readTime: "6 min",
-    author: "Srinikhita Pole",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/living-with-endometriosis-srinikhita-poles-story-of-chronic-pain-surgery-and-resilience-e22486eeb5f7",
-    imgUrl:
-      "/medium/Living%20with%20Endometriosis-%20Srinikhita%20Pole%E2%80%99s%20Story%20of%20Chronic%20Pain,%20Surgery,%20and%20Resilience_image.webp",
-  },
-  {
-    id: 2,
-    tag: "Neuropsychology & Pain",
-    title: "Understanding the Unseen: A Neuropsychologist’s Personal Journey with Chronic Pain",
-    excerpt:
-      "A neuropsychologist shares his lived experience of chronic pain and invisible illness, and why he founded Blooming in Pain to build community.",
-    readTime: "5 min",
-    author: "Pratik Aggarwal",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/understanding-the-unseen-a-neuropsychologists-personal-journey-with-chronic-pain-262dbee5357f",
-    imgUrl:
-      "/medium/Understanding%20the%20Unseen-%20A%20Neuropsychologist%E2%80%99s%20Personal%20Journey%20with%20Chronic%20Pain_image.webp",
-  },
-  {
-    id: 3,
-    tag: "Youth & Chronic Illness",
-    title: "Living with Pain: Varshal’s Story of Strength and Stillness",
-    excerpt:
-      "Varshal shares her journey after her body suddenly turned against her at a young age, finding inner quiet, strength, and acceptance.",
-    readTime: "5 min",
-    author: "Varshal",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/living-with-pain-varshals-story-of-strength-and-stillness-de0f29706db9",
-    imgUrl:
-      "/medium/She%20Was%20Active,%20Healthy,%20and%20Young-%20Then%20Her%20Body%20Turned%20Against%20Her_image.webp",
-  },
-  {
-    id: 4,
-    tag: "Vulvodynia & Misdiagnosis",
-    title: "She Thought It Was Just Another Yeast Infection: Years of Misdiagnosis & Pelvic Pain",
-    excerpt:
-      "Phillipa Baines’ brutally honest journey through vulvodynia, medical gaslighting, and the radical courage it took to reclaim her life.",
-    readTime: "6 min",
-    author: "Pratik Aggarwal",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/she-thought-it-was-just-another-yeast-infection-what-followed-was-years-of-misdiagnosis-pain-21ca8e569330",
-    imgUrl:
-      "/medium/She%20Thought%20It%20Was%20Just%20Another%20Yeast%20Infection,%20But%20It%20Stole%20Her%20Peace%20and%20Power_image.webp",
-  },
-  {
-    id: 5,
-    tag: "Medical Trauma & Advocacy",
-    title: "Kevin James’ Unyielding Fight: Surviving Iatrogenic Injuries & Misdiagnoses",
-    excerpt:
-      "Navigating complex medical trauma, iatrogenic harm, and the emotional journey from systemic medical disbelief to fierce self-advocacy.",
-    readTime: "7 min",
-    author: "Kevin James",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/kevin-james-unyielding-fight-surviving-iatrogenic-injuries-misdiagnoses-and-the-emotional-bb4d0579d29f",
-    imgUrl:
-      "/medium/Kevin%20James%E2%80%99%20Unyielding%20Fight-%20Surviving%20Iatrogenic%20Injuries,%20Misdiagnoses,%20and%20the%20Emotional%20Journey%20to%20Self-Advocacy_image.webp",
-  },
-  {
-    id: 6,
-    tag: "Caregiving & Partner Support",
-    title: "Shabnam Rakhiba’s Guide to Love and Care: Standing by Someone with Chronic Pain",
-    excerpt:
-      "An insightful guide for partners, family, and allies on providing meaningful care, emotional grounding, and active support for loved ones with chronic pain.",
-    readTime: "5 min",
-    author: "Shabnam Rakhiba",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/shabnam-rakhibas-guide-to-love-and-care-standing-by-someone-with-chronic-pain-b687cd63fc28",
-    imgUrl:
-      "/medium/Shabnam%20Rakhiba%E2%80%99s%20Guide%20to%20Love%20and%20Care-%20Standing%20by%20Someone%20with%20Chronic%20Pain_image.webp",
-  },
-  {
-    id: 7,
-    tag: "Global Patient Advocacy",
-    title: "Rising from the Abyss: Virginia McIntyre’s Journey to International Advocacy",
-    excerpt:
-      "From chronic pain patient to global patient advocate, Virginia McIntyre shares how processing deep illness transformed her into a champion for disability rights.",
-    readTime: "6 min",
-    author: "Virginia McIntyre",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/rising-from-the-abyss-virginia-mcintyres-journey-from-chronic-pain-patient-to-international-1fefa2664bf1",
-    imgUrl:
-      "/medium/Rising%20from%20the%20Abyss-%20Virginia%20McIntyre%E2%80%99s%20Journey%20from%20Chronic%20Pain%20Patient%20to%20International%20Advocate_image.webp",
-  },
-  {
-    id: 8,
-    tag: "Dance, Movement & Pain",
-    title: "The Last Dance: Abitha P Sunil Rises Through Pain",
-    excerpt:
-      "Abitha P Sunil reflects on dance, movement, and bodily expression while navigating the unyielding onset of chronic pain.",
-    readTime: "5 min",
-    author: "Abitha P Sunil",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/the-last-dance-abitha-p-sunil-rises-through-pain-27ca52c584a2",
-    imgUrl:
-      "/medium/The%20Last%20Dance-%20Abitha%20P%20Sunil%20Rises%20Through%20Pain_image.webp",
-  },
-  {
-    id: 9,
-    tag: "Identity & Loss",
-    title: "I Am Changed: Navigating Life, Loss, and Identity with Chronic Illness",
-    excerpt:
-      "A reflective personal essay on grief, body identity, and letting go of who you were to embrace who you are today.",
-    readTime: "4 min",
-    author: "Community Contributor",
-    mediumUrl:
-      "https://medium.com/@BloomingInPain/i-am-changed-ffe9ecd433be",
-    imgUrl:
-      "/medium/I%20am%20changed_image.webp",
-  },
-];
-
+// ── Fallback Activities List ───────────────────────────────────────────────────
 const activitiesList = [
   {
     title: "Storytelling Platform",
@@ -178,6 +59,7 @@ const faqItems = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function BloomingInPain() {
+  const { settings } = useBipSettings();
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
 
   return (
@@ -230,23 +112,15 @@ export default function BloomingInPain() {
             className="text-4xl sm:text-5xl md:text-7xl text-foreground mb-6 tracking-tight font-serif"
             style={{ fontFamily: "'Fraunces', Georgia, serif", lineHeight: 1.07 }}
           >
-            Centering Stories of<br />
-            <em className="italic text-plum">
-              Fibromyalgia &amp; Chronic Pain
-            </em>
+            {settings.hero_title}
           </h1>
 
           <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6">
-            Founded by Pratik in 2021 to create space for un-sanitised stories about living with invisible conditions
+            {settings.hero_subtitle}
           </p>
 
           <div className="space-y-4 text-base md:text-lg text-foreground leading-relaxed">
-            <p>
-              Blooming in Pain is a <span data-key-info>storytelling platform for people who live with disabilities the world can't see</span> — fibromyalgia, chronic pain, chronic fatigue, lupus, anxiety disorders, endometriosis, and hundreds of other conditions that exist between what bodies hold and what medicine is prepared to name.
-            </p>
-            <p>
-              This isn't a resource hub or a support group. It's a space where <span data-key-info>people write about their lives honestly</span> — the hard parts and the full parts — without having to explain or justify themselves before they begin.
-            </p>
+            <p>{settings.intro_body}</p>
           </div>
         </div>
       </header>
@@ -414,7 +288,7 @@ export default function BloomingInPain() {
             </a>
           </div>
 
-          <StoryCarousel stories={stories} />
+          <StoryCarousel stories={settings.stories} />
         </div>
       </section>
 

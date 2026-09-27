@@ -5,204 +5,24 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { Building2, Users, GraduationCap, Landmark, Sparkles } from "lucide-react";
 import { ClickableImage } from "@/components/image-lightbox";
+import { useHomeSettings } from "@/hooks/use-home-settings";
+import type { HomePersonaHighlight } from "@/lib/supabase";
 
-// ── Data ──────────────────────────────────────────────────────────────────────
+// ── Icon map for persona iconKey ─────────────────────────────────────────────
+const PERSONA_ICONS: Record<string, typeof Building2> = {
+  users: Users,
+  landmark: Landmark,
+  "graduation-cap": GraduationCap,
+  building2: Building2,
+  sparkles: Sparkles,
+};
 
-const stats = [
-  { numeric: 9, suffix: "+", label: "Years in Disability Practice" },
-  { numeric: 40, suffix: "+", label: "Talks & Panels" },
-  { numeric: 20, suffix: "+", label: "Partner Organisations" },
-];
+export type AudienceId = string;
 
-const orgLogos = [
-  { name: "UNICEF", initials: "UN", bg: "#E8F4FA", color: "#00689D" },
-  { name: "HCL Foundation", initials: "HCL", bg: "#FEF0E6", color: "#C44B00" },
-  { name: "Tech Mahindra", initials: "TM", bg: "#F2EAF7", color: "#5C1F7A" },
-  { name: "ASTHA", initials: "AS", bg: "#E2EDE7", color: "#1F3D2A" },
-  { name: "Delhi University", initials: "DU", bg: "#E6EBF1", color: "#1B3A5B" },
-  { name: "IIT Delhi", initials: "IIT", bg: "#F7E8E8", color: "#8B1A1A" },
-  { name: "Safdarjung Hospital", initials: "SH", bg: "#EDE4EF", color: "#3D1E3C" },
-  { name: "NDMA + UN India", initials: "ND", bg: "#E6EFF6", color: "#3D6B8F" },
-  { name: "Samuhik Pahal", initials: "SP", bg: "#EBF2EA", color: "#2B5329" },
-  { name: "The Print", initials: "TP", bg: "#F5F0E6", color: "#6B4B00" },
-  { name: "Times of India", initials: "TOI", bg: "#F9E8E8", color: "#AA151B" },
-  { name: "Outlook India", initials: "OI", bg: "#E6EBF5", color: "#003580" },
-];
+// ── Cycling role word component (reads from Supabase) ─────────────────────────
 
-export type AudienceId = "training" | "consulting" | "talks" | "research";
-
-interface AudiencePersona {
-  id: AudienceId;
-  label: string;
-  shortLabel: string;
-  badge: string;
-  icon: typeof Building2;
-  tagline: string;
-  leadText: string;
-  keyHighlights: string[];
-  ctaLabel: string;
-  ctaHref: string;
-  photoUrl: string;
-  photoAlt: string;
-  photoCaption: string;
-}
-
-const audiencePersonas: AudiencePersona[] = [
-  {
-    id: "training",
-    label: "Training & Capacity Building",
-    shortLabel: "Training",
-    badge: "Workplace & Development Sector Training",
-    icon: Users,
-    tagline: "Interactive Training Delivered Across Organisational Hierarchies",
-    leadText:
-      "Delivering interactive training for corporates, NGOs, governments, and educational institutions — from senior leadership and HR teams to programme staff, teachers, and frontline health workers.",
-    keyHighlights: [
-      "Corporate DEI, disability awareness & inclusive communication",
-      "RPwD Act 2016, rights-based frameworks & CBR",
-      "Inclusive education, early intervention & child protection",
-      "Capacity building for ASHAs, Anganwadi Workers & community teams",
-    ],
-    ctaLabel: "Explore Training & Capacity Building →",
-    ctaHref: "/services#training",
-    photoUrl: "/images/Pratik%20Pictures/ToT%20on%20Neuro%20developmentak%20disabilities%20for%20TMF/TMF.jpg",
-    photoAlt: "Pratik Aggarwal conducting Training of Trainers for Tech Mahindra Foundation",
-    photoCaption: "Interactive Capacity Building Workshop",
-  },
-  {
-    id: "consulting",
-    label: "Consulting & Advisory",
-    shortLabel: "Advisory",
-    badge: "Systemic Inclusion & Policy Advisory",
-    icon: Landmark,
-    tagline: "Making Programmes, Policies, Workplaces & Systems Inclusive",
-    leadText:
-      "Advising organisations on making their existing systems and policies genuinely inclusive — including HR policies, universal design, accessibility reviews, programme evaluation, and MEL.",
-    keyHighlights: [
-      "Disability Inclusion & DEI strategy & legal/policy clarity",
-      "Organisational HR policies, safeguarding & reasonable accommodation",
-      "Sensory infrastructure co-design (e.g. Umang Vatika)",
-      "Programme reviews, accessibility audits & impact evaluation",
-    ],
-    ctaLabel: "Consult on Systems & Strategy →",
-    ctaHref: "/services#consulting",
-    photoUrl: "/images/Pratik%20Pictures/Sensory%20Park%20Safdarjung/DSCF6747%20(1).JPG",
-    photoAlt: "Pratik Aggarwal co-creating Umang Vatika Sensory Garden at Safdarjung Hospital",
-    photoCaption: "Sensory Infrastructure & Universal Design",
-  },
-  {
-    id: "talks",
-    label: "Speaking & Keynotes",
-    shortLabel: "Keynotes",
-    badge: "Keynotes, University Lectures & Summits",
-    icon: GraduationCap,
-    tagline: "Challenging Conventional Disability Narratives",
-    leadText:
-      "Delivering compelling keynote addresses, university lectures, and public summit interventions — grounding policy and research in lived authority and disability rights.",
-    keyHighlights: [
-      "Keynote addresses on invisible disability & lived authority",
-      "University guest lectures & postgraduate interactive seminars",
-      "National & global conference panels (e.g. Purple Fest Goa, ARNEC Manila)",
-      "Public health, media, and podcast dialogue facilitation",
-    ],
-    ctaLabel: "Invite Pratik to Speak →",
-    ctaHref: "/services#talks",
-    photoUrl: "/images/Pratik%20Pictures/Purple%20Fest%20-%20Census%20and%20Disability%20/IMG_9575.jpeg",
-    photoAlt: "Pratik Aggarwal delivering keynote address at Purple Fest",
-    photoCaption: "Keynote Address on Lived Authority",
-  },
-  {
-    id: "research",
-    label: "Research & Writing",
-    shortLabel: "Research",
-    badge: "Research, Policy & Organisational Communication",
-    icon: Building2,
-    tagline: "Writing & Communication Supporting Impact & Fundraising",
-    leadText:
-      "Supporting non-profits and foundations with grant writing, donor proposals, policy briefs, research reports, and rendering organizational communication fully disability-inclusive.",
-    keyHighlights: [
-      "Grant and proposal writing & donor communication",
-      "Programme, annual, and impact assessment reports",
-      "Research reports, policy briefs & thought leadership articles",
-      "Making digital, social media, and publications accessible",
-    ],
-    ctaLabel: "Commission Research & Writing →",
-    ctaHref: "/services#research",
-    photoUrl: "/images/Pratik%20Pictures/ARNEC%20Manila/image%20(8).png",
-    photoAlt: "Pratik Aggarwal presenting research paper at ARNEC Manila",
-    photoCaption: "Global Advocacy & Research Presentation",
-  },
-];
-
-const mediaHighlights = [
-  {
-    outlet: "The Better India",
-    category: "Sensory Garden Pioneer",
-    title: "At Safdarjung Hospital, ‘Umang Vatika’ Lets Children With Disabilities Play Freely & Safely",
-    description: "North India’s first government sensory garden designed for neurodivergent children in collaboration with ASTHA.",
-    url: "https://thebetterindia.com/innovation/umang-vatika-safdarjung-hospital-delhi-sensory-park-children-disabilities-astha-11168102",
-  },
-  {
-    outlet: "The Indian Express",
-    category: "Sensory Garden Feature",
-    title: "From visual art installations to mud pits: Sensory garden for neurodivergent children opens at Delhi’s Safdarjung Hospital",
-    description: "Visual art installations, mud pits, and accessible sensory pathways in New Delhi.",
-    url: "https://indianexpress.com/article/cities/delhi/from-visual-art-installations-to-mud-pits-sensory-garden-for-neurodivergent-children-opens-at-delhis-safdarjung-hospital-10461086/",
-  },
-  {
-    outlet: "DD News",
-    category: "National Broadcast",
-    title: "वीएमएमसी एवं सफदरजंग अस्पताल में ‘उमंग वाटिका’ का उद्घाटन — उत्तर भारत का पहला सरकारी सेंसरी गार्डन",
-    description: "DD News national television coverage on North India's first government sensory garden.",
-    url: "https://ddnews.gov.in/inauguration-of-umang-vatika-at-vmmc-and-safdarjung-hospital-the-first-government-sensory-garden-in-north-india/",
-  },
-  {
-    outlet: "The Print",
-    category: "Ground Report",
-    title: "How Delhi’s 'Viklang Basti' lost everything in a fire and fought to get new wheelchairs",
-    description: "Field reporting on emergency crisis response, disability rights advocacy, and wheelchair access.",
-    url: "https://theprint.in/ground-reports/delhis-viklang-basti-lost-fire-fought-new-wheelchairs/2971119/",
-  },
-  {
-    outlet: "Outlook India",
-    category: "Policy & Data",
-    title: "India’s Persons With Disabilities Left Out As NFHS-6 Fact Sheets Omit Disability Data",
-    description: "Critical commentary on systemic data omission of persons with disabilities in national health surveys.",
-    url: "https://www.outlookindia.com/national/indias-persons-with-disabilities-left-out-as-nfhs-6-fact-sheets-omit-disability-data",
-  },
-  {
-    outlet: "Times of India",
-    category: "Media Quote",
-    title: "Out of sight, out of support: Disability care lags in Delhi’s slums in most trying of times",
-    description: "Expert opinion on informal settlement care deficits during climate and health shocks.",
-    url: "https://timesofindia.indiatimes.com/city/delhi/out-of-sight-out-of-support-disability-care-lags-in-delhis-slums-in-most-trying-of-times/articleshow/122526141.cms",
-  },
-  {
-    outlet: "Citizen Matters",
-    category: "Education Rights",
-    title: "Most urban schools violate law, exclude children with disabilities",
-    description: "Analysis of urban school non-compliance with the Rights of Persons with Disabilities Act.",
-    url: "https://citizenmatters.in/most-urban-schools-violate-law-exclude-children-with-disabilities/",
-  },
-  {
-    outlet: "Samuhik Pahal",
-    category: "Thought Leadership",
-    title: "Thirty years of working with communities: Reflections and Opinions",
-    description: "Reflections on 30 years of rights-based community engagement and organizational learning.",
-    url: "https://samuhikpahal.org/reflections-and-opinions/thirty-years-of-working-with-communities/",
-  },
-];
-
-// ── Cycling role word ─────────────────────────────────────────────────────────
-
-const roleVariants = [
-  { word: "Expert", styleClass: "text-plum font-serif font-bold italic underline decoration-plum/40 decoration-2 underline-offset-4" },
-  { word: "Researcher", styleClass: "text-[#1F3D2A] bg-[#E2EDE7] px-3 py-0.5 rounded-lg font-mono text-2xl sm:text-3xl md:text-4xl shadow-2xs" },
-  { word: "Speaker", styleClass: "text-[#5C1F7A] font-serif underline decoration-plum/60 decoration-wavy decoration-2" },
-  { word: "Executive Director @ ASTHA", styleClass: "text-foreground font-semibold bg-plum/10 text-plum px-3 py-0.5 rounded-full text-xl sm:text-2xl md:text-3xl" },
-];
-
-function HeroRoleWord() {
+function HeroRoleWord({ roleWords }: { roleWords: { word: string; styleClass: string }[] }) {
+  const variants = roleWords.length > 0 ? roleWords : [{ word: "Expert", styleClass: "text-plum font-serif font-bold italic" }];
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
@@ -210,15 +30,15 @@ function HeroRoleWord() {
     const id = setInterval(() => {
       setVisible(false);
       const tid = setTimeout(() => {
-        setIndex((i) => (i + 1) % roleVariants.length);
+        setIndex((i) => (i + 1) % variants.length);
         setVisible(true);
       }, 350);
       return () => clearTimeout(tid);
     }, 3200);
     return () => clearInterval(id);
-  }, []);
+  }, [variants.length]);
 
-  const current = roleVariants[index];
+  const current = variants[index];
 
   return (
     <span
@@ -309,11 +129,12 @@ function OrgChip({ name, initials, bg, color }: { name: string; initials: string
   );
 }
 
-function OrgMarquee() {
+function OrgMarquee({ logos }: { logos: { name: string; initials: string; bg: string; color: string }[] }) {
+  const tripled = [...logos, ...logos, ...logos];
   return (
     <div className="w-full overflow-hidden relative" role="region" aria-label="Organisations Pratik has worked with">
       <div className="marquee-track gap-3 py-1">
-        {[...orgLogos, ...orgLogos, ...orgLogos].map((org, i) => (
+        {tripled.map((org, i) => (
           <OrgChip key={`${org.name}-${i}`} {...org} />
         ))}
       </div>
@@ -321,13 +142,13 @@ function OrgMarquee() {
   );
 }
 
-function MediaMarquee() {
-  const marqueeItems = [...mediaHighlights, ...mediaHighlights, ...mediaHighlights];
+function MediaMarquee({ items }: { items: { outlet: string; category: string; title: string; description: string; url: string }[] }) {
+  const tripled = [...items, ...items, ...items];
 
   return (
     <div className="relative w-full overflow-hidden py-2" role="region" aria-label="National media features infinite scroll">
       <div className="marquee-track gap-4 py-2">
-        {marqueeItems.map((item, i) => (
+        {tripled.map((item, i) => (
           <a
             key={`${item.title}-${i}`}
             href={item.url}
@@ -359,29 +180,40 @@ function MediaMarquee() {
 // ── Main Page Component ───────────────────────────────────────────────────────
 
 export default function Home() {
+  const { settings } = useHomeSettings();
   const [selectedAudience, setSelectedAudience] = useState<AudienceId>("training");
   const [isAutoCycling, setIsAutoCycling] = useState(true);
 
-  const currentPersona = audiencePersonas.find((p) => p.id === selectedAudience) || audiencePersonas[0];
+  const personas = settings.personas;
+  const currentPersona: HomePersonaHighlight = personas.find((p) => p.id === selectedAudience) || personas[0];
 
   // Auto-cycle through personas until user interacts manually
   useEffect(() => {
-    if (!isAutoCycling) return;
+    if (!isAutoCycling || personas.length === 0) return;
     const timer = setInterval(() => {
       setSelectedAudience((prev) => {
-        const currentIndex = audiencePersonas.findIndex((p) => p.id === prev);
-        const nextIndex = (currentIndex + 1) % audiencePersonas.length;
-        return audiencePersonas[nextIndex].id;
+        const currentIndex = personas.findIndex((p) => p.id === prev);
+        const nextIndex = (currentIndex + 1) % personas.length;
+        return personas[nextIndex]?.id ?? prev;
       });
     }, 3500);
     return () => clearInterval(timer);
-  }, [isAutoCycling]);
+  }, [isAutoCycling, personas]);
+
+  // Reset selected audience when personas change
+  useEffect(() => {
+    if (personas.length > 0 && !personas.find(p => p.id === selectedAudience)) {
+      setSelectedAudience(personas[0].id);
+    }
+  }, [personas]);
 
   const handleAudienceSelect = (id: AudienceId) => {
     setIsAutoCycling(false);
     setSelectedAudience(id);
     track("audience_personalized", { selected: id });
   };
+
+  if (!currentPersona) return null;
 
   return (
     <>
@@ -427,17 +259,17 @@ export default function Home() {
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight leading-tight"
                   style={{ fontFamily: "'Fraunces', Georgia, serif" }}
                 >
-                  Disability Inclusion <HeroRoleWord />
+                  {settings.hero_prefix} <HeroRoleWord roleWords={settings.role_words} />
                 </h1>
 
                 <p className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  Bringing together lived authority, community engagement, research, and public policy to help organisations build meaningful disability practices beyond compliance.
+                  {settings.hero_bio}
                 </p>
               </div>
 
               {/* 3 Count-up Stat Boxes directly under text */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3.5 pt-1">
-                {stats.map((stat) => (
+                {settings.stats.map((stat) => (
                   <AnimatedStat key={stat.label} {...stat} />
                 ))}
               </div>
@@ -445,19 +277,19 @@ export default function Home() {
               {/* Swapped Action CTAs */}
               <div className="flex flex-row flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
                 <Link
-                  to="/work"
+                  to={settings.hero_cta1_href}
                   className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm transition-opacity shadow-md text-white hover:opacity-90"
                   style={{ backgroundColor: "var(--plum)" }}
-                  onClick={() => track("cta_clicked", { label: "Explore My Work", location: "hero" })}
+                  onClick={() => track("cta_clicked", { label: settings.hero_cta1_label, location: "hero" })}
                 >
-                  Explore My Work →
+                  {settings.hero_cta1_label}
                 </Link>
                 <Link
-                  to="/contact"
+                  to={settings.hero_cta2_href}
                   className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-xs sm:text-sm hover:bg-muted transition-colors"
-                  onClick={() => track("cta_clicked", { label: "Start a Partnership", location: "hero" })}
+                  onClick={() => track("cta_clicked", { label: settings.hero_cta2_label, location: "hero" })}
                 >
-                  Start a Partnership →
+                  {settings.hero_cta2_label}
                 </Link>
               </div>
             </div>
@@ -465,10 +297,10 @@ export default function Home() {
             {/* Right Column: Compact Hero Portrait pulled up */}
             <div className="md:col-span-5 flex justify-center md:justify-end">
               <ClickableImage
-                src="/images/Pratik%20Pictures/Pratik%20Sir%20-%20ARNEC%20ASIA%20PACIFIC%20-%20MANILA%20-.jpg"
-                alt="Pratik Aggarwal speaking on global disability policy at ARNEC Asia Pacific Manila"
+                src={settings.hero_photo_url}
+                alt={settings.hero_photo_alt}
                 title="Keynote Speaker & Practitioner"
-                caption="ARNEC Asia Pacific Conference, Manila"
+                caption={settings.hero_photo_caption}
                 containerClassName="relative w-full max-w-[280px] sm:max-w-[340px] aspect-[4/5] rounded-2xl border-2 border-border shadow-lg bg-card group"
                 className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
               />
@@ -477,7 +309,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 3. AUTO-CYCLING AUDIENCE ANGLE SELECTOR ("What represents you best today?") ── */}
+      {/* ── 3. AUTO-CYCLING AUDIENCE ANGLE SELECTOR ("{settings.persona_section_heading}") ── */}
       <section
         aria-labelledby="persona-selector-heading"
         className="px-4 sm:px-6 py-8 md:py-14 border-b border-border bg-ground"
@@ -490,10 +322,10 @@ export default function Home() {
               className="text-2xl sm:text-3xl md:text-4xl text-foreground font-serif mb-1 sm:mb-2"
               style={{ fontFamily: "'Fraunces', Georgia, serif" }}
             >
-              What represents you best today?
+              {settings.persona_section_heading}
             </h2>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Select your context below to view tailored solutions, engagements, and impact focus.
+              {settings.persona_section_subheading}
             </p>
           </div>
 
@@ -503,8 +335,8 @@ export default function Home() {
             role="tablist"
             aria-label="Select your organization or interest"
           >
-            {audiencePersonas.map((persona) => {
-              const IconComponent = persona.icon;
+            {personas.map((persona) => {
+              const IconComponent = PERSONA_ICONS[persona.iconKey] ?? Building2;
               const isSelected = selectedAudience === persona.id;
               return (
                 <button
@@ -610,14 +442,14 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-border pb-5">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-plum mb-1">
-                Authentic Practice &amp; Fieldwork
+                {settings.gallery_section_badge}
               </p>
               <h2
                 id="authentic-gallery-heading"
                 className="text-3xl md:text-4xl text-foreground font-serif"
                 style={{ fontFamily: "'Fraunces', Georgia, serif" }}
               >
-                Pratik in Action Across Sectors
+                {settings.gallery_section_heading}
               </h2>
             </div>
             <Link
@@ -728,18 +560,18 @@ export default function Home() {
           <div className="flex flex-wrap items-baseline justify-between gap-4 border-b border-border pb-5">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest text-plum mb-1">
-                Podcasts &amp; Press Features
+                {settings.podcasts_section_badge}
               </p>
               <h2
                 id="media-heading"
                 className="text-3xl md:text-4xl text-foreground font-serif"
                 style={{ fontFamily: "'Fraunces', Georgia, serif" }}
               >
-                In the News &amp; Discussions
+                {settings.podcasts_section_heading}
               </h2>
             </div>
             <p className="text-xs md:text-sm text-muted-foreground max-w-md">
-              Selected podcast conversations, national ground reports, policy critiques, and media features.
+              {settings.podcasts_section_subheading}
             </p>
           </div>
 
@@ -852,9 +684,9 @@ export default function Home() {
           {/* National Media Features Infinite Marquee */}
           <div className="pt-2 border-t border-border/60">
             <h3 className="text-lg font-serif mb-4" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-              National Media Features &amp; Thought Leadership
+              {settings.media_section_heading}
             </h3>
-            <MediaMarquee />
+            <MediaMarquee items={settings.media_highlights} />
           </div>
         </div>
       </section>
@@ -863,25 +695,25 @@ export default function Home() {
       <section aria-labelledby="bip-heading" className="px-6 py-16 bg-card/40">
         <div className="max-w-6xl mx-auto text-center space-y-6">
           <span className="inline-block text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-plum/10 text-plum">
-            Blooming in Pain Community
+            {settings.bip_section_badge}
           </span>
           <h2
             id="bip-heading"
             className="text-3xl md:text-4xl font-serif max-w-2xl mx-auto"
             style={{ fontFamily: "'Fraunces', Georgia, serif" }}
           >
-            Centering Stories of Invisible Illness &amp; Chronic Pain
+            {settings.bip_section_heading}
           </h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Founded by Pratik in 2021 to create space for un-sanitised stories about living with persistent illness and non-visual disability.
+            {settings.bip_section_text}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
             <Link
-              to="/blooming-in-pain"
+              to={settings.bip_cta_href}
               className="inline-flex items-center px-6 py-3 rounded-xl font-semibold text-sm text-white transition-opacity shadow-sm hover:opacity-90"
               style={{ backgroundColor: "var(--plum)" }}
             >
-              Read Community Stories →
+              {settings.bip_cta_label}
             </Link>
             <Link
               to="/contact"
