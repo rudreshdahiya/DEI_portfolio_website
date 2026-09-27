@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
+
 
 export interface Story {
   id: number;
@@ -85,12 +87,11 @@ export function StoryCarousel({ stories }: StoryCarouselProps) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-xs font-semibold underline underline-offset-4 hover:opacity-80 transition-opacity shrink-0 ml-2"
                       style={{ color: "var(--plum)" }}
-                      onClick={() =>
-                        track("outbound_click", {
-                          destination: "medium",
-                          story: story.title,
-                        })
-                      }
+                      onClick={() => {
+                        track("outbound_click", { destination: "medium", story: story.title });
+                        trackEvent("outbound_click", { destination: "medium", story: story.title });
+                      }}
+
                       aria-label={`Read "${story.title}" on Medium (opens in new tab)`}
                     >
                       Read on Medium →

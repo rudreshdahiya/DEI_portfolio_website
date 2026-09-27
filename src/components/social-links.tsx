@@ -1,5 +1,6 @@
 import { Instagram, Linkedin, Youtube } from "lucide-react";
 import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 export function MediumIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
@@ -16,6 +17,11 @@ interface SocialLinksProps {
 }
 
 export function SocialLinks({ className = "flex items-center gap-2", iconSize = "w-4 h-4" }: SocialLinksProps) {
+  const handleClick = (destination: string) => {
+    track("outbound_click", { destination, location: "social_bar" });
+    trackEvent("outbound_click", { destination, location: "social_bar" });
+  };
+
   return (
     <div className={className}>
       {/* Blooming in Pain — Instagram */}
@@ -25,7 +31,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Blooming in Pain Instagram (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "instagram_bip", location: "social_bar" })}
+        onClick={() => handleClick("instagram_bip")}
         title="Blooming in Pain Instagram (@blooming.in.pain)"
       >
         <Instagram className={iconSize} />
@@ -39,7 +45,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Blooming in Pain Medium (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "medium_bip", location: "social_bar" })}
+        onClick={() => handleClick("medium_bip")}
         title="Blooming in Pain Medium (@BloomingInPain)"
       >
         <MediumIcon className={iconSize} />
@@ -53,7 +59,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Blooming in Pain LinkedIn Page (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "linkedin_bip", location: "social_bar" })}
+        onClick={() => handleClick("linkedin_bip")}
         title="Blooming in Pain LinkedIn Page"
       >
         <Linkedin className={iconSize} />
@@ -67,7 +73,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Pratik Aggarwal Instagram Profile (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "instagram_pratik", location: "social_bar" })}
+        onClick={() => handleClick("instagram_pratik")}
         title="Pratik Aggarwal Instagram (@pratik.aggarwal)"
       >
         <Instagram className={iconSize} />
@@ -81,7 +87,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Pratik Aggarwal LinkedIn Profile (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "linkedin_pratik", location: "social_bar" })}
+        onClick={() => handleClick("linkedin_pratik")}
         title="Pratik Aggarwal LinkedIn"
       >
         <Linkedin className={iconSize} />
@@ -95,7 +101,7 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
         rel="noopener noreferrer"
         aria-label="Pratik Aggarwal YouTube Channel (opens in new tab)"
         className="p-2 rounded-full border border-border bg-card hover:bg-muted text-foreground hover:text-primary transition-all hover:scale-105 flex items-center justify-center"
-        onClick={() => track("outbound_click", { destination: "youtube_pratik", location: "social_bar" })}
+        onClick={() => handleClick("youtube_pratik")}
         title="Pratik Aggarwal YouTube Channel"
       >
         <Youtube className={iconSize} />
@@ -104,4 +110,3 @@ export function SocialLinks({ className = "flex items-center gap-2", iconSize = 
     </div>
   );
 }
-

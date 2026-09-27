@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router";
 import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
 import { PageMeta } from "@/components/page-meta";
+
 import { JsonLd } from "@/components/json-ld";
 import { Building2, Users, GraduationCap, Landmark, Sparkles } from "lucide-react";
 import { ClickableImage } from "@/components/image-lightbox";
@@ -280,18 +282,25 @@ export default function Home() {
                   to={settings.hero_cta1_href}
                   className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm transition-opacity shadow-md text-white hover:opacity-90"
                   style={{ backgroundColor: "var(--plum)" }}
-                  onClick={() => track("cta_clicked", { label: settings.hero_cta1_label, location: "hero" })}
+                  onClick={() => {
+                    track("cta_clicked", { label: settings.hero_cta1_label, location: "hero" });
+                    trackEvent("cta_clicked", { label: settings.hero_cta1_label, location: "hero" });
+                  }}
                 >
                   {settings.hero_cta1_label}
                 </Link>
                 <Link
                   to={settings.hero_cta2_href}
                   className="inline-flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl border border-border bg-card text-foreground font-semibold text-xs sm:text-sm hover:bg-muted transition-colors"
-                  onClick={() => track("cta_clicked", { label: settings.hero_cta2_label, location: "hero" })}
+                  onClick={() => {
+                    track("cta_clicked", { label: settings.hero_cta2_label, location: "hero" });
+                    trackEvent("cta_clicked", { label: settings.hero_cta2_label, location: "hero" });
+                  }}
                 >
                   {settings.hero_cta2_label}
                 </Link>
               </div>
+
             </div>
 
             {/* Right Column: Compact Hero Portrait pulled up */}

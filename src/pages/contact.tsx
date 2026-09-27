@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
 import { PageMeta } from "@/components/page-meta";
+
 import { JsonLd } from "@/components/json-ld";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -105,8 +107,10 @@ export default function Contact() {
       if (!response.ok) throw new Error("Submission failed");
 
       track("contact_form_submitted", { inquiry_type: form.inquiryType });
+      trackEvent("contact_form_submitted", { inquiry_type: form.inquiryType, name: form.name });
       setSubmitted(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
+
     } catch {
       setSubmitError(
         `Something went wrong sending your message. Please try again, or email ${contactEmail} directly.`
