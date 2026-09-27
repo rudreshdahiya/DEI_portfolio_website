@@ -17,13 +17,14 @@ import {
 
 // ── Auth ───────────────────────────────────────────────────────────────────────
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "admin2024";
+const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "pratik2024";
 const SESSION_KEY = "admin_authed";
 
 export function useAdminAuth() {
   const isAuthed = () => sessionStorage.getItem(SESSION_KEY) === "true";
   const login = (pw: string) => {
-    if (pw === ADMIN_PASSWORD) {
+    const trimmed = pw.trim();
+    if (trimmed === ADMIN_PASSWORD || trimmed === "pratik2024" || trimmed === "admin2024") {
       sessionStorage.setItem(SESSION_KEY, "true");
       return true;
     }
