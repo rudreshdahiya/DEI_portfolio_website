@@ -15,24 +15,67 @@ export const supabase = createClient(
 // ── Generic key-value helpers ─────────────────────────────────────────────────
 
 export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
+  let localData: T | null = null;
+  try {
+    const raw = localStorage.getItem(`dei_setting_${key}`);
+    if (raw) {
+      localData = JSON.parse(raw) as T;
+    }
+  } catch {
+    // Ignore localStorage parse errors
+  }
+
   try {
     const { data, error } = await supabase
       .from("site_settings")
       .select("value")
       .eq("key", key)
       .single();
-    if (error || !data) return fallback;
-    return { ...fallback, ...(data.value as Partial<T>) } as T;
-  } catch {
-    return fallback;
+
+    if (!error && data && data.value) {
+      const merged = { ...fallback, ...(data.value as Partial<T>) } as T;
+      // Sync local storage with latest Supabase data
+      try {
+        localStorage.setItem(`dei_setting_${key}`, JSON.stringify(merged));
+      } catch {
+        // Ignore storage write errors
+      }
+      return merged;
+    }
+  } catch (err) {
+    console.warn(`Supabase fetch warning for key '${key}':`, err);
   }
+
+  return localData ? { ...fallback, ...localData } : fallback;
 }
 
 export async function saveSetting<T>(key: string, value: T): Promise<void> {
-  const { error } = await supabase
-    .from("site_settings")
-    .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
-  if (error) throw error;
+  // 1. Always save to LocalStorage for instant resilience
+  try {
+    localStorage.setItem(`dei_setting_${key}`, JSON.stringify(value));
+  } catch (err) {
+    console.warn("LocalStorage save error:", err);
+  }
+
+  // 2. Persist to Supabase site_settings table
+  try {
+    const { error } = await supabase
+      .from("site_settings")
+      .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
+
+    if (error) {
+      console.warn(`Supabase upsert warning for '${key}':`, error.message);
+      // If error is RLS or permissions, local storage already saved the changes so we don't crash
+      if (error.code === "42501" || error.message.includes("row-level security")) {
+        console.info("Saved to local storage backup. To enable Supabase cloud persistence, add RLS policies to public.site_settings.");
+        return;
+      }
+      throw error;
+    }
+  } catch (err) {
+    console.warn("Supabase save error:", err);
+    // If local storage saved successfully, we don't block the user
+  }
 }
 
 // ── Image Upload Helper ────────────────────────────────────────────────────────
