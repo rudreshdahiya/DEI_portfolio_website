@@ -32,6 +32,7 @@ import AdminAboutSettings from "./admin/about-settings";
 import AdminServicesSettings from "./admin/services-settings";
 import AdminWorkSettings from "./admin/work-settings";
 import AdminContactSettings from "./admin/contact-settings";
+import AnalyticsDashboard from "./admin/analytics-dashboard";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -64,6 +65,7 @@ createRoot(document.getElementById("root")!).render(
                           <Route element={<AdminGuard />}>
                             <Route element={<AdminLayout />}>
                               <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                              <Route path="/admin/analytics" element={<AnalyticsDashboard />} />
                               <Route path="/admin/global" element={<AdminGlobalSettings />} />
                               <Route path="/admin/home" element={<AdminHomeSettings />} />
                               <Route path="/admin/blooming-in-pain" element={<AdminBipSettings />} />
@@ -74,6 +76,7 @@ createRoot(document.getElementById("root")!).render(
                               <Route path="/admin/*" element={<Navigate to="/admin/dashboard" replace />} />
                             </Route>
                           </Route>
+
 
                           <Route path="*" element={<Navigate to="/" replace />} />
                         </Routes>

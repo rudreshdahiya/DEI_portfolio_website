@@ -5,6 +5,7 @@ import { AccessibilityWidget } from "@/components/accessibility-widget";
 import { LightboxProvider } from "@/components/image-lightbox";
 import { Home, User, Briefcase, HeartHandshake, Mail, ArrowRight, X, Menu, Instagram, Linkedin, Youtube } from "lucide-react";
 import { useGlobalSettings } from "@/hooks/use-global-settings";
+import { trackEvent } from "@/lib/analytics";
 import type { SocialLink } from "@/lib/supabase";
 
 // ── Icon map for social links ──────────────────────────────────────────────────
@@ -65,7 +66,13 @@ export function Layout() {
   const location = useLocation();
   const { settings } = useGlobalSettings();
 
+  // Track page views (cookieless)
   useEffect(() => {
+    trackEvent("page_view", { path: location.pathname });
+  }, [location.pathname]);
+
+  useEffect(() => {
+
     if (!mobileNavOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {

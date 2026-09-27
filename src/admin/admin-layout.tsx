@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Navigate, Outlet, Link, useLocation } from "react-router";
 import {
   LayoutDashboard,
+  BarChart3,
   Settings,
   Home,
   User,
@@ -139,6 +140,7 @@ export function AdminGuard() {
 
 const adminNavItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/analytics", label: "Analytics & Funnel", icon: BarChart3 },
   { href: "/admin/global", label: "Global Settings", icon: Settings },
   { href: "/admin/home", label: "Home Page", icon: Home },
   { href: "/admin/about", label: "About Page", icon: User },

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import {
+  BarChart3,
   Settings,
   Home,
   User,
@@ -14,6 +15,14 @@ import {
 
 const sections = [
   {
+    href: "/admin/analytics",
+    icon: BarChart3,
+    label: "Analytics & Conversion Funnel",
+    desc: "Cookieless PM view: Page views, CTA clicks, conversion funnel & top traffic",
+    status: "ready",
+    color: "#B84472",
+  },
+  {
     href: "/admin/global",
     icon: Settings,
     label: "Global Settings",
@@ -21,6 +30,7 @@ const sections = [
     status: "ready",
     color: "#5C2A57",
   },
+
   {
     href: "/admin/home",
     icon: Home,
