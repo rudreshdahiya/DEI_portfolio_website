@@ -18,6 +18,7 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
 import { ClickableImage } from "@/components/image-lightbox";
+import { useServicesSettings } from "@/hooks/use-services-settings";
 
 // ── Types & Data ──────────────────────────────────────────────────────────────
 
@@ -455,6 +456,7 @@ const faqItems = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Services() {
+  const { settings } = useServicesSettings();
   const [selectedAudience, setSelectedAudience] = useState<PillarId>("all");
   const [activeFaqIndex, setActiveFaqIndex] = useState<number | null>(null);
   const [expandedPillars, setExpandedPillars] = useState<Record<string, boolean>>({});
@@ -478,10 +480,24 @@ export default function Services() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
+  // Merge dynamic settings into pillars array
+  const dynamicPillars = pillars.map((p) => {
+    const override = settings.pillars?.find((sp) => sp.id === p.id);
+    if (!override) return p;
+    return {
+      ...p,
+      title: override.title || p.title,
+      tagline: override.subtitle || p.tagline,
+      leadDescription: override.description || p.leadDescription,
+      featuredImage: override.photoUrl || p.featuredImage,
+      ctaLabel: override.ctaLabel || p.ctaLabel,
+    };
+  });
+
   const filteredPillars =
     selectedAudience === "all"
-      ? pillars
-      : pillars.filter((p) => p.id === selectedAudience);
+      ? dynamicPillars
+      : dynamicPillars.filter((p) => p.id === selectedAudience);
 
   return (
     <div>
@@ -517,7 +533,7 @@ export default function Services() {
             name: "4 Consolidated Service Pillars — Pratik Aggarwal",
             description:
               "Training & Capacity Building, Consulting & Advisory, Keynotes & Speaking, and Research, Writing & Communication by Pratik Aggarwal.",
-            itemListElement: pillars.map((pillar, idx) => ({
+            itemListElement: dynamicPillars.map((pillar, idx) => ({
               "@type": "ListItem",
               position: idx + 1,
               item: {
@@ -553,10 +569,10 @@ export default function Services() {
                 className="text-4xl md:text-5xl lg:text-6xl text-foreground font-serif tracking-tight leading-tight"
                 style={{ fontFamily: "'Fraunces', Georgia, serif" }}
               >
-                Building Disability Inclusion in Practice
+                {settings.hero_title || "Building Disability Inclusion in Practice"}
               </h1>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                4 coherent service pillars — bringing together interactive training, institutional advisory, keynote speaking, and rigorous research &amp; communication.
+                {settings.hero_subtitle || "4 coherent service pillars — bringing together interactive training, institutional advisory, keynote speaking, and rigorous research & communication."}
               </p>
             </div>
 

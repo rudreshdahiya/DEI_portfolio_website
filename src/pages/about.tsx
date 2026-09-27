@@ -19,42 +19,24 @@ interface FAQOption {
   answer: string;
 }
 
-const PRESET_FAQS: FAQOption[] = [
-  {
-    id: "services",
-    label: "Core Services",
-    question: "What core services & consulting does Pratik offer?",
-    answer: "Pratik offers 4 main pillars: (1) Interactive Training & Capacity Building for leadership and staff; (2) Institutional Advisory for disability-inclusive policies & accessibility; (3) Keynote Speaking & University Lectures on invisible disability; and (4) Research, Grant Writing & Accessible Communication.",
-  },
-  {
-    id: "invisible-disability",
-    label: "Invisible Disability",
-    question: "What is invisible disability advocacy?",
-    answer: "Invisible disability advocacy addresses conditions not immediately apparent visually (e.g. chronic illness, pain conditions, neurodivergence). Pratik leverages lived authority to transform institutional policies, workplace accommodations, and social perceptions beyond physical mobility frameworks.",
-  },
-  {
-    id: "trainings",
-    label: "Capacity Building",
-    question: "How does Pratik conduct capacity building workshops?",
-    answer: "Pratik delivers interactive, practical training across organizational levels — from C-suite leadership and HR teams to frontline community workers. Topics include disability etiquette, RPwD Act compliance, inclusive communication, and early intervention.",
-  },
-  {
-    id: "speaking",
-    label: "Keynotes & Talks",
-    question: "What keynote topics does Pratik present on?",
-    answer: "Pratik delivers keynotes on 'Invisible Disability & Lived Authority', 'Intersectional DEI in Practice', 'Designing Sensory & Accessible Public Spaces', and 'De-stigmatizing Chronic Conditions'. He has spoken at global conferences like ARNEC Manila and top institutions like IIT Delhi.",
-  },
-  {
-    id: "research",
-    label: "Research & Writing",
-    question: "What research, policy, and grant writing work does Pratik do?",
-    answer: "Pratik supports NGOs and foundations with grant proposals, donor reporting, state policy roundtables (e.g. Chhattisgarh Disability Policy), disaster risk reduction frameworks (NDMA & UN India), and accessible digital publications.",
-  },
-];
-
-function AskAI() {
+function AskAI({ faqs }: { faqs?: FAQOption[] }) {
   const [question, setQuestion] = useState("");
   const [activeFaq, setActiveFaq] = useState<FAQOption | null>(null);
+
+  const presetList = faqs && faqs.length > 0 ? faqs : [
+    {
+      id: "services",
+      label: "Core Services",
+      question: "What core services & consulting does Pratik offer?",
+      answer: "Pratik offers 4 main pillars: (1) Interactive Training & Capacity Building for leadership and staff; (2) Institutional Advisory for disability-inclusive policies & accessibility; (3) Keynote Speaking & University Lectures on invisible disability; and (4) Research, Grant Writing & Accessible Communication.",
+    },
+    {
+      id: "invisible-disability",
+      label: "Invisible Disability",
+      question: "What is invisible disability advocacy?",
+      answer: "Invisible disability advocacy addresses conditions not immediately apparent visually (e.g. chronic illness, pain conditions, neurodivergence). Pratik leverages lived authority to transform institutional policies, workplace accommodations, and social perceptions beyond physical mobility frameworks.",
+    },
+  ];
 
   const buildUrl = (base: string, customQ?: string) => {
     const q = (customQ || question).trim() || DEFAULT_Q;
@@ -90,7 +72,7 @@ function AskAI() {
           Frequently Asked Questions (Click to Ask):
         </p>
         <div className="flex flex-wrap gap-2" role="group" aria-label="Preset AI Questions">
-          {PRESET_FAQS.map((faq) => {
+          {presetList.map((faq) => {
             const isSelected = activeFaq?.id === faq.id;
             return (
               <button
@@ -110,6 +92,7 @@ function AskAI() {
           })}
         </div>
       </div>
+
 
       {/* Search Input Box */}
       <div
@@ -348,7 +331,7 @@ export default function About() {
             {settings.hero_subtitle}
           </p>
 
-          <AskAI />
+          <AskAI faqs={settings.faqs} />
         </div>
       </header>
 
@@ -371,18 +354,11 @@ export default function About() {
             </div>
 
             <div className="space-y-5 text-base md:text-lg text-foreground/90 leading-relaxed font-normal">
-              <p>
-                Pratik Aggarwal is a <span data-key-info>disability inclusion practitioner and organisational leader</span> working across disability rights, community-based systems, early intervention, inclusive education, accessibility, and public policy. For over a decade, his work has been rooted in communities — particularly with children with disabilities and their families in Delhi’s urban informal settlements.
-              </p>
-
-              <p>
-                <span data-key-info>As Executive Director of ASTHA</span>, he has led the organisation through a period of significant growth, while developing programmes, teams, partnerships, and systems that enable community-based approaches to reach more children and families. His experience spans early childhood development, family and community strengthening, inclusive education, frontline health systems, disability advocacy, and programme design. He has also worked on initiatives bringing together health, rehabilitation, and disability services, and has contributed to the development of inclusive public spaces and institutional practices — including co-creating <span className="font-semibold text-foreground">Umang Vatika</span>, North India’s first government sensory garden at Safdarjung Hospital.
-              </p>
-
-              <p>
-                Alongside his field and organisational work, Pratik advises organisations and emerging leaders working in disability, health, education, child development, and social change. He brings a combination of <span data-key-info>grassroots experience, social work and public health training, quantitative skills, programme leadership, and practical experience</span> of building and scaling a social-impact organisation. His consultancy work includes disability inclusion, accessibility, programme development, organisational strengthening, training, research, and strategy. He is particularly interested in helping organisations move from good ideas and small pilots towards stronger systems, sustainable programmes, and meaningful scale.
-              </p>
+              {settings.bio_p1 && <p>{settings.bio_p1}</p>}
+              {settings.bio_p2 && <p>{settings.bio_p2}</p>}
+              {settings.bio_p3 && <p>{settings.bio_p3}</p>}
             </div>
+
 
             <PullQuote accent="teal">
               "Inclusion isn't a checklist slide or a policy clause. It is the unromanticised, daily commitment to building systems that honour lived complexity and community rights."

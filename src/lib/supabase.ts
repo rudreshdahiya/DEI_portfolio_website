@@ -15,11 +15,11 @@ export const supabase = createClient(
 // ── Generic key-value helpers ─────────────────────────────────────────────────
 
 export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
-  let localData: T | null = null;
+  let localData: (T & { _updatedAt?: number }) | null = null;
   try {
     const raw = localStorage.getItem(`dei_setting_${key}`);
     if (raw) {
-      localData = JSON.parse(raw) as T;
+      localData = JSON.parse(raw);
     }
   } catch {
     // Ignore localStorage parse errors
@@ -33,7 +33,16 @@ export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
       .single();
 
     if (!error && data && data.value) {
-      const merged = { ...fallback, ...(data.value as Partial<T>) } as T;
+      const remoteVal = data.value as T & { _updatedAt?: number };
+      const remoteTime = remoteVal._updatedAt || 0;
+      const localTime = localData?._updatedAt || 0;
+
+      // If local data has a newer edit timestamp than remote Supabase data, stick with localData!
+      if (localData && localTime > remoteTime) {
+        return { ...fallback, ...localData };
+      }
+
+      const merged = { ...fallback, ...remoteVal };
       // Sync local storage with latest Supabase data
       try {
         localStorage.setItem(`dei_setting_${key}`, JSON.stringify(merged));
@@ -50,27 +59,31 @@ export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
 }
 
 export async function saveSetting<T>(key: string, value: T): Promise<void> {
+  const timestampedValue = {
+    ...(value as object),
+    _updatedAt: Date.now(),
+  };
+
   // 1. Always save to LocalStorage for instant resilience
   try {
-    localStorage.setItem(`dei_setting_${key}`, JSON.stringify(value));
+    localStorage.setItem(`dei_setting_${key}`, JSON.stringify(timestampedValue));
   } catch (err) {
     console.warn("LocalStorage save error:", err);
   }
 
   // Broadcast event so all mounted React components update instantly
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key } }));
+    window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key, value: timestampedValue } }));
   }
 
   // 2. Persist to Supabase site_settings table
   try {
     const { error } = await supabase
       .from("site_settings")
-      .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
+      .upsert({ key, value: timestampedValue, updated_at: new Date().toISOString() }, { onConflict: "key" });
 
     if (error) {
       console.warn(`Supabase upsert warning for '${key}':`, error.message);
-      // If error is RLS or permissions, local storage already saved the changes so we don't crash
       if (error.code === "42501" || error.message.includes("row-level security")) {
         console.info("Saved to local storage backup. To enable Supabase cloud persistence, add RLS policies to public.site_settings.");
         return;
@@ -79,9 +92,9 @@ export async function saveSetting<T>(key: string, value: T): Promise<void> {
     }
   } catch (err) {
     console.warn("Supabase save error:", err);
-    // If local storage saved successfully, we don't block the user
   }
 }
+
 
 // ── Image Upload Helper ────────────────────────────────────────────────────────
 

@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { useRevealAll } from "@/hooks/use-reveal-all";
+import { useWorkSettings } from "@/hooks/use-work-settings";
 import { Camera, Sparkles, X, MapPin, Calendar, ExternalLink } from "lucide-react";
 
 // ── Types & data ──────────────────────────────────────────────────────────────
@@ -361,6 +362,7 @@ function EventPhoto({ src, alt }: { src?: string; alt?: string }) {
 // ── Main Page Component ───────────────────────────────────────────────────────
 
 export default function Work() {
+  const { settings } = useWorkSettings();
   const [selectedGalleryCategory, setSelectedGalleryCategory] = useState<string>("all");
   const [activePhotoModal, setActivePhotoModal] = useState<GalleryPhoto | null>(null);
 
@@ -406,10 +408,10 @@ export default function Work() {
             className="text-4xl md:text-6xl text-foreground font-serif tracking-tight leading-tight"
             style={{ fontFamily: "'Fraunces', Georgia, serif" }}
           >
-            Live Engagements &amp; Field Practice
+            {settings.hero_title || "Live Engagements & Field Practice"}
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-[60ch] leading-relaxed">
-            A curated record of corporate workshops, frontline capacity building, university lectures, international summits, and government policy advisory.
+            {settings.hero_subtitle || "A curated record of corporate workshops, frontline capacity building, university lectures, international summits, and government policy advisory."}
           </p>
         </div>
       </header>
