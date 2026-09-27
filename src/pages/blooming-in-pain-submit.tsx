@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { track } from "@vercel/analytics";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 const GOOGLE_FORM_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform";
@@ -9,6 +10,9 @@ const GOOGLE_FORM_EMBED_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform?embedded=true";
 
 export default function BloomingInPainSubmit() {
+  const { settings: globalSettings } = useGlobalSettings();
+  const contactEmail = globalSettings.contact_email || "hello@bloominginpain.com";
+
   return (
     <div>
       <PageMeta
@@ -174,10 +178,10 @@ export default function BloomingInPainSubmit() {
                   Questions?
                 </p>
                 <a
-                  href="mailto:hello@bloominginpain.com"
+                  href={`mailto:${contactEmail}`}
                   className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                 >
-                  hello@bloominginpain.com
+                  {contactEmail}
                 </a>
               </div>
             </div>

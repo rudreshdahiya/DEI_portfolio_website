@@ -57,6 +57,11 @@ export async function saveSetting<T>(key: string, value: T): Promise<void> {
     console.warn("LocalStorage save error:", err);
   }
 
+  // Broadcast event so all mounted React components update instantly
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key } }));
+  }
+
   // 2. Persist to Supabase site_settings table
   try {
     const { error } = await supabase

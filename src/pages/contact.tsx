@@ -5,6 +5,7 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -43,6 +44,9 @@ function validate(form: FormState): FormErrors {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Contact() {
+  const { settings: globalSettings } = useGlobalSettings();
+  const contactEmail = globalSettings.contact_email || "hello@bloominginpain.com";
+
   const [form, setForm] = useState<FormState>({
     inquiryType: "",
     name: "",
@@ -105,7 +109,7 @@ export default function Contact() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       setSubmitError(
-        "Something went wrong sending your message. Please try again, or email hello@bloominginpain.com directly."
+        `Something went wrong sending your message. Please try again, or email ${contactEmail} directly.`
       );
     } finally {
       setIsSubmitting(false);
@@ -136,10 +140,10 @@ export default function Contact() {
             working days. If your inquiry is time-sensitive, you can also reach
             me directly at{" "}
             <a
-              href="mailto:hello@bloominginpain.com"
+              href={`mailto:${contactEmail}`}
               className="text-foreground underline underline-offset-4 hover:text-primary transition-colors"
             >
-              hello@bloominginpain.com
+              {contactEmail}
             </a>
             .
           </p>
@@ -203,7 +207,7 @@ export default function Contact() {
           <p className="text-lg text-muted-foreground max-w-[52ch] leading-relaxed">
             Fill in the blanks below — or if you prefer,{" "}
             <a
-              href="mailto:hello@bloominginpain.com"
+              href={`mailto:${contactEmail}`}
               className="underline underline-offset-4 hover:text-foreground transition-colors"
             >
               email me directly
@@ -227,10 +231,10 @@ export default function Contact() {
                   Email
                 </p>
                 <a
-                  href="mailto:hello@bloominginpain.com"
+                  href={`mailto:${contactEmail}`}
                   className="text-base text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                 >
-                  hello@bloominginpain.com
+                  {contactEmail}
                 </a>
                 <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
                   I typically respond within 3–5 working days.

@@ -1,8 +1,12 @@
 import { Link } from "react-router";
 import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
+import { useGlobalSettings } from "@/hooks/use-global-settings";
 
 export default function Accessibility() {
+  const { settings: globalSettings } = useGlobalSettings();
+  const contactEmail = globalSettings.contact_email || "hello@bloominginpain.com";
+
   return (
     <>
       <PageMeta
@@ -145,10 +149,10 @@ export default function Accessibility() {
               <p>
                 You can reach us at:{" "}
                 <a
-                  href="mailto:hello@bloominginpain.com?subject=Accessibility%20issue"
+                  href={`mailto:${contactEmail}?subject=Accessibility%20issue`}
                   className="text-foreground underline underline-offset-4 hover:text-primary transition-colors"
                 >
-                  hello@bloominginpain.com
+                  {contactEmail}
                 </a>
               </p>
               <p>

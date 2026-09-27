@@ -4,25 +4,43 @@ import { fetchServicesSettings, type ServicesSettings, DEFAULT_SERVICES_SETTINGS
 interface ServicesSettingsContextValue {
   settings: ServicesSettings;
   loading: boolean;
+  refresh: () => Promise<void>;
 }
 
 const ServicesSettingsContext = createContext<ServicesSettingsContextValue>({
   settings: DEFAULT_SERVICES_SETTINGS,
   loading: false,
+  refresh: async () => {},
 });
 
 export function ServicesSettingsProvider({ children }: { children: ReactNode }) {
   const [settings, setSettings] = useState<ServicesSettings>(DEFAULT_SERVICES_SETTINGS);
   const [loading, setLoading] = useState(true);
 
+  const load = async () => {
+    try {
+      const data = await fetchServicesSettings();
+      setSettings(data);
+    } catch {
+      // ignore
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    fetchServicesSettings()
-      .then(setSettings)
-      .finally(() => setLoading(false));
+    load();
+    const handleUpdate = () => load();
+    window.addEventListener("dei-settings-updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("dei-settings-updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   return (
-    <ServicesSettingsContext.Provider value={{ settings, loading }}>
+    <ServicesSettingsContext.Provider value={{ settings, loading, refresh: load }}>
       {children}
     </ServicesSettingsContext.Provider>
   );
