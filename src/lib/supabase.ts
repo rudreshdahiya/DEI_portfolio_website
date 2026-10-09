@@ -667,14 +667,37 @@ export interface ContactSettings {
   hero_title: string;
   hero_subtitle: string;
   recipient_email: string;
+  blooming_email: string;
+  webhook_url: string;
   response_time_note: string;
+  show_organisation_field: boolean;
+  show_phone_field: boolean;
+  organisation_label: string;
+  message_label: string;
+  button_label: string;
+  inquiry_types: string[];
 }
 
 export const DEFAULT_CONTACT_SETTINGS: ContactSettings = {
   hero_title: "Start a Partnership",
   hero_subtitle: "Reach out to discuss training, institutional advisory, keynote invitations, or research collaborations.",
-  recipient_email: "hello@bloominginpain.com",
+  recipient_email: "Pratik@asthaindia.in",
+  blooming_email: "hello@bloominginpain.com",
+  webhook_url: "https://script.google.com/macros/s/AKfycbwA5nV_PzLB6bAK-9izcQFX1fqXRwBYignX_xac0hYaCdtpudXPk3wzaGc6pxWkM73NNA/exec",
   response_time_note: "Pratik typically responds within 2 business days.",
+  show_organisation_field: true,
+  show_phone_field: true,
+  organisation_label: "Organisation / Institution",
+  message_label: "Tell us about your initiative, timeline, or scope",
+  button_label: "Send message",
+  inquiry_types: [
+    "Keynote Speaking & Panels",
+    "Corporate Inclusion Workshop",
+    "Institutional / DEI Advisory",
+    "Blooming in Pain (Stories & Initiatives)",
+    "Media & Press Inquiry",
+    "General Inquiry",
+  ],
 };
 
 export async function fetchContactSettings(): Promise<ContactSettings> {
