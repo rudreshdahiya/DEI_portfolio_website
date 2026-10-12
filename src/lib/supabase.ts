@@ -676,6 +676,8 @@ export interface ContactSettings {
   message_label: string;
   button_label: string;
   inquiry_types: string[];
+  instagram_url?: string;
+  linkedin_url?: string;
 }
 
 export const DEFAULT_CONTACT_SETTINGS: ContactSettings = {
@@ -698,6 +700,8 @@ export const DEFAULT_CONTACT_SETTINGS: ContactSettings = {
     "Media & Press Inquiry",
     "General Inquiry",
   ],
+  instagram_url: "https://instagram.com/bloominginpain",
+  linkedin_url: "https://linkedin.com/in/pratikaggarwal",
 };
 
 export async function fetchContactSettings(): Promise<ContactSettings> {

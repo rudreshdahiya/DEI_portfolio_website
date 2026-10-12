@@ -74,6 +74,8 @@ export default function Contact() {
   const primaryEmail = contactSettings.recipient_email || globalSettings.contact_email || "Pratik@asthaindia.in";
   const bloomingEmail = contactSettings.blooming_email || "hello@bloominginpain.com";
   const webhookUrl = contactSettings.webhook_url || import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
+  const instagramUrl = contactSettings.instagram_url !== undefined && contactSettings.instagram_url !== "" ? contactSettings.instagram_url : "https://instagram.com/bloominginpain";
+  const linkedinUrl = contactSettings.linkedin_url !== undefined && contactSettings.linkedin_url !== "" ? contactSettings.linkedin_url : "https://linkedin.com/in/pratikaggarwal";
 
   const inquiryTypes = contactSettings.inquiry_types && contactSettings.inquiry_types.length > 0
     ? contactSettings.inquiry_types
@@ -294,35 +296,49 @@ export default function Contact() {
                   </p>
                 </div>
 
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-                    Follow & Connect
-                  </p>
-                  <ul className="space-y-2.5 list-none m-0 p-0">
-                    <li>
-                      <a
-                        href="https://instagram.com/bloominginpain"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-base text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-                      >
-                        Instagram
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://linkedin.com/in/pratikaggarwal"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-base text-foreground underline underline-offset-4 hover:text-primary transition-colors"
-                      >
-                        LinkedIn
-                        <span className="sr-only">(opens in new tab)</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                {(instagramUrl || linkedinUrl) && (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+                      Follow & Connect
+                    </p>
+                    <ul className="space-y-2.5 list-none m-0 p-0">
+                      {instagramUrl && (
+                        <li>
+                          <a
+                            href={instagramUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-base text-foreground underline underline-offset-4 hover:text-primary transition-colors"
+                            onClick={() => {
+                              track("outbound_click", { destination: "instagram", location: "contact_sidebar" });
+                              trackEvent("outbound_click", { destination: "instagram", location: "contact_sidebar" });
+                            }}
+                          >
+                            Instagram
+                            <span className="sr-only">(opens in new tab)</span>
+                          </a>
+                        </li>
+                      )}
+                      {linkedinUrl && (
+                        <li>
+                          <a
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-base text-foreground underline underline-offset-4 hover:text-primary transition-colors"
+                            onClick={() => {
+                              track("outbound_click", { destination: "linkedin", location: "contact_sidebar" });
+                              trackEvent("outbound_click", { destination: "linkedin", location: "contact_sidebar" });
+                            }}
+                          >
+                            LinkedIn
+                            <span className="sr-only">(opens in new tab)</span>
+                          </a>
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">

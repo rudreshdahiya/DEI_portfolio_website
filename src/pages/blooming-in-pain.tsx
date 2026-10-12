@@ -7,6 +7,7 @@ import { track } from "@vercel/analytics";
 import { StoryCarousel } from "@/components/story-carousel";
 import { ClickableImage } from "@/components/image-lightbox";
 import { useBipSettings } from "@/hooks/use-bip-settings";
+import { ShareButton } from "@/components/share-button";
 
 // ── Fallback Activities List ───────────────────────────────────────────────────
 const activitiesList = [
@@ -68,6 +69,7 @@ export default function BloomingInPain() {
         title="Blooming in Pain — Centering Stories of Fibromyalgia & Chronic Pain"
         description="Founded by Pratik Aggarwal in 2021 to create space for un-sanitised stories about living with fibromyalgia, chronic pain, and invisible conditions."
         path="/blooming-in-pain"
+        ogImage="https://pratik-aggarwal-website.vercel.app/blooming-in-pain-og.jpeg"
         keywords="invisible disability stories, fibromyalgia community, chronic illness platform, Blooming in Pain, Purple Fest Goa art exhibition"
       />
       <JsonLd schema={[
@@ -101,12 +103,19 @@ export default function BloomingInPain() {
         style={{ backgroundColor: "var(--ground)" }}
       >
         <div className="max-w-[70ch] mx-auto">
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-5"
-            style={{ color: "var(--bloom)" }}
-          >
-            Initiative Founded by Pratik Aggarwal
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+            <p
+              className="text-xs font-semibold uppercase tracking-widest"
+              style={{ color: "var(--bloom)" }}
+            >
+              Initiative Founded by Pratik Aggarwal
+            </p>
+            <ShareButton
+              title="Blooming in Pain — Centering Stories of Fibromyalgia & Chronic Pain"
+              url="https://pratik-aggarwal-website.vercel.app/blooming-in-pain"
+              variant="pill"
+            />
+          </div>
 
           <h1
             className="text-4xl sm:text-5xl md:text-7xl text-foreground mb-6 tracking-tight font-serif"
@@ -371,17 +380,26 @@ export default function BloomingInPain() {
             <span data-key-info>You don't need a diagnosis to contribute.</span> You need to have lived it.
             We'll work with you from there.
           </p>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center px-7 py-3 rounded-xl font-semibold text-sm text-white hover:opacity-90 transition-opacity shadow-sm"
-            style={{ backgroundColor: "var(--plum)" }}
-            onClick={() => track("outbound_click", { destination: "google_form", location: "bip_share_section" })}
-          >
-            Share your story →
-            <span className="sr-only">(opens in new tab)</span>
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-3.5">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfWiQxhRrOoBlYs8cs_eUN4o6wBCFjKTnly6_YP7coaxky7_Q/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-7 py-3 rounded-xl font-semibold text-sm text-white hover:opacity-90 transition-opacity shadow-sm"
+              style={{ backgroundColor: "var(--plum)" }}
+              onClick={() => track("outbound_click", { destination: "google_form", location: "bip_share_section" })}
+            >
+              Share your story →
+              <span className="sr-only">(opens in new tab)</span>
+            </a>
+            <ShareButton
+              title="Blooming in Pain — Centering Stories of Fibromyalgia & Chronic Pain"
+              url="https://pratik-aggarwal-website.vercel.app/blooming-in-pain"
+              variant="outline"
+              align="center"
+              className="py-1"
+            />
+          </div>
           <p className="mt-4 text-xs text-muted-foreground">
             Stories are reviewed before publication. We'll be in touch within
             two weeks.

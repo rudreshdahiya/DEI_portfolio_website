@@ -92,3 +92,18 @@ Stack: Vite + React 19 + TypeScript + React Router + Tailwind CSS v4 + Shadcn UI
 * [ ] Update final domain in `src/components/page-meta.tsx` and `index.html` upon deployment
 * [ ] Screen reader smoke test (VoiceOver / NVDA)
 
+---
+
+## 2026-10-11: Admin Social Links & Social Sharing Fixes
+
+### 1. Contact Page Social Links Configurable via Admin
+- Added `instagram_url` and `linkedin_url` to `ContactSettings` in `src/lib/supabase.ts` with default fallback links.
+- Added "Social Media Links (Follow & Connect Sidebar)" card in `/admin/contact` (`src/admin/contact-settings.tsx`) allowing Pratik to edit Instagram and LinkedIn URLs directly from the admin panel and persist to Supabase.
+- Updated `src/pages/contact.tsx` to read dynamic social URLs with outbound click tracking to Vercel and local analytics.
+
+### 2. Blooming in Pain Page Sharing & Dedicated Meta Fix
+- **Issue Diagnosed**: Vite is an SPA; when crawlers (WhatsApp, LinkedIn, Twitter/X, Facebook, Slack, iMessage) unfurl links like `/blooming-in-pain`, they received `index.html` where `og:url`, `og:title`, and `og:description` were hardcoded to the homepage, leading platforms like LinkedIn to collapse shares into the generic homepage preview.
+- **Static Page Generation**: Added `scripts/generate-static-pages.js` hooked into `npm run build` to generate static HTML for all routes (`/blooming-in-pain`, `/about`, `/services`, `/work`, `/contact`, `/accessibility`, `/blooming-in-pain/submit`) with route-specific `<title>`, `<meta property="og:title">`, `<meta property="og:url">`, `<meta property="og:image">`, `<meta property="og:description">`, and `<link rel="canonical">`.
+- **Clean URLs**: Added `"cleanUrls": true` in `vercel.json` so static HTML files are served by Vercel for inner routes without rewriting to root `index.html`.
+- **Dedicated OG Image**: Added `public/blooming-in-pain-og.jpeg` specifically for Blooming in Pain social previews.
+- **Interactive Share Component**: Built `src/components/share-button.tsx` with Web Share API support, 1-click clipboard link copying, WhatsApp, LinkedIn, X (Twitter), and Email sharing buttons, integrated into both the hero and community contribute sections of the Blooming in Pain page.

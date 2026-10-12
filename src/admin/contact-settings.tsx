@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router";
-import { ChevronLeft, Save, Check, AlertCircle, Loader2, Plus, Trash2, Mail, Link as LinkIcon, Settings2 } from "lucide-react";
+import { ChevronLeft, Save, Check, AlertCircle, Loader2, Plus, Trash2, Mail, Link as LinkIcon, Settings2, Instagram, Linkedin } from "lucide-react";
 import {
   fetchContactSettings, saveContactSettings,
   type ContactSettings,
@@ -111,6 +111,49 @@ export default function AdminContactSettings() {
                 value={settings.blooming_email}
                 onChange={e => update("blooming_email", e.target.value)}
                 placeholder="hello@bloominginpain.com"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E4DEE6] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B84472]"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Section 2: Social Media Links (Follow & Connect) */}
+        <div className="bg-white border border-[#E4DEE6] rounded-2xl p-6 space-y-5 shadow-sm">
+          <div className="flex items-center gap-2.5 text-[#5C2A57] font-semibold text-base pb-2 border-b border-[#E4DEE6]">
+            <Instagram className="w-5 h-5 text-[#B84472]" />
+            <h2>Social Media Links (Follow & Connect Sidebar)</h2>
+          </div>
+          <p className="text-xs text-[#6B636C]">
+            Configure the Instagram and LinkedIn URLs displayed in the &ldquo;Follow & Connect&rdquo; section on the Contact page.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-sm font-semibold text-[#1E1A24] flex items-center gap-2 mb-1">
+                <Instagram className="w-4 h-4 text-[#B84472]" />
+                Instagram URL
+              </label>
+              <p className="text-xs text-[#6B636C] mb-2">Profile or page link for Instagram</p>
+              <input
+                type="url"
+                value={settings.instagram_url ?? ""}
+                onChange={e => update("instagram_url", e.target.value)}
+                placeholder="https://instagram.com/bloominginpain"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E4DEE6] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B84472]"
+              />
+            </div>
+
+            <div>
+              <label className="text-sm font-semibold text-[#1E1A24] flex items-center gap-2 mb-1">
+                <Linkedin className="w-4 h-4 text-[#0077B5]" />
+                LinkedIn URL
+              </label>
+              <p className="text-xs text-[#6B636C] mb-2">Profile link for LinkedIn</p>
+              <input
+                type="url"
+                value={settings.linkedin_url ?? ""}
+                onChange={e => update("linkedin_url", e.target.value)}
+                placeholder="https://linkedin.com/in/pratikaggarwal"
                 className="w-full px-3.5 py-2.5 rounded-xl border border-[#E4DEE6] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B84472]"
               />
             </div>
