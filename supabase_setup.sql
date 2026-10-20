@@ -4,7 +4,7 @@
 --
 -- BEFORE RUNNING:
 --   1. Authentication → Users → Add user → create the admin login (tick "Auto confirm user").
---   2. Replace admin@example.com below with that same email.
+--   2. The admin email below must match that user's email.
 
 -- ── 0. Tables and image storage ─────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS public.site_settings (
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS public.admin_users (
 -- RLS on with no policies: the table can't be read or changed through the public API.
 ALTER TABLE public.admin_users ENABLE ROW LEVEL SECURITY;
 
-INSERT INTO public.admin_users (email) VALUES ('admin@example.com')
+INSERT INTO public.admin_users (email) VALUES ('pratik07.agg@gmail.com')
 ON CONFLICT (email) DO NOTHING;
 
 CREATE OR REPLACE FUNCTION public.is_admin()
