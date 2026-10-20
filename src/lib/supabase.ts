@@ -64,7 +64,22 @@ export async function saveSetting<T>(key: string, value: T): Promise<void> {
     _updatedAt: Date.now(),
   };
 
-  // 1. Always save to LocalStorage for instant resilience
+  // 1. Persist to Supabase first. Only signed-in admins may write (see supabase_security.sql),
+  //    so a failure here is reported to the admin screen instead of being hidden.
+  const { error } = await supabase
+    .from("site_settings")
+    .upsert({ key, value: timestampedValue, updated_at: new Date().toISOString() }, { onConflict: "key" });
+
+  if (error) {
+    console.warn(`Supabase save failed for '${key}':`, error.message);
+    throw new Error(
+      error.code === "42501" || error.message.includes("row-level security")
+        ? "Not allowed to save. Please sign in again with an admin account."
+        : error.message,
+    );
+  }
+
+  // 2. Cache locally so this browser shows the new content instantly
   try {
     localStorage.setItem(`dei_setting_${key}`, JSON.stringify(timestampedValue));
   } catch (err) {
@@ -74,24 +89,6 @@ export async function saveSetting<T>(key: string, value: T): Promise<void> {
   // Broadcast event so all mounted React components update instantly
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key, value: timestampedValue } }));
-  }
-
-  // 2. Persist to Supabase site_settings table
-  try {
-    const { error } = await supabase
-      .from("site_settings")
-      .upsert({ key, value: timestampedValue, updated_at: new Date().toISOString() }, { onConflict: "key" });
-
-    if (error) {
-      console.warn(`Supabase upsert warning for '${key}':`, error.message);
-      if (error.code === "42501" || error.message.includes("row-level security")) {
-        console.info("Saved to local storage backup. To enable Supabase cloud persistence, add RLS policies to public.site_settings.");
-        return;
-      }
-      throw error;
-    }
-  } catch (err) {
-    console.warn("Supabase save error:", err);
   }
 }
 

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchBipSettings, type BipSettings, DEFAULT_BIP_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface BipSettingsContextValue {
   settings: BipSettings;
@@ -14,7 +15,7 @@ const BipSettingsContext = createContext<BipSettingsContextValue>({
 });
 
 export function BipSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<BipSettings>(DEFAULT_BIP_SETTINGS);
+  const [settings, setSettings] = useState<BipSettings>(() => seededSettings("bip", DEFAULT_BIP_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

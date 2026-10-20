@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchWorkSettings, type WorkSettings, DEFAULT_WORK_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface WorkSettingsContextValue {
   settings: WorkSettings;
@@ -14,7 +15,7 @@ const WorkSettingsContext = createContext<WorkSettingsContextValue>({
 });
 
 export function WorkSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<WorkSettings>(DEFAULT_WORK_SETTINGS);
+  const [settings, setSettings] = useState<WorkSettings>(() => seededSettings("work", DEFAULT_WORK_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

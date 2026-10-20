@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchAboutSettings, type AboutSettings, DEFAULT_ABOUT_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface AboutSettingsContextValue {
   settings: AboutSettings;
@@ -14,7 +15,7 @@ const AboutSettingsContext = createContext<AboutSettingsContextValue>({
 });
 
 export function AboutSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<AboutSettings>(DEFAULT_ABOUT_SETTINGS);
+  const [settings, setSettings] = useState<AboutSettings>(() => seededSettings("about", DEFAULT_ABOUT_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

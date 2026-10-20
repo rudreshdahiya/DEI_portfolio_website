@@ -203,6 +203,11 @@ for (const route of routes) {
     `<meta name="twitter:image" content="${route.ogImage}" />`
   );
 
+  // Admin pages must never appear in search results
+  if (route.path.startsWith('/admin')) {
+    customHtml = customHtml.replace('</head>', '    <meta name="robots" content="noindex, nofollow" />\n  </head>');
+  }
+
   // Target directory: dist/route.path
   const targetDir = path.join(distDir, route.path.replace(/^\//, ''));
   fs.mkdirSync(targetDir, { recursive: true });

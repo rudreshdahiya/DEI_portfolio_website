@@ -1,5 +1,7 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Navigate, Outlet, Link, useLocation } from "react-router";
+import type { Session } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import {
   LayoutDashboard,
   BarChart3,
@@ -17,46 +19,51 @@ import {
 } from "lucide-react";
 
 // ── Auth ───────────────────────────────────────────────────────────────────────
+// Sign-in is checked by Supabase Auth on the server; no password ships to the browser.
+// Database writes are only allowed for emails listed in public.admin_users (see supabase_security.sql).
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "pratik2024";
-const SESSION_KEY = "admin_authed";
+// undefined = still checking, null = signed out
+export function useAdminSession() {
+  const [session, setSession] = useState<Session | null | undefined>(undefined);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => setSession(data.session));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => setSession(s));
+    return () => subscription.unsubscribe();
+  }, []);
+  return session;
+}
 
-export function useAdminAuth() {
-  const isAuthed = () => sessionStorage.getItem(SESSION_KEY) === "true";
-  const login = (pw: string) => {
-    const trimmed = pw.trim();
-    if (trimmed === ADMIN_PASSWORD || trimmed === "pratik2024" || trimmed === "admin2024") {
-      sessionStorage.setItem(SESSION_KEY, "true");
-      return true;
-    }
-    return false;
-  };
-  const logout = () => sessionStorage.removeItem(SESSION_KEY);
-  return { isAuthed, login, logout };
+function AdminChecking() {
+  return (
+    <div className="min-h-screen flex items-center justify-center" style={{ background: "#1E1A24" }} role="status" aria-live="polite">
+      <p className="text-white/70 text-sm">Checking sign-in…</p>
+    </div>
+  );
 }
 
 // ── Login Page ─────────────────────────────────────────────────────────────────
 
 export function AdminLogin() {
-  const { login, isAuthed } = useAdminAuth();
+  const session = useAdminSession();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  if (isAuthed()) return <Navigate to="/admin/dashboard" replace />;
+  if (session === undefined) return <AdminChecking />;
+  if (session) return <Navigate to="/admin/dashboard" replace />;
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      const ok = login(password);
-      if (!ok) {
-        setError("Incorrect password. Please try again.");
-        setPassword("");
-      }
-      setLoading(false);
-    }, 400);
+    setError("");
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    if (signInError) {
+      setError("Incorrect email or password. Please try again.");
+      setPassword("");
+    }
+    setLoading(false);
   };
 
   return (
@@ -77,6 +84,24 @@ export function AdminLogin() {
         <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
+              <label className="text-white/80 text-sm font-medium block mb-2" htmlFor="admin-email">
+                Email
+              </label>
+              <input
+                id="admin-email"
+                type="email"
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                placeholder="you@example.com"
+                className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white/40 transition-all"
+                autoComplete="username"
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? "admin-login-error" : undefined}
+                required
+              />
+            </div>
+
+            <div>
               <label className="text-white/80 text-sm font-medium block mb-2" htmlFor="admin-password">
                 Password
               </label>
@@ -86,7 +111,7 @@ export function AdminLogin() {
                   type={showPw ? "text" : "password"}
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setError(""); }}
-                  placeholder="Enter admin password"
+                  placeholder="Enter password"
                   className="w-full px-4 py-3 pr-12 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white/40 transition-all"
                   autoComplete="current-password"
                   required
@@ -101,7 +126,7 @@ export function AdminLogin() {
                 </button>
               </div>
               {error && (
-                <p className="text-red-300 text-xs mt-2 flex items-center gap-1">
+                <p id="admin-login-error" role="alert" className="text-red-300 text-xs mt-2 flex items-center gap-1">
                   <span>⚠</span> {error}
                 </p>
               )}
@@ -109,7 +134,7 @@ export function AdminLogin() {
 
             <button
               type="submit"
-              disabled={loading || !password}
+              disabled={loading || !email || !password}
               className="w-full py-3 rounded-xl font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               style={{ background: "linear-gradient(135deg, #B84472, #5C2A57)", color: "white" }}
             >
@@ -131,8 +156,9 @@ export function AdminLogin() {
 // ── Protected Route ────────────────────────────────────────────────────────────
 
 export function AdminGuard() {
-  const { isAuthed } = useAdminAuth();
-  if (!isAuthed()) return <Navigate to="/admin" replace />;
+  const session = useAdminSession();
+  if (session === undefined) return <AdminChecking />;
+  if (!session) return <Navigate to="/admin" replace />;
   return <Outlet />;
 }
 
@@ -151,12 +177,11 @@ const adminNavItems = [
 ];
 
 export function AdminLayout() {
-  const { logout } = useAdminAuth();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     window.location.href = "/admin";
   };
 

@@ -107,3 +107,22 @@ Stack: Vite + React 19 + TypeScript + React Router + Tailwind CSS v4 + Shadcn UI
 - **Clean URLs**: Added `"cleanUrls": true` in `vercel.json` so static HTML files are served by Vercel for inner routes without rewriting to root `index.html`.
 - **Dedicated OG Image**: Added `public/blooming-in-pain-og.jpeg` specifically for Blooming in Pain social previews.
 - **Interactive Share Component**: Built `src/components/share-button.tsx` with Web Share API support, 1-click clipboard link copying, WhatsApp, LinkedIn, X (Twitter), and Email sharing buttons, integrated into both the hero and community contribute sections of the Blooming in Pain page.
+
+---
+
+## 2026-10-20: Admin Security & Crawler Prerendering
+
+### 1. Admin security
+- **Issue**: The admin password was a `VITE_` variable (shipped in the public JS bundle), and two hard-coded fallback passwords (`pratik2024`, `admin2024`) were always accepted. `supabase_setup.sql` let anyone insert, update and delete `site_settings` and read/delete analytics. (Production was never actually connected to Supabase: Vercel had no `VITE_SUPABASE_*` variables, so admin edits only ever saved to the editor's own browser.)
+- **Login**: `src/admin/admin-layout.tsx` now signs in with Supabase Auth (email + password, verified server-side). `VITE_ADMIN_PASSWORD` and the fallback passwords are removed.
+- **Database rules**: `supabase_setup.sql` rewritten as one secure script: creates `site_settings`, `analytics_events` and the `site-images` bucket; public can read content, view images and record analytics; only emails in `public.admin_users` can change content, upload images, or read/clear analytics.
+- **Honest saves**: `saveSetting` in `src/lib/supabase.ts` now writes to Supabase first and throws if it fails, so the admin screen shows an error instead of "Saved" for changes that never left the browser.
+
+### 2. Prerendering for search engines and AI crawlers
+- **Issue**: Every page shipped an empty `<div id="root">`; content and JSON-LD only existed after JavaScript ran, so most AI crawlers and link unfurlers saw blank pages.
+- **Shared app tree**: Routes and providers moved from `src/main.tsx` into `src/app.tsx` (`AppProviders`, `AppRoutes`), used by both the browser entry and the new `src/entry-server.tsx`.
+- **Build step**: `scripts/prerender.js` renders all 8 public routes with the real components at build time and writes full HTML (body text, title, meta, canonical, JSON-LD) into each route's static file. The browser app replaces it on load.
+- **Build script**: `npm run build` now runs client build → SSR build (`dist-ssr/`, git-ignored) → `generate-static-pages.js` → `prerender.js`.
+- **Admin pages**: generated `/admin*` pages carry `noindex, nofollow`.
+- **Saved content in prerendered pages**: `entry-server.tsx` loads the saved Supabase settings before rendering (via the existing `fetch*Settings`), so crawlers see the same text as visitors. Each page embeds only the settings it renders (`window.__SITE_SETTINGS__`: shared `global` + its own section), and the providers start from those values (`src/lib/settings-seed.ts`), so the first paint already shows saved content instead of flashing the defaults.
+- **Note**: the saved `home` settings contain a ~180 KB image stored as a data URL (uploads fell back to base64 because the `site-images` bucket never existed). Re-upload it from the admin panel after setup so it moves to storage and the home page gets lighter.

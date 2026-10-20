@@ -70,6 +70,27 @@ Tasks
 * [x] Robots.txt (`public/robots.txt`)
 * [ ] OG image — create `/og-image.jpg` and place in `public/` before launch
 * [ ] Confirm final domain and replace `pratikaggarwal.in` in `src/components/page-meta.tsx` and `index.html`
+* [x] Prerender public pages so crawlers without JavaScript see full content and JSON-LD (`scripts/prerender.js`)
+* [x] Keep admin pages out of search (`noindex`)
+* [ ] Verify site in Google Search Console (URL prefix) and submit `sitemap.xml`
+* [ ] Import site into Bing Webmaster Tools from Search Console
+
+---
+
+## Admin Security & Supabase
+
+Status: In progress
+
+Tasks
+
+* [x] Replace shared password with Supabase Auth email login
+* [x] Remove hard-coded fallback passwords and `VITE_ADMIN_PASSWORD`
+* [x] Secure `supabase_setup.sql` (admin-only writes, public reads)
+* [x] Surface failed saves in the admin UI
+* [ ] Create admin user in Supabase → Authentication → Users
+* [ ] Run `supabase_setup.sql` with the admin email filled in
+* [ ] Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to Vercel (Production + Preview); delete `VITE_ADMIN_PASSWORD` there if present
+* [ ] Optional: turn off public sign-ups in Supabase → Authentication → Sign In / Providers
 
 ---
 

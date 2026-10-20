@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5173",
-    "build": "vite build && node scripts/generate-static-pages.js",
+    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/generate-static-pages.js && node scripts/prerender.js",
     "preview": "vite preview --host 0.0.0.0 --port 3000",
     "serve": "vite preview --host 0.0.0.0 --port 3000"
   },

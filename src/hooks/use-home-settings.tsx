@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchHomeSettings, type HomeSettings, DEFAULT_HOME_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface HomeSettingsContextValue {
   settings: HomeSettings;
@@ -14,7 +15,7 @@ const HomeSettingsContext = createContext<HomeSettingsContextValue>({
 });
 
 export function HomeSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<HomeSettings>(DEFAULT_HOME_SETTINGS);
+  const [settings, setSettings] = useState<HomeSettings>(() => seededSettings("home", DEFAULT_HOME_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

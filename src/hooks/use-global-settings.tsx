@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchGlobalSettings, type GlobalSettings, DEFAULT_GLOBAL_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface GlobalSettingsContextValue {
   settings: GlobalSettings;
@@ -14,7 +15,7 @@ const GlobalSettingsContext = createContext<GlobalSettingsContextValue>({
 });
 
 export function GlobalSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<GlobalSettings>(DEFAULT_GLOBAL_SETTINGS);
+  const [settings, setSettings] = useState<GlobalSettings>(() => seededSettings("global", DEFAULT_GLOBAL_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchContactSettings, type ContactSettings, DEFAULT_CONTACT_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface ContactSettingsContextValue {
   settings: ContactSettings;
@@ -14,7 +15,7 @@ const ContactSettingsContext = createContext<ContactSettingsContextValue>({
 });
 
 export function ContactSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<ContactSettings>(DEFAULT_CONTACT_SETTINGS);
+  const [settings, setSettings] = useState<ContactSettings>(() => seededSettings("contact", DEFAULT_CONTACT_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {

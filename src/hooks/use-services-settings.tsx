@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { fetchServicesSettings, type ServicesSettings, DEFAULT_SERVICES_SETTINGS } from "@/lib/supabase";
+import { seededSettings } from "@/lib/settings-seed";
 
 interface ServicesSettingsContextValue {
   settings: ServicesSettings;
@@ -14,7 +15,7 @@ const ServicesSettingsContext = createContext<ServicesSettingsContextValue>({
 });
 
 export function ServicesSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<ServicesSettings>(DEFAULT_SERVICES_SETTINGS);
+  const [settings, setSettings] = useState<ServicesSettings>(() => seededSettings("services", DEFAULT_SERVICES_SETTINGS));
   const [loading, setLoading] = useState(true);
 
   const load = async () => {
