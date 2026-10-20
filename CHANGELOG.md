@@ -126,3 +126,6 @@ Stack: Vite + React 19 + TypeScript + React Router + Tailwind CSS v4 + Shadcn UI
 - **Admin pages**: generated `/admin*` pages carry `noindex, nofollow`.
 - **Saved content in prerendered pages**: `entry-server.tsx` loads the saved Supabase settings before rendering (via the existing `fetch*Settings`), so crawlers see the same text as visitors. Each page embeds only the settings it renders (`window.__SITE_SETTINGS__`: shared `global` + its own section), and the providers start from those values (`src/lib/settings-seed.ts`), so the first paint already shows saved content instead of flashing the defaults.
 - **Note**: the saved `home` settings contain a ~180 KB image stored as a data URL (uploads fell back to base64 because the `site-images` bucket never existed). Re-upload it from the admin panel after setup so it moves to storage and the home page gets lighter.
+
+### 3. Footer year always current (2026-10-20)
+- `src/layout.tsx`: `currentYearCopyright()` replaces the year in a saved "© YYYY …" footer with the current year (year ranges untouched), so a stale saved value like "© 2025" no longer shows.

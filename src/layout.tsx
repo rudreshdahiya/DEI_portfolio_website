@@ -60,6 +60,13 @@ const MOBILE_ICONS: Record<string, typeof Home> = {
   "/contact":         Mail,
 };
 
+// Keeps the footer year current even when an older year was saved in the admin panel
+// ("© 2025 Pratik Aggarwal" shows as "© <this year> Pratik Aggarwal"). Year ranges are left alone.
+function currentYearCopyright(saved?: string) {
+  const year = new Date().getFullYear();
+  return (saved || `© ${year}`).replace(/^(©\s*)\d{4}(?!\s*[–-]\s*\d)/, `$1${year}`);
+}
+
 export function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -325,7 +332,7 @@ export function Layout() {
                 Accessibility
               </Link>
               <span className="text-xs text-muted-foreground/80">
-                {settings.footer_copyright || `© ${new Date().getFullYear()}`}
+                {currentYearCopyright(settings.footer_copyright)}
               </span>
             </div>
           </div>
