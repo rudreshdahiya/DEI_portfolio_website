@@ -30,7 +30,7 @@ export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
       .from("site_settings")
       .select("value")
       .eq("key", key)
-      .single();
+      .maybeSingle(); // no row yet = use defaults, without a 406 error in the console
 
     if (!error && data && data.value) {
       const remoteVal = data.value as T & { _updatedAt?: number };
