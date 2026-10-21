@@ -91,6 +91,9 @@ Tasks
 * [ ] Run `supabase_setup.sql` with the admin email filled in
 * [ ] Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to Vercel (Production + Preview); delete `VITE_ADMIN_PASSWORD` there if present
 * [ ] Optional: turn off public sign-ups in Supabase → Authentication → Sign In / Providers
+* [x] Rebuild the site automatically after admin saves (`api/rebuild.js`)
+* [ ] Create a Deploy Hook in Vercel → Project Settings → Git → Deploy Hooks (branch `main`) and add its URL as `VERCEL_DEPLOY_HOOK_URL` (Production) — until then, admin saves still need a manual redeploy for prerendered HTML
+* [ ] After deploying, save once in admin and confirm a new deployment starts in Vercel
 
 ---
 

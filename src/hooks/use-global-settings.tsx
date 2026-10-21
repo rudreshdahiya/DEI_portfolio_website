@@ -34,10 +34,8 @@ export function GlobalSettingsProvider({ children }: { children: ReactNode }) {
     load();
     const handleUpdate = () => load();
     window.addEventListener("dei-settings-updated", handleUpdate);
-    window.addEventListener("storage", handleUpdate);
     return () => {
       window.removeEventListener("dei-settings-updated", handleUpdate);
-      window.removeEventListener("storage", handleUpdate);
     };
   }, []);
 

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { seededSettings, type SettingsKey } from "./settings-seed";
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -14,17 +15,9 @@ export const supabase = createClient(
 
 // ── Generic key-value helpers ─────────────────────────────────────────────────
 
-export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
-  let localData: (T & { _updatedAt?: number }) | null = null;
-  try {
-    const raw = localStorage.getItem(`dei_setting_${key}`);
-    if (raw) {
-      localData = JSON.parse(raw);
-    }
-  } catch {
-    // Ignore localStorage parse errors
-  }
-
+// Supabase is the only source of truth. If it can't be reached, the saved content the page was
+// built with stays on screen (see settings-seed.ts) rather than older copies or the defaults.
+export async function fetchSetting<T>(key: SettingsKey, fallback: T): Promise<T> {
   try {
     const { data, error } = await supabase
       .from("site_settings")
@@ -32,43 +25,20 @@ export async function fetchSetting<T>(key: string, fallback: T): Promise<T> {
       .eq("key", key)
       .maybeSingle(); // no row yet = use defaults, without a 406 error in the console
 
-    if (!error && data && data.value) {
-      const remoteVal = data.value as T & { _updatedAt?: number };
-      const remoteTime = remoteVal._updatedAt || 0;
-      const localTime = localData?._updatedAt || 0;
-
-      // If local data has a newer edit timestamp than remote Supabase data, stick with localData!
-      if (localData && localTime > remoteTime) {
-        return { ...fallback, ...localData };
-      }
-
-      const merged = { ...fallback, ...remoteVal };
-      // Sync local storage with latest Supabase data
-      try {
-        localStorage.setItem(`dei_setting_${key}`, JSON.stringify(merged));
-      } catch {
-        // Ignore storage write errors
-      }
-      return merged;
-    }
+    if (!error) return data?.value ? { ...fallback, ...(data.value as T) } : fallback;
+    console.warn(`Supabase fetch warning for key '${key}':`, error.message);
   } catch (err) {
     console.warn(`Supabase fetch warning for key '${key}':`, err);
   }
-
-  return localData ? { ...fallback, ...localData } : fallback;
+  return seededSettings(key, fallback);
 }
 
-export async function saveSetting<T>(key: string, value: T): Promise<void> {
-  const timestampedValue = {
-    ...(value as object),
-    _updatedAt: Date.now(),
-  };
-
-  // 1. Persist to Supabase first. Only signed-in admins may write (see supabase_security.sql),
-  //    so a failure here is reported to the admin screen instead of being hidden.
+export async function saveSetting<T>(key: SettingsKey, value: T): Promise<void> {
+  // Only signed-in admins may write (see supabase_setup.sql), so a failure here is
+  // reported to the admin screen instead of being hidden.
   const { error } = await supabase
     .from("site_settings")
-    .upsert({ key, value: timestampedValue, updated_at: new Date().toISOString() }, { onConflict: "key" });
+    .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: "key" });
 
   if (error) {
     console.warn(`Supabase save failed for '${key}':`, error.message);
@@ -79,16 +49,26 @@ export async function saveSetting<T>(key: string, value: T): Promise<void> {
     );
   }
 
-  // 2. Cache locally so this browser shows the new content instantly
-  try {
-    localStorage.setItem(`dei_setting_${key}`, JSON.stringify(timestampedValue));
-  } catch (err) {
-    console.warn("LocalStorage save error:", err);
-  }
-
   // Broadcast event so all mounted React components update instantly
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key, value: timestampedValue } }));
+    window.dispatchEvent(new CustomEvent("dei-settings-updated", { detail: { key, value } }));
+  }
+
+  requestSiteRebuild();
+}
+
+// The public pages are prerendered with the saved content at build time, so each save asks
+// Vercel to rebuild (api/rebuild.js). Fire-and-forget: the save itself has already succeeded.
+async function requestSiteRebuild(): Promise<void> {
+  if (import.meta.env.DEV) return;
+  try {
+    const { data } = await supabase.auth.getSession();
+    const token = data.session?.access_token;
+    if (!token) return;
+    const res = await fetch("/api/rebuild", { method: "POST", headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) console.warn("Site rebuild request failed:", res.status, await res.text());
+  } catch (err) {
+    console.warn("Site rebuild request failed:", err);
   }
 }
 

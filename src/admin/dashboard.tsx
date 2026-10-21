@@ -165,7 +165,7 @@ export default function AdminDashboard() {
       <div className="mt-8 p-4 rounded-2xl border border-[#E4DEE6] bg-white/50 text-sm text-[#504852]">
         <p>
           <strong className="text-[#1E1A24]">How it works:</strong>{" "}
-          Edit any section, click <strong>Save</strong>, and changes go live on the website instantly — no rebuild needed.
+          Edit any section, click <strong>Save</strong>, and the website rebuilds itself with your changes — they are live within a couple of minutes.
         </p>
       </div>
     </div>

@@ -190,7 +190,7 @@ function SaveBar({ onSave, status }: { onSave: () => void; status: "idle" | "sav
         {status === "saved" && (
           <span className="flex items-center gap-1.5 text-green-700">
             <Check className="w-4 h-4" />
-            Saved! Changes are live on the website.
+            Saved! Live on the site within a couple of minutes.
           </span>
         )}
         {status === "error" && (
@@ -292,13 +292,13 @@ export default function AdminGlobalSettings() {
             hint="Short description shown in the footer and meta tags"
           />
           <Field
-            label="Contact Email"
+            label="Footer Email"
             id="contact_email"
             value={settings.contact_email}
             onChange={(v) => update("contact_email", v)}
             type="email"
             placeholder="hello@bloominginpain.com"
-            hint="Shown in the footer"
+            hint="Shown in the footer, the Accessibility page and the story submission page. Pratik's own email on the Contact page is set under Contact Page settings."
           />
         </SectionCard>
 

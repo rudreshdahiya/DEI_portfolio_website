@@ -6,7 +6,6 @@ import { PageMeta } from "@/components/page-meta";
 import { JsonLd } from "@/components/json-ld";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { useGlobalSettings } from "@/hooks/use-global-settings";
 import { useContactSettings } from "@/hooks/use-contact-settings";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -67,11 +66,10 @@ function validate(form: FormState): FormErrors {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export default function Contact() {
-  const { settings: globalSettings } = useGlobalSettings();
   const { settings: contactSettings } = useContactSettings();
   const [searchParams] = useSearchParams();
 
-  const primaryEmail = contactSettings.recipient_email || globalSettings.contact_email || "Pratik@asthaindia.in";
+  const primaryEmail = contactSettings.recipient_email || "Pratik@asthaindia.in";
   const bloomingEmail = contactSettings.blooming_email || "hello@bloominginpain.com";
   const webhookUrl = contactSettings.webhook_url || import.meta.env.VITE_CONTACT_FORM_ENDPOINT;
   const instagramUrl = contactSettings.instagram_url !== undefined && contactSettings.instagram_url !== "" ? contactSettings.instagram_url : "https://instagram.com/bloominginpain";

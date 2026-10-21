@@ -12,7 +12,7 @@ function SaveBar({ onSave, status }: { onSave: () => void; status: "idle" | "sav
     <div className="sticky bottom-0 z-10 flex items-center justify-between gap-4 px-6 py-4 border-t border-[#E4DEE6]" style={{ background: "rgba(246,244,247,0.95)", backdropFilter: "blur(8px)" }}>
       <div className="flex items-center gap-2 text-sm">
         {status === "saving" && <span className="flex items-center gap-1.5 text-[#504852]"><Loader2 className="w-4 h-4 animate-spin" />Saving…</span>}
-        {status === "saved" && <span className="flex items-center gap-1.5 text-green-700"><Check className="w-4 h-4" />Saved! Changes are live.</span>}
+        {status === "saved" && <span className="flex items-center gap-1.5 text-green-700"><Check className="w-4 h-4" />Saved! Live on the site within a couple of minutes.</span>}
         {status === "error" && <span className="flex items-center gap-1.5 text-red-600"><AlertCircle className="w-4 h-4" />Error — please try again.</span>}
       </div>
       <button onClick={onSave} disabled={status === "saving"} className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm text-white transition-all disabled:opacity-60 hover:opacity-90 active:scale-[0.98]" style={{ background: "linear-gradient(135deg,#B84472,#5C2A57)" }}>
@@ -91,7 +91,7 @@ export default function AdminContactSettings() {
               <label className="text-sm font-semibold text-[#1E1A24] block mb-1">
                 Primary Contact Email (Pratik)
               </label>
-              <p className="text-xs text-[#6B636C] mb-2">Receives all general inquiries, keynote speaking, & consulting</p>
+              <p className="text-xs text-[#6B636C] mb-2">Shown on the Contact page and receives all general inquiries, keynote speaking, & consulting. The only place Pratik's email is set.</p>
               <input
                 type="email"
                 value={settings.recipient_email}
